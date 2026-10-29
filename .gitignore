@@ -4,3 +4,4 @@ dist
 .DS_Store
 dist-static
 e2e-fail-*.png
+deliverable/*.tgz

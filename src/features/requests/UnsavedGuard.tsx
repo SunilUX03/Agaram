@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 
 /** Asks before leaving a form with unsaved changes. Never asks on a form with no changes. */
-export function UnsavedGuard({ dirty }: { dirty: boolean }) {
+/** Set `bypass.current = true` just before navigating away on purpose (after Send or Post). */
+export function UnsavedGuard({ dirty, bypass }: { dirty: boolean; bypass?: { current: boolean } }) {
   useEffect(() => {
     if (!dirty) return;
     const h = (e: BeforeUnloadEvent) => e.preventDefault();
@@ -12,12 +13,12 @@ export function UnsavedGuard({ dirty }: { dirty: boolean }) {
     return () => window.removeEventListener('beforeunload', h);
   }, [dirty]);
   const hasDataRouter = !!useContext(UNSAFE_DataRouterContext);
-  return hasDataRouter ? <Inner dirty={dirty} /> : null;
+  return hasDataRouter ? <Inner dirty={dirty} bypass={bypass} /> : null;
 }
 
-function Inner({ dirty }: { dirty: boolean }) {
+function Inner({ dirty, bypass }: { dirty: boolean; bypass?: { current: boolean } }) {
   const { t } = useTranslation('requests');
-  const blocker = useBlocker(dirty);
+  const blocker = useBlocker(() => dirty && !bypass?.current);
   if (blocker.state !== 'blocked') return null;
   return (
     <ConfirmDialog

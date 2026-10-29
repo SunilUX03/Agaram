@@ -43,7 +43,7 @@ export default function WhoDoesWhatPage() {
       <QueryView query={query} skeleton="row" skeletonCount={6}>
         {(all) => {
           const depts = list(all);
-          const current = all.find((d) => d.id === dep) ?? (desktop ? depts[0] : undefined);
+          const current = all.find((d) => d.id === dep) ?? (desktop || n ? depts[0] : undefined);
           return (
             <div className="who">
               <aside className="who-list" aria-label={t('who.dept')}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '@/components/Toast';
@@ -17,6 +17,7 @@ export default function NewPostPage() {
   const [params] = useSearchParams();
   const nav = useNavigate();
   const toast = useToast();
+  const bypass = useRef(false);
   const create = useMut('createPost');
   const req = t('ui.errors.required', { ns: 'common' });
   const [v, setV] = useState({
@@ -62,11 +63,12 @@ export default function NewPostPage() {
     ]);
     setDirty(false);
     toast(t('discussions.new.posted'));
+    bypass.current = true;
     nav(`/community/discussions/${p.id}`);
   };
   return (
     <>
-      <UnsavedGuard dirty={dirty && !create.isPending} />
+      <UnsavedGuard bypass={bypass} dirty={dirty && !create.isPending} />
       <RouteHeader
         id="community.discussions.new"
         main={{ onClick: post, disabled: create.isPending }}

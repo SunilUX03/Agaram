@@ -78,6 +78,7 @@ function RequestForm({
   const c = useCfg();
   const nav = useNavigate();
   const toast = useToast();
+  const bypass = useRef(false);
   const save = useMut('saveRequest');
   const officer = useQ('officer');
   const booked = useQ('booked');
@@ -175,6 +176,7 @@ function RequestForm({
     const r = await save.mutateAsync([payload(false, 3)]);
     setDirty(false);
     toast(r.status === 'approved' ? t('form.detailsSaved') : t('form.sent'));
+    bypass.current = true;
     nav(`/requests/${r.id}`);
   };
 
@@ -342,7 +344,7 @@ function RequestForm({
 
   return (
     <>
-      <UnsavedGuard dirty={dirty} />
+      <UnsavedGuard bypass={bypass} dirty={dirty} />
       <RouteHeader
         id="requests.form"
         headline={label}

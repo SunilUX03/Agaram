@@ -14,6 +14,7 @@ let failed = 0;
 const errors = [];
 
 async function flow(name, fn) {
+  if (process.env.ONLY && !name.startsWith(process.env.ONLY)) return;
   const ctx = await browser.newContext({
     viewport: { width: W, height: H },
     acceptDownloads: true,
@@ -119,6 +120,7 @@ await flow('3 Update my details', async (p) => {
   await p.waitForURL(/\/requests\/req-/);
   assert.match(await text(toast(p)), /Your details are saved\./);
   await p.goto(`${BASE}/file/profile`);
+  if (W < 1024) await p.click('summary:has-text("Contact")'); // collapsed on phones
   await p.waitForSelector('text=+91 90000 77777');
   assert.match(await text(p.locator('.kv-item:has-text("+91 90000 77777")')), /Self-reported/);
   // Address needs a proof file and follows the normal path
@@ -141,7 +143,8 @@ await flow('3 Update my details', async (p) => {
   await p.waitForURL(/\/requests\/req-/);
   assert.match(await text(p.locator('.chip').first()), /Submitted/);
   await p.goto(`${BASE}/file/profile`);
-  await p.waitForSelector('text=Tirunelveli');
+  if (W < 1024) await p.click('summary:has-text("Address")');
+  await p.waitForSelector('.kv-item:has-text("Tirunelveli")'); // the address is unchanged until the desk approves
 });
 
 await flow('4 Share an idea', async (p) => {
@@ -201,6 +204,7 @@ await flow('6 Find the right person', async (p) => {
   await p.waitForURL(/\/people\/colleagues\/col-/);
   await p.click('button:has-text("Save contact")');
   await p.waitForSelector('button:has-text("Saved")');
+  await p.waitForTimeout(1500); // let the simulated server finish before leaving
   await p.goto(`${BASE}/desk?tab=people`);
   await p.waitForSelector('.colleague-card');
   await p.waitForSelector('.colleague-card:has-text("Karthik")');
@@ -247,15 +251,16 @@ await flow('8 Find a circular or form', async (p) => {
   await p.goto(`${BASE}/library/circulars?year=${new Date().getFullYear()}`);
   await p.waitForSelector('.lib-row');
   await p.click('.lib-row button:has-text("View") >> nth=0');
-  await p.waitForSelector('[role=dialog] object, [role=dialog] img');
+  await p.waitForSelector('[role=dialog] .viewer', { state: 'attached' });
   const [dl] = await Promise.all([
     p.waitForEvent('download').catch(() => null),
     p.click('[role=dialog] a:has-text("Download")').catch(() => {}),
   ]);
   void dl;
   await p.keyboard.press('Escape');
-  await p.click('.lib-row button:has-text("Save") >> nth=0');
+  await p.click('.lib-row button:has-text("Save") >> nth=1'); // the first circular is already saved in the seed
   await p.waitForSelector('.lib-row button[aria-pressed=true]');
+  await p.waitForTimeout(1500); // let the simulated server finish before leaving
   await p.goto(`${BASE}/desk?tab=items`);
   await p.waitForSelector('.list-row');
   assert.ok((await p.locator('.list-row:has-text("Library")').count()) >= 1);

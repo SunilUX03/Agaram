@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '@/components/Toast';
@@ -15,6 +15,7 @@ export default function NewArticlePage() {
   const { t } = useTranslation('community');
   const nav = useNavigate();
   const toast = useToast();
+  const bypass = useRef(false);
   const create = useMut('createArticle');
   const req = t('ui.errors.required', { ns: 'common' });
   const [v, setV] = useState({ kind: 'article', title: '', role: '', summary: '' });
@@ -51,11 +52,12 @@ export default function NewArticlePage() {
     ]);
     setDirty(false);
     toast(status === 'published' ? t('knowledge.new.published') : t('knowledge.new.drafted'));
+    bypass.current = true;
     nav(status === 'published' ? `/community/knowledge/${a.id}` : '/community/knowledge?tab=mine');
   };
   return (
     <>
-      <UnsavedGuard dirty={dirty && !create.isPending} />
+      <UnsavedGuard bypass={bypass} dirty={dirty && !create.isPending} />
       <RouteHeader
         id="community.knowledge.new"
         main={{ onClick: () => go('published'), disabled: create.isPending }}

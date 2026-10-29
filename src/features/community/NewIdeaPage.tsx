@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Banner } from '@/components/Banner';
@@ -34,6 +34,7 @@ export default function NewIdeaPage() {
   const req = t('ui.errors.required', { ns: 'common' });
   const nav = useNavigate();
   const toast = useToast();
+  const bypass = useRef(false);
   const officer = useQ('officer');
   const create = useMut('createIdea');
   const [step, setStep] = useState<'edit' | 'preview'>('edit');
@@ -85,11 +86,12 @@ export default function NewIdeaPage() {
     ]);
     setDirty(false);
     toast(t('ideas.new.posted'));
+    bypass.current = true;
     nav(`/community/ideas/${i.id}`);
   };
   return (
     <>
-      <UnsavedGuard dirty={dirty && !create.isPending} />
+      <UnsavedGuard bypass={bypass} dirty={dirty && !create.isPending} />
       <RouteHeader
         id="community.ideas.new"
         main={

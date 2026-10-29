@@ -64,6 +64,14 @@ Pages never import mock data. They call hooks in `src/data/hooks.ts` (`useQ('req
 
 Every key in `src/i18n/en/*.json` has a matching key in `src/i18n/ta/*.json` with an empty value, so the interface falls back to English. The department supplies the Tamil text. Do not machine-translate it. Official documents (circulars, GOs, rules) stay in their original language.
 
+## Browser tests (the eight flows)
+
+```bash
+npm run build && npm run preview -- --port 4173   # one terminal
+npm run e2e                                         # another (needs Playwright installed)
+VIEWPORT=390x800 npm run e2e                        # same flows at phone width
+```
+
 ## Tests
 
 `npm run check` runs 400+ tests: every route renders with its exact headline; WCAG checks (axe) on all 42 pages at 360 and 1280 px; overlap, balance, title, transition and privacy rules; the request lifecycle through the repository; and a scan for every "never show" word in section 10.
