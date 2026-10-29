@@ -23,6 +23,10 @@ Sign in with any non-empty email or officer ID and any password.
 | `npm run build:static` | Production build into `dist-static/` using hash URLs. Works from any static host or folder          |
 | `npm run i18n:missing` | Lists message keys that have no Tamil value yet                                                     |
 
+## Hosting
+
+The normal build (`npm run build`, output `dist/`) uses clean URLs such as `/login`, so the host must serve `index.html` for any unknown path. `vercel.json` does this for Vercel (framework preset Vite, build command `npm run build`, output `dist`). On other hosts add the same rewrite, or use `npm run build:static`, which uses `#/` URLs and needs no setup.
+
 ## Demo controls and test switches
 
 - `?demo=1` opens the floating **Demo controls** panel (remembered for the tab): language switch, **Reset demo data**, **Force loading / empty / error**, and **Advance request** (move any request to With the desk, Ready for approval, Returned, Approved or Not approved, with the matching notification).
