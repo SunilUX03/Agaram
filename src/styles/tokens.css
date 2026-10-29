@@ -2,6 +2,11 @@
 :root {
   --primary: #ff385c;
   --primary-active: #e00b41;
+  /* Text-bearing red. Rausch (#ff385c) is 3.5:1 against white, which fails WCAG AA for text,
+     so buttons, badges and red text use design.md's pressed red (4.9:1). Rausch stays for
+     non-text accents: logo, meters, hearts, dots. See DECISIONS.md. */
+  --primary-ui: #e00b41;
+  --primary-ui-hover: #c10a38;
   --primary-disabled: #ffd1da;
   --error: #c13515;
   --error-hover: #b32505;

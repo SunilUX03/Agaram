@@ -5,5 +5,49 @@
       "tagline": "Your private space: tasks, notes, saved people and articles.",
       "main": "Add a task"
     }
+  },
+  "tabs": {
+    "tasks": "Tasks",
+    "notes": "Notes",
+    "people": "Saved people",
+    "items": "Saved items"
+  },
+  "tasks": {
+    "label": "New task",
+    "placeholder": "Write a task",
+    "due": "Due date (optional)",
+    "add": "Add",
+    "empty": "No tasks yet. Add your first task above.",
+    "done": "Done",
+    "showDone": "Done ({{n}})",
+    "delete": "Delete task {{text}}",
+    "delTitle": "Delete this task?",
+    "delBtn": "Delete",
+    "cancel": "Cancel",
+    "due2": "Due {{date}}",
+    "needText": "Write what you need to do."
+  },
+  "notes": {
+    "empty": "No notes yet.",
+    "add": "Add note",
+    "label": "New note",
+    "save": "Save note",
+    "cancel": "Cancel",
+    "delete": "Delete note",
+    "placeholder": "Write a note"
+  },
+  "people": {
+    "empty": "No saved people. Save a colleague from Colleagues.",
+    "remove": "Remove"
+  },
+  "items": {
+    "empty": "Nothing saved yet.",
+    "remove": "Remove",
+    "kind": {
+      "idea": "Idea",
+      "article": "Article",
+      "library": "Library"
+    },
+    "removeName": "Remove {{name}}"
   }
 }

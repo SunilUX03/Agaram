@@ -50,5 +50,196 @@
       "tagline": "Tell other officers how you solved it.",
       "main": "Publish"
     }
+  },
+  "hub": {
+    "discussion": "Start a discussion",
+    "article": "Write an article",
+    "topIdeas": "Top ideas this week",
+    "latestDiscussions": "Latest discussions",
+    "latestArticles": "Latest articles",
+    "seeAll": "See all"
+  },
+  "common": {
+    "anonymous": "Anonymous officer",
+    "youAnonymous": "You posted this anonymously",
+    "you": "You",
+    "asked": "Asked of earlier batches",
+    "replies_one": "{{count}} reply",
+    "replies_other": "{{count}} replies",
+    "comments_one": "{{count}} comment",
+    "comments_other": "{{count}} comments",
+    "lastActivity": "Last activity {{date}}",
+    "by": "{{author}}",
+    "pending": "Pending",
+    "audience": {
+      "all": "All officers",
+      "district": "My district",
+      "department": "My department"
+    },
+    "kind": {
+      "discussion": "Discussion",
+      "experience": "Experience",
+      "poll": "Poll"
+    }
+  },
+  "ideas": {
+    "tabs": {
+      "trending": "Trending",
+      "latest": "Latest",
+      "backed": "Backed by me",
+      "mine": "Mine"
+    },
+    "type": "Type",
+    "district": "District",
+    "department": "Department",
+    "grievance": "Raises a grievance",
+    "all": "All",
+    "back": "Back",
+    "backed": "Backed",
+    "backThis": "Back this idea",
+    "ownTip": "You posted this idea",
+    "empty": "No ideas match. Be the first to share one.",
+    "emptyBtn": "Share an idea",
+    "backers_one": "{{count}} backer",
+    "backers_other": "{{count}} backers",
+    "filters": "Filters",
+    "badge": {
+      "grievance": "Grievance"
+    },
+    "page": {
+      "meta": "{{author}}, {{department}}, {{date}}",
+      "cost": "Estimated cost: {{amount}}",
+      "status": "Status",
+      "steps": {
+        "submitted": "Submitted",
+        "under-review": "Under review",
+        "accepted": "Accepted",
+        "not-taken-forward": "Not taken forward"
+      },
+      "reason": "Reason: {{reason}}",
+      "description": "Description",
+      "attachments": "Attachments",
+      "discussion": "Discussion",
+      "addComment": "Add a comment",
+      "comment": "Comment",
+      "noComments": "No comments yet.",
+      "edit": "Edit",
+      "editTitle": "Edit your idea",
+      "save": "Save",
+      "cancel": "Cancel",
+      "notFound": "We could not find that idea."
+    },
+    "new": {
+      "title": "Title",
+      "titleHelp": "Up to 120 characters.",
+      "type": "Idea type",
+      "description": "Description",
+      "budget": "Budget",
+      "budgetHelp": "Indicative cost, for example ₹15 lakh a year",
+      "visibility": "Who can see this",
+      "visAll": "All officers",
+      "visAdmin": "Admins only",
+      "district": "District",
+      "department": "Department",
+      "choose": "Choose",
+      "attachments": "Attachments",
+      "attachHelp": "Optional. Up to 25 MB each.",
+      "needOne": "Choose a district or a department.",
+      "preview": "Preview",
+      "backEdit": "Back to edit",
+      "previewTitle": "This is how your idea will appear",
+      "posted": "Your idea has been posted."
+    }
+  },
+  "discussions": {
+    "tabs": {
+      "all": "All",
+      "discussion": "Discussion",
+      "experience": "Experience",
+      "poll": "Poll"
+    },
+    "empty": "No posts yet. Start the first discussion.",
+    "emptyBtn": "Start a discussion",
+    "reply": "Reply",
+    "replyBox": "Your reply",
+    "send": "Post reply",
+    "report": "Report",
+    "reportTitle": "Report this reply",
+    "reportReason": "Reason",
+    "reasons": {
+      "abuse": "Abusive or hurtful",
+      "spam": "Spam",
+      "private": "Shares private information",
+      "other": "Something else"
+    },
+    "reportSend": "Send",
+    "reportThanks": "Thank you. We will review it.",
+    "vote": "Vote",
+    "closed": "This poll is closed.",
+    "closes": "Closes {{date}}",
+    "noReplies": "No replies yet.",
+    "replyTo": "Reply to {{name}}",
+    "cancel": "Cancel",
+    "meta": "{{author}}, {{audience}}, {{date}}",
+    "voted": "Your vote is recorded.",
+    "seniors": "Earlier batch",
+    "new": {
+      "type": "Type",
+      "audience": "Who sees it",
+      "title": "Title",
+      "body": "Text",
+      "options": "Poll options",
+      "option": "Option {{n}}",
+      "addOption": "Add option",
+      "closes": "Closing date",
+      "anon": "Post anonymously",
+      "anonNote": "Other officers will see Anonymous officer.",
+      "seniors": "Ask my seniors (earlier batches)",
+      "post": "Post",
+      "posted": "Your post is live.",
+      "needOptions": "Add at least 2 options.",
+      "needDate": "Choose a closing date in the future."
+    }
+  },
+  "knowledge": {
+    "tabs": {
+      "article": "Articles",
+      "handover": "Handover notes",
+      "mine": "Mine"
+    },
+    "search": "Search articles",
+    "tags": "Filter by tag",
+    "save": "Save",
+    "saved": "Saved",
+    "saveDesk": "Save to My Desk",
+    "savedDesk": "Saved to My Desk",
+    "empty": "No articles yet. Write the first one.",
+    "emptyBtn": "Write an article",
+    "draft": "Draft",
+    "related": "Related articles",
+    "attachments": "Attachments",
+    "role": "{{role}}, {{district}}",
+    "handoverNote": "Handover note",
+    "viewAll": "All tags",
+    "new": {
+      "kind": "Kind",
+      "article": "Article",
+      "handover": "Handover note",
+      "handoverVis": "Visible to your successor and the department",
+      "title": "Title",
+      "role": "Your role at the time",
+      "summary": "Short summary",
+      "summaryHelp": "Up to 200 characters.",
+      "sections": "Sections",
+      "heading": "Heading",
+      "body": "Text",
+      "addSection": "Add section",
+      "removeSection": "Remove section",
+      "attach": "Attachments",
+      "saveDraft": "Save draft",
+      "publish": "Publish",
+      "published": "Your article is published.",
+      "drafted": "Draft saved."
+    }
   }
 }

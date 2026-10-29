@@ -5,5 +5,21 @@
       "tagline": "Find officers, ideas, articles, circulars and your own requests.",
       "main": ""
     }
-  }
+  },
+  "label": "Search officers, ideas, articles, circulars and your requests",
+  "hint": "Type at least 2 characters.",
+  "groups": {
+    "officers": "Officers",
+    "ideas": "Ideas",
+    "discussions": "Discussions",
+    "articles": "Articles",
+    "library": "Library",
+    "requests": "My requests"
+  },
+  "showAll": "Show all",
+  "showLess": "Show fewer",
+  "none": "No results for “{{query}}”. Try fewer words.",
+  "all": "All",
+  "results_one": "{{count}} result",
+  "results_other": "{{count}} results"
 }

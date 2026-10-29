@@ -5,5 +5,47 @@
       "tagline": "",
       "main": ""
     }
-  }
+  },
+  "photo": "",
+  "contact": {
+    "title": "",
+    "mobile1": "",
+    "mobile2": "",
+    "personalEmail": "",
+    "officialEmail": "",
+    "officialNote": ""
+  },
+  "password": {
+    "title": "",
+    "current": "",
+    "new": "",
+    "confirm": "",
+    "change": "",
+    "mismatch": "",
+    "changed": "",
+    "short": "",
+    "show": "",
+    "hide": ""
+  },
+  "language": {
+    "title": "",
+    "en": "",
+    "ta": ""
+  },
+  "notifications": {
+    "title": "",
+    "help": "",
+    "requests": "",
+    "replies": "",
+    "circulars": "",
+    "trainings": ""
+  },
+  "privacy": {
+    "title": "",
+    "phone": "",
+    "email": "",
+    "help": ""
+  },
+  "signOut": "",
+  "saved": ""
 }

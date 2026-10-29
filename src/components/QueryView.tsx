@@ -8,7 +8,13 @@ interface Props<T> {
   skeleton?: SkeletonVariant;
   skeletonCount?: number;
   /** Shown instead of the content when the data is an empty list. */
-  empty?: { message: string; actionLabel?: string; to?: string; onAction?: () => void };
+  empty?: {
+    message: string;
+    actionLabel?: string;
+    to?: string;
+    onAction?: () => void;
+    icon?: string;
+  };
   /** Custom skeleton, for example a grid of cards. */
   skeletonNode?: ReactNode;
   children: (data: T) => ReactNode;

@@ -15,5 +15,50 @@
       "tagline": "",
       "main": ""
     }
+  },
+  "trainings": {
+    "tabs": {
+      "upcoming": "",
+      "requested": "",
+      "past": ""
+    },
+    "addCal": "",
+    "openRes": "",
+    "need": "",
+    "needBtn": "",
+    "needOn": "",
+    "dateTime": "",
+    "empty": "",
+    "pastEmpty": "",
+    "links": ""
+  },
+  "resources": {
+    "search": "",
+    "sharedBy": "",
+    "empty": "",
+    "dlgTitle": "",
+    "name": "",
+    "desc": "",
+    "linkLabel": "",
+    "url": "",
+    "addLink": "",
+    "share": "",
+    "cancel": "",
+    "thanks": "",
+    "badUrl": ""
+  },
+  "awards": {
+    "tabs": {
+      "awards": "",
+      "awardees": ""
+    },
+    "eligibility": "",
+    "timeline": "",
+    "window": "",
+    "apply": "",
+    "pick": "",
+    "empty": "",
+    "year": "",
+    "by": ""
   }
 }

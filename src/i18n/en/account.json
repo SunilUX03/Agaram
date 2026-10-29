@@ -5,5 +5,47 @@
       "tagline": "Your contact details, language and privacy.",
       "main": "Save changes"
     }
-  }
+  },
+  "photo": "Change photo",
+  "contact": {
+    "title": "Contact details",
+    "mobile1": "Mobile number 1",
+    "mobile2": "Mobile number 2",
+    "personalEmail": "Personal email",
+    "officialEmail": "Official email",
+    "officialNote": "To change your official email, contact the help desk."
+  },
+  "password": {
+    "title": "Password",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Confirm new password",
+    "change": "Change password",
+    "mismatch": "The two passwords do not match.",
+    "changed": "Your password has been changed.",
+    "short": "Use at least 8 characters.",
+    "show": "Show",
+    "hide": "Hide"
+  },
+  "language": {
+    "title": "Language",
+    "en": "English",
+    "ta": "தமிழ்"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "help": "Choose what you want to hear about by email.",
+    "requests": "Request updates",
+    "replies": "Replies",
+    "circulars": "New circulars",
+    "trainings": "New trainings"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "phone": "Show my phone number to colleagues",
+    "email": "Show my personal email to colleagues",
+    "help": "Both are off unless you switch them on."
+  },
+  "signOut": "Sign out",
+  "saved": "Your settings are saved."
 }

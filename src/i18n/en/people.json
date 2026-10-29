@@ -25,5 +25,82 @@
       "tagline": "Trusted outside help, one phone call away.",
       "main": "Add an entry"
     }
+  },
+  "colleagues": {
+    "search": "Search name, post, district, area of exposure",
+    "district": "District",
+    "department": "Department",
+    "all": "All",
+    "found_one": "{{count}} officer found",
+    "found_other": "{{count}} officers found",
+    "empty": "No officers match. Try fewer words or clear a filter.",
+    "services": "Service",
+    "batch": "Batch {{year}}",
+    "status": {
+      "On leave": "On leave",
+      "On training": "On training"
+    },
+    "posting": "{{district}}, {{department}}",
+    "clear": "Clear filters"
+  },
+  "profile": {
+    "service": "Service",
+    "batch": "Batch",
+    "district": "District",
+    "department": "Department",
+    "area": "Area of exposure",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "none": "This officer has not shared contact details.",
+    "save": "Save contact",
+    "saved": "Saved",
+    "notFound": "We could not find that officer.",
+    "meta": "{{designation}}, {{posting}}"
+  },
+  "who": {
+    "filterDepts": "Filter departments",
+    "dept": "Department",
+    "searchSubject": "Search a subject, section or officer, for example GPF, sugarcane, budget",
+    "notOnFile": "Not on file",
+    "handles": "Handles: {{subjects}}",
+    "noMatch": "No departments match.",
+    "chain": "Chain of posts, highest first",
+    "selectDept": "Choose a department",
+    "match": "Matches your search",
+    "posts_one": "{{count}} post",
+    "posts_other": "{{count}} posts"
+  },
+  "section": {
+    "inCharge": "Officer in charge",
+    "oversees": "Oversees {{n}} sections",
+    "subjects_one": "{{count}} subject",
+    "subjects_other": "{{count}} subjects",
+    "notFound": "We could not find that section.",
+    "back": "Back to {{department}}",
+    "notOnFile": "Not on file"
+  },
+  "experts": {
+    "search": "Search experts and organisations",
+    "tabs": {
+      "all": "All",
+      "organisation": "Organisations",
+      "individual": "Individual experts"
+    },
+    "website": "Website",
+    "phone": "Call {{phone}}",
+    "pending": "Pending review",
+    "empty": "No entries match.",
+    "dlgTitle": "Add an entry",
+    "kind": "Type",
+    "org": "Organisation",
+    "indiv": "Individual expert",
+    "name": "Name",
+    "desc": "One line on what they do, and why an officer should reach out",
+    "website2": "Website (optional)",
+    "phone2": "Phone (optional)",
+    "add": "Add entry",
+    "cancel": "Cancel",
+    "thanks": "Thank you. Your entry will appear after review."
   }
 }

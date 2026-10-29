@@ -50,5 +50,196 @@
       "tagline": "",
       "main": ""
     }
+  },
+  "hub": {
+    "discussion": "",
+    "article": "",
+    "topIdeas": "",
+    "latestDiscussions": "",
+    "latestArticles": "",
+    "seeAll": ""
+  },
+  "common": {
+    "anonymous": "",
+    "youAnonymous": "",
+    "you": "",
+    "asked": "",
+    "replies_one": "",
+    "replies_other": "",
+    "comments_one": "",
+    "comments_other": "",
+    "lastActivity": "",
+    "by": "",
+    "pending": "",
+    "audience": {
+      "all": "",
+      "district": "",
+      "department": ""
+    },
+    "kind": {
+      "discussion": "",
+      "experience": "",
+      "poll": ""
+    }
+  },
+  "ideas": {
+    "tabs": {
+      "trending": "",
+      "latest": "",
+      "backed": "",
+      "mine": ""
+    },
+    "type": "",
+    "district": "",
+    "department": "",
+    "grievance": "",
+    "all": "",
+    "back": "",
+    "backed": "",
+    "backThis": "",
+    "ownTip": "",
+    "empty": "",
+    "emptyBtn": "",
+    "backers_one": "",
+    "backers_other": "",
+    "filters": "",
+    "badge": {
+      "grievance": ""
+    },
+    "page": {
+      "meta": "",
+      "cost": "",
+      "status": "",
+      "steps": {
+        "submitted": "",
+        "under-review": "",
+        "accepted": "",
+        "not-taken-forward": ""
+      },
+      "reason": "",
+      "description": "",
+      "attachments": "",
+      "discussion": "",
+      "addComment": "",
+      "comment": "",
+      "noComments": "",
+      "edit": "",
+      "editTitle": "",
+      "save": "",
+      "cancel": "",
+      "notFound": ""
+    },
+    "new": {
+      "title": "",
+      "titleHelp": "",
+      "type": "",
+      "description": "",
+      "budget": "",
+      "budgetHelp": "",
+      "visibility": "",
+      "visAll": "",
+      "visAdmin": "",
+      "district": "",
+      "department": "",
+      "choose": "",
+      "attachments": "",
+      "attachHelp": "",
+      "needOne": "",
+      "preview": "",
+      "backEdit": "",
+      "previewTitle": "",
+      "posted": ""
+    }
+  },
+  "discussions": {
+    "tabs": {
+      "all": "",
+      "discussion": "",
+      "experience": "",
+      "poll": ""
+    },
+    "empty": "",
+    "emptyBtn": "",
+    "reply": "",
+    "replyBox": "",
+    "send": "",
+    "report": "",
+    "reportTitle": "",
+    "reportReason": "",
+    "reasons": {
+      "abuse": "",
+      "spam": "",
+      "private": "",
+      "other": ""
+    },
+    "reportSend": "",
+    "reportThanks": "",
+    "vote": "",
+    "closed": "",
+    "closes": "",
+    "noReplies": "",
+    "replyTo": "",
+    "cancel": "",
+    "meta": "",
+    "voted": "",
+    "seniors": "",
+    "new": {
+      "type": "",
+      "audience": "",
+      "title": "",
+      "body": "",
+      "options": "",
+      "option": "",
+      "addOption": "",
+      "closes": "",
+      "anon": "",
+      "anonNote": "",
+      "seniors": "",
+      "post": "",
+      "posted": "",
+      "needOptions": "",
+      "needDate": ""
+    }
+  },
+  "knowledge": {
+    "tabs": {
+      "article": "",
+      "handover": "",
+      "mine": ""
+    },
+    "search": "",
+    "tags": "",
+    "save": "",
+    "saved": "",
+    "saveDesk": "",
+    "savedDesk": "",
+    "empty": "",
+    "emptyBtn": "",
+    "draft": "",
+    "related": "",
+    "attachments": "",
+    "role": "",
+    "handoverNote": "",
+    "viewAll": "",
+    "new": {
+      "kind": "",
+      "article": "",
+      "handover": "",
+      "handoverVis": "",
+      "title": "",
+      "role": "",
+      "summary": "",
+      "summaryHelp": "",
+      "sections": "",
+      "heading": "",
+      "body": "",
+      "addSection": "",
+      "removeSection": "",
+      "attach": "",
+      "saveDraft": "",
+      "publish": "",
+      "published": "",
+      "drafted": ""
+    }
   }
 }

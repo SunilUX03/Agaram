@@ -5,5 +5,49 @@
       "tagline": "",
       "main": ""
     }
+  },
+  "tabs": {
+    "tasks": "",
+    "notes": "",
+    "people": "",
+    "items": ""
+  },
+  "tasks": {
+    "label": "",
+    "placeholder": "",
+    "due": "",
+    "add": "",
+    "empty": "",
+    "done": "",
+    "showDone": "",
+    "delete": "",
+    "delTitle": "",
+    "delBtn": "",
+    "cancel": "",
+    "due2": "",
+    "needText": ""
+  },
+  "notes": {
+    "empty": "",
+    "add": "",
+    "label": "",
+    "save": "",
+    "cancel": "",
+    "delete": "",
+    "placeholder": ""
+  },
+  "people": {
+    "empty": "",
+    "remove": ""
+  },
+  "items": {
+    "empty": "",
+    "remove": "",
+    "kind": {
+      "idea": "",
+      "article": "",
+      "library": ""
+    },
+    "removeName": ""
   }
 }

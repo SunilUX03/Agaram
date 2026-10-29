@@ -106,7 +106,7 @@ export function buildSeed(now = new Date()): Db {
     qualifications: [
       {
         id: 'q1',
-        level: 'Master’s degree',
+        level: 'Postgraduate degree',
         degree: 'M.A.',
         specialisation: 'Public Policy',
         institute: 'Example Institute of Policy Studies',
@@ -116,7 +116,7 @@ export function buildSeed(now = new Date()): Db {
       },
       {
         id: 'q2',
-        level: 'Bachelor’s degree',
+        level: 'Graduate degree',
         degree: 'B.E.',
         specialisation: 'Civil Engineering',
         institute: 'Sample College of Engineering',
@@ -1503,7 +1503,7 @@ export function buildSeed(now = new Date()): Db {
       me,
       24,
       false,
-      { budget: 'Indicative cost: ₹25 lakh' },
+      { budget: '₹25 lakh' },
     ),
     idea(
       2,

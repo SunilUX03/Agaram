@@ -12,3 +12,13 @@ export function useUrlState(name: string, fallback = ''): [string, (v: string) =
   };
   return [value, set];
 }
+
+/** Remove several query values in one navigation (clearing all filters at once). */
+export function useUrlClear(): (names: string[]) => void {
+  const [params, setParams] = useSearchParams();
+  return (names) => {
+    const next = new URLSearchParams(params);
+    names.forEach((n) => next.delete(n));
+    setParams(next, { replace: true });
+  };
+}

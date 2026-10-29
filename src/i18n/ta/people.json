@@ -25,5 +25,82 @@
       "tagline": "",
       "main": ""
     }
+  },
+  "colleagues": {
+    "search": "",
+    "district": "",
+    "department": "",
+    "all": "",
+    "found_one": "",
+    "found_other": "",
+    "empty": "",
+    "services": "",
+    "batch": "",
+    "status": {
+      "On leave": "",
+      "On training": ""
+    },
+    "posting": "",
+    "clear": ""
+  },
+  "profile": {
+    "service": "",
+    "batch": "",
+    "district": "",
+    "department": "",
+    "area": "",
+    "contact": "",
+    "phone": "",
+    "email": "",
+    "none": "",
+    "save": "",
+    "saved": "",
+    "notFound": "",
+    "meta": ""
+  },
+  "who": {
+    "filterDepts": "",
+    "dept": "",
+    "searchSubject": "",
+    "notOnFile": "",
+    "handles": "",
+    "noMatch": "",
+    "chain": "",
+    "selectDept": "",
+    "match": "",
+    "posts_one": "",
+    "posts_other": ""
+  },
+  "section": {
+    "inCharge": "",
+    "oversees": "",
+    "subjects_one": "",
+    "subjects_other": "",
+    "notFound": "",
+    "back": "",
+    "notOnFile": ""
+  },
+  "experts": {
+    "search": "",
+    "tabs": {
+      "all": "",
+      "organisation": "",
+      "individual": ""
+    },
+    "website": "",
+    "phone": "",
+    "pending": "",
+    "empty": "",
+    "dlgTitle": "",
+    "kind": "",
+    "org": "",
+    "indiv": "",
+    "name": "",
+    "desc": "",
+    "website2": "",
+    "phone2": "",
+    "add": "",
+    "cancel": "",
+    "thanks": ""
   }
 }

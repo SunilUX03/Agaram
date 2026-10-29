@@ -5,5 +5,21 @@
       "tagline": "",
       "main": ""
     }
-  }
+  },
+  "label": "",
+  "hint": "",
+  "groups": {
+    "officers": "",
+    "ideas": "",
+    "discussions": "",
+    "articles": "",
+    "library": "",
+    "requests": ""
+  },
+  "showAll": "",
+  "showLess": "",
+  "none": "",
+  "all": "",
+  "results_one": "",
+  "results_other": ""
 }

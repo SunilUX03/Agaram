@@ -449,8 +449,8 @@ export const REQUEST_TYPES: RequestTypeDef[] = [
         required: true,
         options: [
           'Diploma',
-          'Bachelor’s degree',
-          'Master’s degree',
+          'Graduate degree',
+          'Postgraduate degree',
           'Doctorate',
           'Certificate course',
         ],

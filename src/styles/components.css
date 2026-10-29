@@ -57,7 +57,7 @@ h4 {
   font-weight: 500;
 }
 .link:hover {
-  color: var(--primary-active);
+  color: var(--primary-ui-hover);
 }
 
 /* buttons */
@@ -91,13 +91,13 @@ h4 {
   cursor: not-allowed;
 }
 .btn-primary {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--primary-ui);
+  border-color: var(--primary-ui);
   color: var(--on-primary);
 }
 .btn-primary:hover:not(:disabled) {
-  background: var(--primary-active);
-  border-color: var(--primary-active);
+  background: var(--primary-ui-hover);
+  border-color: var(--primary-ui-hover);
 }
 .btn-primary:disabled {
   background: var(--primary-disabled);
@@ -189,7 +189,7 @@ h4 {
   height: 18px;
   padding: 0 5px;
   border-radius: 9px;
-  background: var(--primary);
+  background: var(--primary-ui);
   color: #fff;
   font-size: 11px;
   font-weight: 600;
@@ -398,7 +398,7 @@ h4 {
   cursor: pointer;
 }
 .bottombar .is-current {
-  color: var(--primary);
+  color: var(--primary-ui);
 }
 @media (max-width: 1023px) {
   body {
@@ -2114,5 +2114,179 @@ fieldset {
 @media (max-width: 1023px) {
   .main {
     padding-bottom: 140px;
+  }
+}
+.stretch {
+  text-decoration: none;
+  color: inherit;
+}
+.stretch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.idea-card,
+.article-card {
+  position: relative;
+  transition: box-shadow 0.15s ease;
+}
+.idea-card:hover,
+.article-card:hover {
+  box-shadow: var(--shadow);
+}
+.idea-card .btn,
+.article-card .btn {
+  position: relative;
+  z-index: 1;
+}
+.article-lead {
+  height: 140px;
+  margin-bottom: 12px;
+}
+.article-lead img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lead-tint {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--surface-strong);
+}
+.post-row {
+  align-items: flex-start;
+}
+.post-row .list-row-main {
+  gap: 2px;
+}
+.thread {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.thread .thread {
+  margin: 12px 0 0 28px;
+  padding-left: 16px;
+  border-left: 2px solid var(--hairline-soft);
+}
+.comment {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.comment p {
+  margin: 4px 0;
+}
+.comment-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
+.status-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  margin: 12px 0;
+}
+.preview-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.sections-edit .card {
+  margin-bottom: 12px;
+}
+.rich-out h2,
+.rich-out h3 {
+  margin: 16px 0 4px;
+}
+.rich-out ul,
+.rich-out ol {
+  padding-left: 22px;
+}
+.colleague-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.colleague-main {
+  min-width: 0;
+}
+.sticky-search {
+  position: sticky;
+  top: var(--nav-h-mobile);
+  z-index: 30;
+  background: var(--canvas);
+  padding: 8px 0;
+}
+@media (min-width: 1024px) {
+  .sticky-search {
+    position: static;
+    padding: 0;
+  }
+}
+.who {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 1024px) {
+  .who {
+    grid-template-columns: 300px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .who-list {
+    position: sticky;
+    top: calc(var(--nav-h) + 16px);
+  }
+}
+.who-dept {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: var(--r-sm);
+  font: inherit;
+  cursor: pointer;
+  margin-top: 4px;
+}
+.who-dept:hover {
+  background: var(--surface-soft);
+}
+.who-dept[aria-current='true'] {
+  background: var(--surface-strong);
+  font-weight: 600;
+}
+.is-hit {
+  border: 2px solid var(--ink);
+}
+.lib-row {
+  display: grid;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.lib-row h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.lib-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+@media (min-width: 744px) {
+  .lib-row {
+    grid-template-columns: 1fr auto;
+    align-items: center;
   }
 }

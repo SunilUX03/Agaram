@@ -25,5 +25,47 @@
       "tagline": "",
       "main": ""
     }
+  },
+  "common": {
+    "search": "",
+    "view": "",
+    "download": "",
+    "save": "",
+    "saved": "",
+    "empty": "",
+    "number": "",
+    "date": "",
+    "close": ""
+  },
+  "rules": {
+    "search": ""
+  },
+  "circulars": {
+    "search": "",
+    "type": "",
+    "year": "",
+    "all": "",
+    "types": {
+      "Circular": "",
+      "GO": "",
+      "Special entry": ""
+    }
+  },
+  "forms": {
+    "use": ""
+  },
+  "faqs": {
+    "search": "",
+    "topics": {
+      "all": "",
+      "LTC": "",
+      "Medical": "",
+      "GPF": "",
+      "Leave": "",
+      "Other": ""
+    }
+  },
+  "announcements": {
+    "empty": ""
   }
 }

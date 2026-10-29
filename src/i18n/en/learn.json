@@ -15,5 +15,50 @@
       "tagline": "Recognition open to Tamil Nadu civil servants.",
       "main": ""
     }
+  },
+  "trainings": {
+    "tabs": {
+      "upcoming": "Upcoming",
+      "requested": "Requested by officers",
+      "past": "Past"
+    },
+    "addCal": "Add to calendar",
+    "openRes": "Open resource",
+    "need": "{{count}} officers need this",
+    "needBtn": "I need this too",
+    "needOn": "You need this too",
+    "dateTime": "{{date}} at {{time}}",
+    "empty": "Nothing here yet.",
+    "pastEmpty": "No past trainings.",
+    "links": "Links"
+  },
+  "resources": {
+    "search": "Search learning resources",
+    "sharedBy": "Shared by {{name}}",
+    "empty": "No resources match.",
+    "dlgTitle": "Share a resource",
+    "name": "Name",
+    "desc": "Description (optional)",
+    "linkLabel": "Link label",
+    "url": "URL",
+    "addLink": "Add another link",
+    "share": "Share resource",
+    "cancel": "Cancel",
+    "thanks": "Thank you for sharing.",
+    "badUrl": "Enter a web address starting with https://"
+  },
+  "awards": {
+    "tabs": {
+      "awards": "Awards",
+      "awardees": "Awardees"
+    },
+    "eligibility": "Eligibility",
+    "timeline": "Timeline",
+    "window": "Applications: {{from}} to {{to}}",
+    "apply": "Apply on the official site",
+    "pick": "Choose an award",
+    "empty": "No awardees recorded yet.",
+    "year": "{{year}}",
+    "by": "{{name}}, {{designation}}"
   }
 }

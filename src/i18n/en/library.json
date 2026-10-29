@@ -25,5 +25,47 @@
       "tagline": "Notices from the Public Department.",
       "main": "Notification settings"
     }
+  },
+  "common": {
+    "search": "Search",
+    "view": "View",
+    "download": "Download",
+    "save": "Save",
+    "saved": "Saved",
+    "empty": "Nothing matches your search.",
+    "number": "Number",
+    "date": "Date",
+    "close": "Close"
+  },
+  "rules": {
+    "search": "Search rules"
+  },
+  "circulars": {
+    "search": "Search by number, year or subject",
+    "type": "Type",
+    "year": "Year",
+    "all": "All",
+    "types": {
+      "Circular": "Circular",
+      "GO": "GO",
+      "Special entry": "Special entry"
+    }
+  },
+  "forms": {
+    "use": "Use this when {{situation}}"
+  },
+  "faqs": {
+    "search": "Search questions",
+    "topics": {
+      "all": "All",
+      "LTC": "LTC",
+      "Medical": "Medical",
+      "GPF": "GPF",
+      "Leave": "Leave",
+      "Other": "Other"
+    }
+  },
+  "announcements": {
+    "empty": "No announcements."
   }
 }
