@@ -69,7 +69,7 @@ export function FormStepper({
           {t('ui.stepper.step', { n: i + 1, total: steps.length })}
         </p>
         <div
-          className="ux4g-progress-bar ux4g-my-xs"
+          className="ux4g-progress-bar ux4g-my-s"
           data-ux-progress-bar
           data-ux-shape="rounded"
           role="progressbar"
@@ -83,7 +83,7 @@ export function FormStepper({
             <div className="ux4g-progress-bar-fill" />
           </div>
         </div>
-        <h2 className="ux4g-heading-s-strong">{steps[i].title}</h2>
+        <h2 className="ux4g-heading-s-strong ux4g-mt-l">{steps[i].title}</h2>
       </div>
       {errors.length > 0 && (
         <div
@@ -103,7 +103,7 @@ export function FormStepper({
         </div>
       )}
       <div>{steps[i].content}</div>
-      <div className="stepper-bar ux4g-d-flex ux4g-ai-center ux4g-gap-s">
+      <div className="stepper-bar ux4g-d-flex ux4g-ai-center gap-s">
         {i > 0 && (
           <button
             type="button"

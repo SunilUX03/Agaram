@@ -38,23 +38,20 @@ export function IdeaCard({ idea }: { idea: Idea }) {
   const loc = useLoc();
   return (
     <article className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad idea-card">
-      <div
-        className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
-        style={{ justifyContent: 'space-between' }}
-      >
+      <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s ux4g-jc-between">
         <StatusChip status={`idea:${idea.status}`} />
         <div className="tags">
           <Tag>{idea.type}</Tag>
           {idea.grievance && <Tag>{t('ideas.badge.grievance')}</Tag>}
         </div>
       </div>
-      <h3 style={{ marginTop: 12 }}>
+      <h3 className="ux4g-heading-xs-strong ux4g-mt-s">
         <Link to={`/community/ideas/${idea.id}`} className="stretch">
           {idea.title}
         </Link>
       </h3>
       <p className="ux4g-body-s-default ux4g-text-neutral-secondary clamp-2">{idea.description}</p>
-      <p className="ux4g-body-s-default ux4g-text-neutral-secondary" style={{ marginTop: 8 }}>
+      <p className="ux4g-body-s-default ux4g-text-neutral-secondary ux4g-mt-xs">
         {idea.author.name}
         {idea.department ? `, ${idea.department}` : ''} · {formatDate(idea.createdAt, loc)}
       </p>
@@ -109,7 +106,7 @@ export function ArticleCard({ a }: { a: Article }) {
         {a.status === 'draft' && <Tag>{t('knowledge.draft')}</Tag>}
         {a.kind === 'handover-note' && <Tag>{t('knowledge.handoverNote')}</Tag>}
       </div>
-      <h3 style={{ marginTop: 6 }}>
+      <h3 className="ux4g-heading-xs-strong ux4g-mt-xs">
         <Link to={`/community/knowledge/${a.id}`} className="stretch">
           {a.title}
         </Link>
@@ -118,10 +115,8 @@ export function ArticleCard({ a }: { a: Article }) {
         {a.authorRole}
         {a.district ? `, ${a.district}` : ''}
       </p>
-      <p className="clamp-2" style={{ marginTop: 6 }}>
-        {a.summary}
-      </p>
-      <div className="tags" style={{ marginTop: 8 }}>
+      <p className="clamp-2 ux4g-mt-xs">{a.summary}</p>
+      <div className="tags ux4g-mt-xs">
         {a.tags.map((x) => (
           <Tag key={x}>{x}</Tag>
         ))}

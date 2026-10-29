@@ -29,7 +29,7 @@ function Block({
   const [open, setOpen] = useState(!!defaultOpen);
   const update = (
     <Link
-      className="ux4g-text-link-md ux4g-body-s-default"
+      className="ux4g-text-link-m ux4g-body-s-default"
       to={`/requests/new/update-details?section=${encodeURIComponent(section)}`}
     >
       {t('profile.update')}
@@ -42,7 +42,7 @@ function Block({
         aria-label={title}
       >
         <div className="cardhead">
-          <h2>{title}</h2>
+          <h2 className="ux4g-heading-s-strong">{title}</h2>
           {update}
         </div>
         {children}

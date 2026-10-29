@@ -58,7 +58,7 @@ export default function TravelPage() {
                         {r.purpose ? ` · ${r.purpose}` : ''}
                       </span>
                       {r.kind === 'foreign' && (
-                        <span className="checks" style={{ marginTop: 6 }}>
+                        <span className="checks ux4g-mt-xs">
                           {r.politicalClearance && (
                             <Tag>
                               <Icon name="check" size={12} /> {t('travel.political')}

@@ -36,9 +36,7 @@ export default function NotificationsPage() {
             const items = rows.filter((n) => dayKey(n.createdAt) === g);
             return (
               <section key={g} className="section" aria-label={label(items[0].createdAt)}>
-                <h2 className="ux4g-heading-xs-strong" style={{ marginBottom: 4 }}>
-                  {label(items[0].createdAt)}
-                </h2>
+                <h2 className="ux4g-heading-xs-strong ux4g-mb-2xs">{label(items[0].createdAt)}</h2>
                 {items.map((n) => (
                   <NotificationItem
                     key={n.id}

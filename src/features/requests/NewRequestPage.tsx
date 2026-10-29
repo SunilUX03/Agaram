@@ -37,29 +37,28 @@ export default function NewRequestPage() {
           { label: t('routes.requests_new.headline') },
         ]}
       />
-      <div style={{ marginBottom: 24 }}>
+      <div className="ux4g-mb-xl">
         <SearchField label={t('new.search')} value={q} onChange={setQ} />
       </div>
       {groups.length === 0 && <EmptyState message={t('new.noResults')} icon="search" />}
       {groups.map((g) => (
         <section key={g.id} className="section" aria-labelledby={`grp-${g.id}`}>
           <div className="section-head">
-            <h2 id={`grp-${g.id}`}>{t(`new.groups.${g.id}`)}</h2>
+            <h2 id={`grp-${g.id}`} className="ux4g-heading-m-strong">
+              {t(`new.groups.${g.id}`)}
+            </h2>
           </div>
           <div className="grid-cards">
             {g.items.map((x) => (
               <Card key={x.key} to={`/requests/new/${x.key}`}>
-                <span className="list-row-icon" style={{ marginBottom: 12 }}>
+                <span className="list-row-icon ux4g-mb-s">
                   <Icon name={x.icon} />
                 </span>
-                <h3>{c(x.key, 'card', x.cardName)}</h3>
+                <h3 className="ux4g-heading-xs-strong">{c(x.key, 'card', x.cardName)}</h3>
                 <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                   {c(x.key, 'help', x.help)}
                 </p>
-                <p
-                  className="ux4g-body-s-default ux4g-text-neutral-secondary"
-                  style={{ marginTop: 8 }}
-                >
+                <p className="ux4g-body-s-default ux4g-text-neutral-secondary ux4g-mt-xs">
                   {t('new.keepReady', { items: c(x.key, 'keep', x.keepReady) })}
                 </p>
               </Card>

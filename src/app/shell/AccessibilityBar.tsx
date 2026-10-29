@@ -15,10 +15,10 @@ export function AccessibilityBar() {
   };
   return (
     <div className="ux4g-topbar">
-      <a href="#main" className="ux4g-topbar__skip">
-        {t('app.skipToMain')}
-      </a>
-      <div className="ux4g-topbar__wrap">
+      <div className="ux4g-topbar__wrap ux4g-container ux4g-d-flex ux4g-ai-center ux4g-jc-between">
+        <a href="#main" className="ux4g-topbar__skip">
+          {t('app.skipToMain')}
+        </a>
         <div className="ux4g-topbar__group" role="group" aria-label={t('a11y.textSize')}>
           <button
             type="button"

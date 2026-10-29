@@ -33,9 +33,7 @@ export function FilterBar({ children, active, onRemove, onClear }: Props) {
           <Icon name="plus" size={18} />
           {t('ui.filters.open')}
           {active.length > 0 && (
-            <span className="ux4g-badge-digit-primary ux4g-badge-s ux4g-ml-xs">
-              {active.length}
-            </span>
+            <span className="ux4g-tag-tonal-primary ux4g-tag-s ux4g-ml-xs">{active.length}</span>
           )}
         </button>
       ) : (
@@ -43,22 +41,22 @@ export function FilterBar({ children, active, onRemove, onClear }: Props) {
       )}
       {active.length > 0 && (
         <ul
-          className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-s ux4g-mt-s plain-list"
+          className="ux4g-d-flex ux4g-flex-wrap gap-s ux4g-mt-s plain-list"
           aria-label={t('ui.filters.active')}
         >
           {active.map((f) => (
             <li key={f.key}>
-              <span className="ux4g-input-chip-m">
+              <button
+                type="button"
+                className="ux4g-input-chip-m"
+                onClick={() => onRemove(f.key)}
+                aria-label={t('ui.filters.remove', { name: f.label })}
+              >
                 {f.label}
-                <button
-                  type="button"
-                  className="ux4g-chip-close"
-                  onClick={() => onRemove(f.key)}
-                  aria-label={t('ui.filters.remove', { name: f.label })}
-                >
-                  &times;
-                </button>
-              </span>
+                <i className="ux4g-icon-outlined" aria-hidden="true">
+                  close
+                </i>
+              </button>
             </li>
           ))}
         </ul>

@@ -55,7 +55,7 @@ export default function HomePage() {
                 })
               : ' '}
           </p>
-          <div className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-s ux4g-mt-m">
+          <div className="ux4g-d-flex ux4g-flex-wrap gap-s ux4g-mt-m">
             <Link to="/requests/new" className="ux4g-btn-primary ux4g-btn-m">
               {p.main}
             </Link>
@@ -109,11 +109,11 @@ function Section({
     <section className="section" aria-label={title}>
       <div className="section-head">
         <div>
-          <h2>{title}</h2>
+          <h2 className="ux4g-heading-m-strong">{title}</h2>
           <p>{tagline}</p>
         </div>
         {link && to && (
-          <Link to={to} className="ux4g-text-link-md">
+          <Link to={to} className="ux4g-text-link-m">
             {link}
           </Link>
         )}
@@ -419,8 +419,8 @@ function WhatIsNew() {
           {cols.map((c) => (
             <Card key={c.id}>
               <div className="section-head">
-                <h3>{c.title}</h3>
-                <Link to={c.to} className="ux4g-text-link-md ux4g-body-s-default">
+                <h3 className="ux4g-heading-xs-strong">{c.title}</h3>
+                <Link to={c.to} className="ux4g-text-link-m ux4g-body-s-default">
                   {t('new.seeAll')}
                 </Link>
               </div>

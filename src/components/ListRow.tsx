@@ -20,7 +20,7 @@ export function ListRow({ to, title, meta, chip, icon }: Props) {
           <span className="ux4g-body-m-strong">{title}</span>
           {meta && <span className="ux4g-body-s-default ux4g-text-neutral-secondary">{meta}</span>}
         </span>
-        <span className="ux4g-list-item-end ux4g-d-flex ux4g-ai-center ux4g-gap-s">
+        <span className="ux4g-list-item-end ux4g-d-flex ux4g-ai-center gap-s">
           {chip}
           <Icon name="chevron" size={20} />
         </span>

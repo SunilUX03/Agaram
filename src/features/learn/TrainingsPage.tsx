@@ -117,13 +117,13 @@ export default function TrainingsPage() {
               <div className="grid-cards">
                 {rows.map((e) => (
                   <Card key={e.id}>
-                    <h3>{e.title}</h3>
+                    <h3 className="ux4g-heading-xs-strong">{e.title}</h3>
                     <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                       {e.description}
                     </p>
                     {tab === 'upcoming' ? (
                       <>
-                        <p style={{ marginTop: 8 }}>
+                        <p className="ux4g-mt-xs">
                           <Icon name="calendar" size={16} />{' '}
                           {t('trainings.dateTime', {
                             date: e.date ? formatDate(e.date, loc) : '',
@@ -141,7 +141,7 @@ export default function TrainingsPage() {
                           {e.links.map((l) => (
                             <a
                               key={l.url}
-                              className="ux4g-text-link-md"
+                              className="ux4g-text-link-m"
                               href={l.url}
                               target="_blank"
                               rel="noopener noreferrer"

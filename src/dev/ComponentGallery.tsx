@@ -88,21 +88,21 @@ export default function ComponentGallery() {
         breadcrumb={[{ label: 'Dev', to: '/home' }, { label: 'Components' }]}
       />
       <S title="StatusChip">
-        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
           {[...REQUEST_STATUSES, 'idea:accepted', 'award:open', 'officer:serving'].map((s) => (
             <StatusChip key={s} status={s} />
           ))}
         </div>
       </S>
       <S title="Tag, Avatar">
-        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
           <Tag>Flagship initiative</Tag>
           <Avatar name="Meenakshi Sundaram" />
           <Avatar name="Asha Rao" photoUrl="/missing.png" />
         </div>
       </S>
       <S title="Card, ListRow, QuickActionTile">
-        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
           <Card>Plain card</Card>
           <Card to="/home">Interactive card</Card>
         </div>
@@ -255,7 +255,7 @@ export default function ComponentGallery() {
         <SimpleRichText name="g-rt" label="Rich text" value={rich} onChange={setRich} />
       </S>
       <S title="BalanceMeter, KeyValueList, HelpTip">
-        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
           <BalanceMeter label="Casual leave (CL)" allowed={12} used={4} />
           <HelpTip text="Casual leave." />
         </div>
@@ -267,7 +267,7 @@ export default function ComponentGallery() {
         />
       </S>
       <S title="FileViewer, ConfirmDialog, Toast">
-        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
           <button className="ux4g-btn-outline-primary ux4g-btn-m" onClick={() => setViewer(true)}>
             Open viewer
           </button>
@@ -301,7 +301,7 @@ export default function ComponentGallery() {
         ))}
       </S>
       <S title="ToggleButton, Accordion, PollBar">
-        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
           <ToggleButton
             label="Back this idea"
             onLabel="Backed"

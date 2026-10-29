@@ -27,9 +27,9 @@ export function ColleagueCard({ c }: { c: Colleague }) {
     >
       <Avatar name={c.name} photoUrl={c.photoUrl} size={56} />
       <div className="colleague-main">
-        <h3>{c.name}</h3>
+        <h3 className="ux4g-heading-xs-strong">{c.name}</h3>
         <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{c.designation}</p>
-        <div className="tags" style={{ margin: '6px 0' }}>
+        <div className="tags ux4g-my-xs">
           <Tag>
             {c.service}
             {c.batch ? ` · ${t('colleagues.batch', { year: c.batch })}` : ''}
@@ -96,7 +96,7 @@ export default function ColleaguesPage() {
         />
       </FilterBar>
       <div
-        className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+        className="ux4g-d-flex ux4g-flex-wrap gap-xs ux4g-mb-s"
         role="group"
         aria-label={t('colleagues.services')}
       >

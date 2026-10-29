@@ -36,10 +36,19 @@ export function PageHeader({
   useEffect(() => {
     document.title = t('app.title', { headline });
   }, [headline, t]);
+  const actions =
+    main || secondary ? (
+      <div
+        className={`ux4g-d-flex ux4g-flex-wrap gap-s page-header-actions${stickyMain ? ' hide-mobile' : ''}`}
+      >
+        {secondary}
+        {main}
+      </div>
+    ) : null;
   return (
-    <header className="page-header ux4g-mb-l">
+    <header className="page-header ux4g-mb-xl">
       {breadcrumb && <Breadcrumb items={breadcrumb} />}
-      <div className="ux4g-d-flex ux4g-jc-between ux4g-gap-xl">
+      <div className="ux4g-d-flex ux4g-flex-column ux4g-md-flex-row ux4g-md-jc-between ux4g-md-ai-start gap-m">
         <div className="page-header-text">
           <h1 ref={h1} tabIndex={-1} className="ux4g-heading-l-strong">
             {headline}
@@ -47,15 +56,10 @@ export function PageHeader({
           {tagline && (
             <p className="ux4g-body-m-default ux4g-text-neutral-secondary ux4g-mt-xs">{tagline}</p>
           )}
-          {(main || secondary) && (
-            <div
-              className={`ux4g-d-flex ux4g-flex-wrap ux4g-gap-s ux4g-mt-m${stickyMain ? ' hide-mobile' : ''}`}
-            >
-              {main}
-              {secondary}
-            </div>
-          )}
+          {/* With an image the buttons sit under the text; otherwise they sit on the right. */}
+          {image && actions && <div className="ux4g-mt-m">{actions}</div>}
         </div>
+        {!image && actions}
         {image && <div className="ux4g-d-none ux4g-lg-d-block page-header-image">{image}</div>}
       </div>
       {stickyMain && main && <div className="sticky-bar">{main}</div>}

@@ -23,7 +23,7 @@ export default function PropertyPage() {
       <RouteHeader
         id="file.property"
         tagline={
-          <span className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s" style={{ gap: 6 }}>
+          <span className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
             <Icon name="lock" size={16} label={t('property.private')} />
             {p.tagline}
           </span>
@@ -55,9 +55,9 @@ export default function PropertyPage() {
                     key={r.id}
                     className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
                   >
-                    <h3>{r.type}</h3>
+                    <h3 className="ux4g-heading-xs-strong">{r.type}</h3>
                     <p>{r.details}</p>
-                    <dl className="kv" style={{ marginTop: 12 }}>
+                    <dl className="kv ux4g-mt-s">
                       <div className="kv-item">
                         <dt>{t('property.fund')}</dt>
                         <dd>{r.funding}</dd>

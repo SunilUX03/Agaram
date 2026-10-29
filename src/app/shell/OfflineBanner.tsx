@@ -13,7 +13,7 @@ export function OfflineBanner() {
     return () => (removeEventListener('online', on), removeEventListener('offline', off));
   }, []);
   return online ? null : (
-    <div className="wrap">
+    <div className="ux4g-container">
       <Banner variant="warning">{t('offline')}</Banner>
     </div>
   );

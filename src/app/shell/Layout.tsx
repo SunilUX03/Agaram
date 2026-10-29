@@ -22,7 +22,7 @@ export function Layout({ children }: { children: ReactNode }) {
       {!bare && <TopBar desktop={desktop} />}
       {!bare && !desktop && <SectionTabs />}
       <OfflineBanner />
-      <main id="main" className="wrap main" tabIndex={-1}>
+      <main id="main" className="ux4g-container main" tabIndex={-1}>
         <ErrorBoundary>
           <Suspense fallback={<Skeleton variant="header" />}>{children}</Suspense>
         </ErrorBoundary>

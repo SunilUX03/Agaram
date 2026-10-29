@@ -91,9 +91,7 @@ export default function IdeaPage() {
               <Tag>{i.type}</Tag>
               {i.budget && <Tag>{t('ideas.page.cost', { amount: i.budget })}</Tag>}
             </div>
-            <h2 className="ux4g-heading-xs-strong" style={{ marginTop: 16 }}>
-              {t('ideas.page.description')}
-            </h2>
+            <h2 className="ux4g-heading-xs-strong ux4g-mt-m">{t('ideas.page.description')}</h2>
             <p>{i.description}</p>
             {i.attachments.length > 0 && (
               <>

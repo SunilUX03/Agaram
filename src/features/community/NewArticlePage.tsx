@@ -159,7 +159,7 @@ export default function NewArticlePage() {
             {t('knowledge.new.addSection')}
           </button>
         </div>
-        <div style={{ marginTop: 20 }}>
+        <div className="ux4g-mt-l">
           <FileUpload
             name="art-files"
             label={t('knowledge.new.attach')}

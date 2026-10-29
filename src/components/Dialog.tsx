@@ -49,7 +49,7 @@ export function Dialog({
             </h2>
             <button
               type="button"
-              className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md"
+              className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m"
               data-drawer-close
               onClick={onClose}
               aria-label={t('ui.sheet.close')}
@@ -61,7 +61,7 @@ export function Dialog({
           </div>
           <div className="ux4g-drawer-body">{children}</div>
           {footer && (
-            <div className="ux4g-drawer-footer ux4g-d-flex ux4g-gap-s ux4g-jc-end">{footer}</div>
+            <div className="ux4g-drawer-footer ux4g-d-flex gap-s ux4g-jc-end">{footer}</div>
           )}
         </div>
       </div>
@@ -98,9 +98,7 @@ export function Dialog({
         </div>
         <div className="ux4g-modal-body">{children}</div>
         {footer && (
-          <div className="ux4g-modal-actions ux4g-d-flex ux4g-gap-s ux4g-jc-end ux4g-pt-m">
-            {footer}
-          </div>
+          <div className="ux4g-modal-actions ux4g-d-flex gap-s ux4g-jc-end ux4g-pt-m">{footer}</div>
         )}
       </div>
     </div>

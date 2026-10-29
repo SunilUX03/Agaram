@@ -84,9 +84,9 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
           disabled: save.isPending,
         }}
         image={
-          <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+          <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
             <Avatar name={officer.name} photoUrl={photo ?? officer.photoUrl} size={72} />
-            <label className="ux4g-text-link-md" style={{ cursor: 'pointer' }}>
+            <label className="ux4g-text-link-m link-label">
               {t('photo')}
               <input
                 type="file"

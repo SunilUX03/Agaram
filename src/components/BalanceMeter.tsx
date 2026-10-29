@@ -16,7 +16,7 @@ export function BalanceMeter({ label, allowed, used }: Props) {
   const c = 2 * Math.PI * r;
   return (
     <figure className="ux4g-card ux4g-card-outline ux4g-card-vertical meter">
-      <div className="ux4g-card-body ux4g-d-flex ux4g-ai-center ux4g-gap-m">
+      <div className="ux4g-card-body ux4g-d-flex ux4g-ai-center gap-m">
         <div className="ux4g-progress-circle meter-ring">
           <svg viewBox="0 0 80 80" width="96" height="96" aria-hidden="true">
             <circle cx="40" cy="40" r={r} className="meter-track" />

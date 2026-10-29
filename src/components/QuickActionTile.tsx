@@ -13,7 +13,7 @@ export function QuickActionTile({
 }) {
   return (
     <Link to={to} className="ux4g-card ux4g-card-outline ux4g-card-vertical card-link">
-      <span className="ux4g-card-body ux4g-d-flex ux4g-flex-column ux4g-gap-s tile-body">
+      <span className="ux4g-card-body ux4g-d-flex ux4g-flex-column gap-s tile-body">
         <span className="tile-icon" aria-hidden="true">
           <Icon name={icon} size={28} />
         </span>

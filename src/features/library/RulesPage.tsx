@@ -14,7 +14,7 @@ export default function RulesPage() {
     <>
       <RouteHeader id="library.rules" />
       <SearchField label={t('rules.search')} value={q} onChange={setQ} />
-      <div style={{ marginTop: 16 }}>
+      <div className="ux4g-mt-m">
         <QueryView query={query} skeleton="row" skeletonCount={5}>
           {(all) => {
             const n = q.trim().toLowerCase();

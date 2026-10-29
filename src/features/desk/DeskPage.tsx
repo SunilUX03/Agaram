@@ -64,16 +64,18 @@ function Tasks() {
             {t('tasks.label')}
           </label>
           <div className="ux4g-input-container ux4g-input-l ux4g-input-default">
-            <input
-              id="task-text"
-              ref={input}
-
-              placeholder={t('tasks.placeholder')}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              aria-invalid={!!err}
-              aria-describedby={err ? 'task-err' : undefined}
-            />
+            <div className="ux4g-input">
+              <input
+                id="task-text"
+                ref={input}
+                className="ux4g-input-input"
+                placeholder={t('tasks.placeholder')}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                aria-invalid={!!err}
+                aria-describedby={err ? 'task-err' : undefined}
+              />
+            </div>
           </div>
           {err && (
             <div id="task-err" className="ux4g-body-s-default ux4g-text-error">
@@ -93,24 +95,30 @@ function Tasks() {
           const open = all.filter((x) => !x.done);
           const done = all.filter((x) => x.done);
           const row = (x: DeskTask) => (
-            <li key={x.id} className="list-row task-row">
-              <input
-                type="checkbox"
-                id={`tk-${x.id}`}
-                checked={x.done}
-                onChange={() => toggle.mutate([x.id])}
-              />
-              <label htmlFor={`tk-${x.id}`} className="list-row-main">
-                <span className={`ux4g-body-m-strong ${x.done ? ' is-done' : ''}`}>{x.text}</span>
-                {x.due && (
-                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
-                    {t('tasks.due2', { date: formatDate(x.due, loc) })}
-                  </span>
-                )}
+            <li key={x.id} className="task-row ux4g-d-flex ux4g-ai-center ux4g-jc-between gap-s">
+              <label htmlFor={`tk-${x.id}`} className="ux4g-checkbox ux4g-checkbox-m grow">
+                <input
+                  type="checkbox"
+                  id={`tk-${x.id}`}
+                  className="ux4g-checkbox-input"
+                  checked={x.done}
+                  onChange={() => toggle.mutate([x.id])}
+                />
+                <span className="ux4g-checkbox-control">
+                  <span className="ux4g-checkmark"></span>
+                </span>
+                <span className="ux4g-checkbox-content task-text">
+                  <span className={`ux4g-body-m-strong${x.done ? ' is-done' : ''}`}>{x.text}</span>
+                  {x.due && (
+                    <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {t('tasks.due2', { date: formatDate(x.due, loc) })}
+                    </span>
+                  )}
+                </span>
               </label>
               <button
                 type="button"
-                className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md"
+                className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m"
                 aria-label={t('tasks.delete', { text: x.text })}
                 onClick={() => setRm(x)}
               >
@@ -162,10 +170,7 @@ function Notes() {
   return (
     <>
       {open ? (
-        <div
-          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
-          style={{ marginBottom: 16 }}
-        >
+        <div className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad ux4g-mb-m">
           <label htmlFor="note-text" className="sr-only">
             {t('notes.label')}
           </label>
@@ -181,10 +186,7 @@ function Notes() {
               onChange={(e) => setText(e.target.value)}
             />
           </div>
-          <div
-            className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
-            style={{ marginTop: 12 }}
-          >
+          <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s ux4g-mt-s">
             <button
               type="button"
               className="ux4g-btn-primary ux4g-btn-s"
@@ -207,8 +209,7 @@ function Notes() {
       ) : (
         <button
           type="button"
-          className="ux4g-btn-outline-primary ux4g-btn-m"
-          style={{ marginBottom: 16 }}
+          className="ux4g-btn-outline-primary ux4g-btn-m ux4g-mb-m"
           onClick={() => setOpen(true)}
         >
           {t('notes.add')}
@@ -220,16 +221,13 @@ function Notes() {
             {all.map((n) => (
               <li key={n.id} className="sticky-note">
                 <p>{n.text}</p>
-                <div
-                  className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
-                  style={{ justifyContent: 'space-between' }}
-                >
+                <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s ux4g-jc-between">
                   <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                     {formatDate(n.createdAt, loc)}
                   </span>
                   <button
                     type="button"
-                    className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md"
+                    className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m"
                     aria-label={t('notes.delete')}
                     onClick={() => del.mutate([n.id])}
                   >
@@ -324,7 +322,7 @@ function Items() {
     <ul className="plain-list">
       {items.map((x) => (
         <li key={x.s.id} className="list-row">
-          <Link to={x.to} className="list-row-main" style={{ textDecoration: 'none' }}>
+          <Link to={x.to} className="list-row-main">
             <span className="ux4g-body-m-strong">{x.title}</span>
             <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
               {t(`items.kind.${x.s.kind}`)}

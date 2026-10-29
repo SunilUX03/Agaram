@@ -20,11 +20,7 @@ export default function FaqsPage() {
         main={{ to: '/community/discussions/new?type=discussion&ask=1' }}
       />
       <SearchField label={t('faqs.search')} value={q} onChange={setQ} />
-      <div
-        className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
-        role="group"
-        style={{ margin: '16px 0' }}
-      >
+      <div className="ux4g-d-flex ux4g-flex-wrap gap-xs ux4g-my-m" role="group">
         {TOPICS.map((x) => (
           <button
             key={x}

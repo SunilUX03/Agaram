@@ -12,8 +12,8 @@ function Row({ title, to, children }: { title: string; to: string; children: Rea
   return (
     <section className="section" aria-label={title}>
       <div className="section-head">
-        <h2>{title}</h2>
-        <Link to={to} className="ux4g-text-link-md">
+        <h2 className="ux4g-heading-m-strong">{title}</h2>
+        <Link to={to} className="ux4g-text-link-m">
           {t('hub.seeAll')}
         </Link>
       </div>

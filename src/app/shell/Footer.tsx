@@ -11,31 +11,40 @@ export function Footer() {
   const { t } = useTranslation();
   return (
     <footer className="ux4g-footer-wrapper ux4g-footer-primary" role="contentinfo">
-      <div className="ux4g-footer-row footer-inner">
-        <ul className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-m plain-list">
-          {FOOTER_LINKS.map((l) => (
-            <li key={l.label}>
-              {/* Help desk, accessibility and terms have no pages in scope: shown as inert links. */}
-              {l.to ? (
-                <Link to={l.to} className="footer-link">
-                  {t(l.label)}
-                </Link>
-              ) : (
-                <a href="#main" className="footer-link" onClick={(e) => e.preventDefault()}>
-                  {t(l.label)}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-        <p className="ux4g-body-m-default">{t('footer.department')}</p>
-        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-jc-between ux4g-ai-center ux4g-gap-m">
-          <LangSwitch />
-          <span className="ux4g-body-s-default">
-            {t('footer.lastSignedIn', {
-              date: `${formatDate(LAST_SIGNED_IN)}, ${formatTime(LAST_SIGNED_IN)}`,
-            })}
-          </span>
+      <div className="ux4g-container footer-inner">
+        <nav aria-label={t('footer.links')}>
+          <ul className="ux4g-d-flex ux4g-flex-wrap gap-l plain-list">
+            {FOOTER_LINKS.map((l) => (
+              <li key={l.label}>
+                {/* Help desk, accessibility and terms have no pages in scope: shown as inert links. */}
+                {l.to ? (
+                  <Link to={l.to} className="footer-link ux4g-body-m-default">
+                    {t(l.label)}
+                  </Link>
+                ) : (
+                  <a
+                    href="#main"
+                    className="footer-link ux4g-body-m-default"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    {t(l.label)}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <hr />
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-jc-between ux4g-ai-center gap-m">
+          <p className="ux4g-body-s-default">{t('footer.department')}</p>
+          <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-m">
+            <LangSwitch />
+            <span className="ux4g-body-s-default">
+              {t('footer.lastSignedIn', {
+                date: `${formatDate(LAST_SIGNED_IN)}, ${formatTime(LAST_SIGNED_IN)}`,
+              })}
+            </span>
+          </div>
         </div>
       </div>
     </footer>

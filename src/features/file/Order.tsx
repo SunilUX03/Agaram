@@ -9,18 +9,17 @@ export function OrderLink({ orderId }: { orderId?: string }) {
   const docs = useQ('documents');
   const [open, setOpen] = useState(false);
   const doc = orderId ? docs.data?.find((d) => d.id === orderId) : undefined;
-  if (!orderId) return null;
+  if (!orderId || !doc) return null; // shown once the order is known, so the button never appears disabled
   return (
     <>
       <button
         type="button"
         className="ux4g-btn-text-primary ux4g-btn-s"
         onClick={() => setOpen(true)}
-        disabled={!doc}
       >
         {t('common.order')}
       </button>
-      {open && doc && (
+      {open && (
         <FileViewer
           title={doc.orderNumber ?? doc.title}
           url={doc.fileUrl}

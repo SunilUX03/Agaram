@@ -24,7 +24,7 @@ export function SimpleRichText({ name, value, onChange, ...f }: Props) {
     onChange(sanitizeHtml(ref.current?.innerHTML ?? ''));
   };
   return (
-    <Field id={id} {...f}>
+    <Field id={id} kind="textarea" {...f}>
       <div className="rich">
         <div className="rich-bar" role="toolbar" aria-label={t('ui.rich.editor')}>
           <button
@@ -64,7 +64,7 @@ export function SimpleRichText({ name, value, onChange, ...f }: Props) {
         <div
           id={id}
           ref={ref}
-          className="ux4g-input-input rich-area"
+          className="ux4g-textarea-input rich-area"
           contentEditable
           role="textbox"
           aria-multiline="true"

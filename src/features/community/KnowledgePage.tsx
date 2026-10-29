@@ -50,10 +50,9 @@ export default function KnowledgePage() {
             return (
               <>
                 <div
-                  className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+                  className="ux4g-d-flex ux4g-flex-wrap gap-xs ux4g-mb-s ux4g-mt-s"
                   role="group"
                   aria-label={t('knowledge.tags')}
-                  style={{ marginTop: 12 }}
                 >
                   {tags.map((x) => (
                     <button

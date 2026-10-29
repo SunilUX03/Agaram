@@ -53,13 +53,15 @@ export default function WhoDoesWhatPage() {
                       {t('who.filterDepts')}
                     </label>
                     <div className="ux4g-input-container ux4g-input-l ux4g-input-default">
-                      <input
-                        id="dept-filter"
-
-                        placeholder={t('who.filterDepts')}
-                        value={filter}
-                        onChange={(e) => setFilter(e.target.value)}
-                      />
+                      <div className="ux4g-input">
+                        <input
+                          id="dept-filter"
+                          className="ux4g-input-input"
+                          placeholder={t('who.filterDepts')}
+                          value={filter}
+                          onChange={(e) => setFilter(e.target.value)}
+                        />
+                      </div>
                     </div>
                     <ul className="plain-list">
                       {depts.map((d) => (
@@ -93,7 +95,7 @@ export default function WhoDoesWhatPage() {
               <div>
                 <SearchField ref={box} label={t('who.searchSubject')} value={q} onChange={setQ} />
                 {current ? (
-                  <section aria-label={current.name} style={{ marginTop: 16 }}>
+                  <section aria-label={current.name} className="ux4g-mt-m">
                     <h2 className="ux4g-heading-xs-strong">{current.name}</h2>
                     <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                       {t('who.chain')}
@@ -107,11 +109,8 @@ export default function WhoDoesWhatPage() {
                             to={`/people/who-does-what/${current.id}/${p.id}`}
                             className={hit ? 'is-hit' : undefined}
                           >
-                            <div
-                              className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
-                              style={{ justifyContent: 'space-between' }}
-                            >
-                              <h3>{p.title}</h3>
+                            <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s ux4g-jc-between">
+                              <h3 className="ux4g-heading-xs-strong">{p.title}</h3>
                               {hit && (
                                 <span className="ux4g-tag-tonal-neutral ux4g-tag-s chip-warning-soft">
                                   {t('who.match')}
@@ -134,9 +133,7 @@ export default function WhoDoesWhatPage() {
                     </div>
                   </section>
                 ) : (
-                  <p className="ux4g-text-neutral-secondary" style={{ marginTop: 16 }}>
-                    {t('who.selectDept')}
-                  </p>
+                  <p className="ux4g-text-neutral-secondary ux4g-mt-m">{t('who.selectDept')}</p>
                 )}
               </div>
             </div>

@@ -7,6 +7,8 @@ const VARIANT = {
   critical: 'ux4g-alert-error',
 } as const;
 
+const ICON = { info: 'info', warning: 'warning', critical: 'error' } as const;
+
 /** UX4G in-page alert. */
 export function Banner({
   variant = 'info',
@@ -21,6 +23,9 @@ export function Banner({
       className={`ux4g-alert ${VARIANT[variant]} ux4g-mb-m`}
       role={variant === 'info' ? 'status' : 'alert'}
     >
+      <i className="ux4g-icon-outlined ux4g-alert-icon" aria-hidden="true">
+        {ICON[variant]}
+      </i>
       <div className="ux4g-alert-content">
         <span className="ux4g-alert-message">
           <span className="sr-only">{t(`ui.banner.${variant}`)}: </span>

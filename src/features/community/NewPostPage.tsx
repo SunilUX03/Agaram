@@ -138,7 +138,7 @@ export default function NewPostPage() {
                 {t('discussions.new.addOption')}
               </button>
             )}
-            <div style={{ marginTop: 16 }}>
+            <div className="ux4g-mt-m">
               <DatePicker
                 name="post-closes"
                 label={t('discussions.new.closes')}

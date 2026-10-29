@@ -44,7 +44,7 @@ export default function SectionPage() {
       />
       <div className="form-narrow stack">
         <section
-          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s"
           aria-label={t('section.inCharge')}
         >
           {officer ? (
@@ -68,7 +68,7 @@ export default function SectionPage() {
               const isOpen = open.includes(s.id);
               return (
                 <li key={s.id} className="acc-item">
-                  <h3>
+                  <h3 className="ux4g-heading-xs-strong">
                     <button
                       type="button"
                       aria-expanded={isOpen}

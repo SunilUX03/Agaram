@@ -149,7 +149,9 @@ export default function RequestPage() {
             aria-labelledby="rq-tl"
           >
             <div className="cardhead">
-              <h2 id="rq-tl">{t('detail.timeline')}</h2>
+              <h2 id="rq-tl" className="ux4g-heading-s-strong">
+                {t('detail.timeline')}
+              </h2>
               <StatusChip status={r.status} />
             </div>
             <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
@@ -199,7 +201,7 @@ export default function RequestPage() {
                       {t('detail.view')}
                     </button>
                     <a
-                      className="ux4g-text-link-md"
+                      className="ux4g-text-link-m"
                       href={`${import.meta.env.BASE_URL}sample.pdf`}
                       download
                     >
@@ -215,11 +217,13 @@ export default function RequestPage() {
           className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad order-3 sticky"
           aria-labelledby="rq-notes"
         >
-          <h2 id="rq-notes" className="ux4g-heading-xs-strong">
+          <h2 id="rq-notes" className="ux4g-heading-s-strong ux4g-mb-xs">
             {t('detail.notes')}
           </h2>
           {r.notes.length === 0 ? (
-            <p className="ux4g-text-neutral-secondary">{t('detail.notesEmpty')}</p>
+            <p className="ux4g-body-m-default ux4g-text-neutral-secondary ux4g-mb-m">
+              {t('detail.notesEmpty')}
+            </p>
           ) : (
             <ul className="notes">
               {r.notes.map((n) => (

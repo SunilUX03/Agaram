@@ -199,7 +199,7 @@ export default function NewIdeaPage() {
           <Banner variant="info">{t('ideas.new.previewTitle')}</Banner>
           <article className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <StatusChip status="idea:submitted" />
-            <h2 style={{ margin: '12px 0 4px' }}>{v.title}</h2>
+            <h2 className="ux4g-heading-s-strong ux4g-mt-s ux4g-mb-2xs">{v.title}</h2>
             <div className="tags">
               <Tag>{v.type}</Tag>
               {v.budget && <Tag>{t('ideas.page.cost', { amount: v.budget })}</Tag>}

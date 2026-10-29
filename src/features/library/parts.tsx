@@ -18,7 +18,7 @@ export function LibraryRow({ item, save }: { item: LibraryItem; save?: boolean }
         <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
           {[item.number, formatDate(item.date, loc)].filter(Boolean).join(' · ')}
         </p>
-        <h3>{item.title}</h3>
+        <h3 className="ux4g-heading-xs-strong">{item.title}</h3>
         {item.description && (
           <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{item.description}</p>
         )}

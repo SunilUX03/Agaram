@@ -53,15 +53,17 @@ export default function DiscussionPage() {
     });
   const node = (c: Comment, depth: number) => (
     <li key={c.id} className="comment">
-      <div className="comment-head">
-        <strong>{author(c.author, c.mine)}</strong>
+      <div className="comment-head ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
+        <strong className="ux4g-body-m-strong">{author(c.author, c.mine)}</strong>
         {c.author !== 'anonymous' && c.author.designation?.includes('earlier batch') && (
           <Tag>{t('discussions.seniors')}</Tag>
         )}
-        <span className="ux4g-text-neutral-secondary">{formatDate(c.createdAt, loc)}</span>
+        <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+          {formatDate(c.createdAt, loc)}
+        </span>
       </div>
-      <p>{c.text}</p>
-      <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s" style={{ gap: 16 }}>
+      <p className="ux4g-body-m-default ux4g-my-xs">{c.text}</p>
+      <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-m">
         {depth === 0 && (
           <button
             type="button"
@@ -116,12 +118,11 @@ export default function DiscussionPage() {
             {p.askSeniors && <Tag>{t('common.asked')}</Tag>}
           </div>
           <div
-            className="rich-out"
-            style={{ marginTop: 12 }}
+            className="rich-out ux4g-mt-s"
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(p.body) }}
           />
           {p.poll && (
-            <div style={{ marginTop: 16 }}>
+            <div className="ux4g-mt-m">
               {showResult || closed ? (
                 p.poll.options.map((o) => (
                   <PollBar
@@ -171,7 +172,7 @@ export default function DiscussionPage() {
           ) : (
             <p className="ux4g-text-neutral-secondary">{t('discussions.noReplies')}</p>
           )}
-          <div style={{ marginTop: 16 }}>
+          <div className="ux4g-mt-m">
             {replyTo && (
               <p className="ux4g-body-s-default">
                 {t('discussions.replyTo', { name: author(replyTo.author, replyTo.mine) })}{' '}
@@ -201,8 +202,7 @@ export default function DiscussionPage() {
             </div>
             <button
               type="button"
-              className="ux4g-btn-primary ux4g-btn-m"
-              style={{ marginTop: 12 }}
+              className="ux4g-btn-primary ux4g-btn-m ux4g-mt-s"
               disabled={!text.trim() || add.isPending}
               onClick={send}
             >

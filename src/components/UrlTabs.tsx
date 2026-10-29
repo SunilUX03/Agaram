@@ -78,9 +78,7 @@ export function UrlTabs({
             >
               {tab.label}
               {tab.count !== undefined && (
-                <span className="ux4g-badge-digit-neutral ux4g-badge-s ux4g-ml-xs">
-                  {tab.count}
-                </span>
+                <span className="ux4g-tag-tonal-neutral ux4g-tag-s ux4g-ml-xs">{tab.count}</span>
               )}
             </button>
           </li>

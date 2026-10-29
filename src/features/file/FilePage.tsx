@@ -90,7 +90,7 @@ export default function FilePage() {
             <div className="hub-head">
               <Avatar name={of.name} photoUrl={of.photoUrl} size={88} />
               <div>
-                <h2>
+                <h2 className="ux4g-heading-s-strong">
                   {of.salutation} {of.name}
                 </h2>
                 <p className="ux4g-text-neutral-secondary">
@@ -116,7 +116,7 @@ export default function FilePage() {
                 to={x.to}
                 className="ux4g-card ux4g-card-outline ux4g-card-vertical card-link"
               >
-                <span className="ux4g-card-body ux4g-d-flex ux4g-gap-s ux4g-ai-center">
+                <span className="ux4g-card-body ux4g-d-flex gap-s ux4g-ai-center">
                   <span className="tile-icon" aria-hidden="true">
                     <Icon name={x.icon} size={28} />
                   </span>
@@ -136,7 +136,7 @@ export default function FilePage() {
         )}
       </section>
       <p>
-        <Link to="/requests/new/correction" className="ux4g-text-link-md">
+        <Link to="/requests/new/correction" className="ux4g-text-link-m">
           {t('hub.report')}
         </Link>
       </p>

@@ -18,7 +18,7 @@ export function HelpTip({ text }: { text: string }) {
     >
       <button
         type="button"
-        className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-sm"
+        className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-s"
         aria-expanded={open}
         aria-controls={id}
         aria-label={t('ui.help.open')}
@@ -27,7 +27,11 @@ export function HelpTip({ text }: { text: string }) {
         <Icon name="help" size={18} />
       </button>
       {open && (
-        <span id={id} role="note" className="ux4g-tooltip ux4g-tooltip-bottom-center-m helptip-pop">
+        <span
+          id={id}
+          role="note"
+          className="ux4g-tooltip ux4g-tooltip-bottom-center ux4g-tooltip-s helptip-pop"
+        >
           {text}
         </span>
       )}

@@ -25,7 +25,7 @@ export default function ExpertsPage() {
     <>
       <RouteHeader id="people.experts" main={{ onClick: () => setDlg(true) }} />
       <SearchField label={t('experts.search')} value={q} onChange={setQ} />
-      <div style={{ marginTop: 16 }}>
+      <div className="ux4g-mt-m">
         <UrlTabs tabs={tabs} />
       </div>
       <div id="tabpanel" role="tabpanel" aria-labelledby={`tab-${tab}`}>
@@ -50,14 +50,14 @@ export default function ExpertsPage() {
                       <Tag>{e.kind === 'organisation' ? t('experts.org') : t('experts.indiv')}</Tag>
                       {e.pending && <Tag>{t('experts.pending')}</Tag>}
                     </div>
-                    <h3 style={{ marginTop: 8 }}>{e.name}</h3>
+                    <h3 className="ux4g-heading-xs-strong ux4g-mt-xs">{e.name}</h3>
                     <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                       {e.description}
                     </p>
                     <div className="card-foot">
                       {e.website && (
                         <a
-                          className="ux4g-text-link-md"
+                          className="ux4g-text-link-m"
                           href={e.website}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -66,7 +66,7 @@ export default function ExpertsPage() {
                         </a>
                       )}
                       {e.phone && (
-                        <a className="ux4g-text-link-md" href={`tel:${e.phone.replace(/\s/g, '')}`}>
+                        <a className="ux4g-text-link-m" href={`tel:${e.phone.replace(/\s/g, '')}`}>
                           {t('experts.phone', { phone: e.phone })}
                         </a>
                       )}

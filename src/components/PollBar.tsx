@@ -14,7 +14,7 @@ export function PollBar({ label, votes, total, showResult, mine }: Props) {
   const pct = total ? Math.round((votes / total) * 100) : 0;
   return (
     <div className="ux4g-mb-m">
-      <div className="ux4g-d-flex ux4g-jc-between ux4g-gap-m ux4g-body-m-default">
+      <div className="ux4g-d-flex ux4g-jc-between gap-m ux4g-body-m-default">
         <span>
           {label}{' '}
           {mine && <span className="ux4g-tag-tonal-neutral ux4g-tag-s">{t('ui.poll.yours')}</span>}

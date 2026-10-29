@@ -30,14 +30,12 @@ export function BellLink() {
   return (
     <Link
       to="/notifications"
-      className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md bell"
+      className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m bell"
       aria-label={`${t('nav.notifications')}, ${n > 9 ? t('ui.unreadMany') : t('ui.unreadCount', { count: n })}`}
     >
       <Icon name="bell" size={24} />
       {n > 0 && (
-        <span className="ux4g-badge-digit-danger ux4g-badge-s bell-badge" aria-hidden="true">
-          {n > 9 ? '9+' : n}
-        </span>
+        <span className="ux4g-badge-dot-danger ux4g-badge-m bell-badge" aria-hidden="true" />
       )}
     </Link>
   );
@@ -53,7 +51,7 @@ function AvatarMenu() {
     <div className="menu-button" ref={ref} onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}>
       <button
         type="button"
-        className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md"
+        className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m"
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={`AV, ${t('nav.avatarMenu')}`}
@@ -108,7 +106,7 @@ export function TopBar({ desktop }: { desktop: boolean }) {
   return (
     <header role="banner" className="topbar">
       <nav className="ux4g-navbar" aria-label={t('nav.primary')}>
-        <div className="ux4g-navbar-wrap">
+        <div className="ux4g-navbar-wrap ux4g-container">
           <Link to="/home" className="brand">
             <Emblem />
             <span className="ux4g-heading-xs-strong">{t('app.name')}</span>
@@ -127,7 +125,7 @@ export function TopBar({ desktop }: { desktop: boolean }) {
             )}
             <Link
               to="/search"
-              className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md"
+              className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m"
               aria-label={t('nav.search')}
             >
               <Icon name="search" size={24} />
@@ -137,7 +135,7 @@ export function TopBar({ desktop }: { desktop: boolean }) {
               <>
                 <Link
                   to="/desk"
-                  className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md wide-only"
+                  className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m wide-only"
                   aria-label={t('nav.myDesk')}
                 >
                   <Icon name="desk" size={24} />

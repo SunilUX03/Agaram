@@ -93,7 +93,7 @@ export default function DocumentsPage() {
                       header: t('documents.cols.linked'),
                       render: (d) =>
                         d.linkedTo ? (
-                          <Link className="ux4g-text-link-md" to={d.linkedTo.to}>
+                          <Link className="ux4g-text-link-m" to={d.linkedTo.to}>
                             {d.linkedTo.label}
                           </Link>
                         ) : (
@@ -104,10 +104,7 @@ export default function DocumentsPage() {
                       key: 'actions',
                       header: t('documents.cols.view'),
                       render: (d) => (
-                        <span
-                          className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
-                          style={{ gap: 12 }}
-                        >
+                        <span className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
                           <button
                             type="button"
                             className="ux4g-btn-text-primary ux4g-btn-s"
@@ -115,7 +112,7 @@ export default function DocumentsPage() {
                           >
                             {t('documents.cols.view')}
                           </button>
-                          <a className="ux4g-text-link-md" href={d.fileUrl} download>
+                          <a className="ux4g-text-link-m" href={d.fileUrl} download>
                             {t('documents.cols.download')}
                           </a>
                         </span>

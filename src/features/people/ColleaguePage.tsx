@@ -71,7 +71,7 @@ export default function ColleaguePage() {
               {shared.phone && (
                 <li>
                   <a
-                    className="ux4g-text-link-md ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+                    className="ux4g-text-link-m ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s"
                     href={`tel:${shared.phone.replace(/\s/g, '')}`}
                   >
                     <Icon name="user" size={16} /> {shared.phone}
@@ -81,7 +81,7 @@ export default function ColleaguePage() {
               {shared.email && (
                 <li>
                   <a
-                    className="ux4g-text-link-md ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+                    className="ux4g-text-link-m ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s"
                     href={`mailto:${shared.email}`}
                   >
                     <Icon name="requests" size={16} /> {shared.email}

@@ -27,9 +27,7 @@ export default function SearchPage() {
       <RouteHeader id="search" />
       <SearchField ref={box} label={t('label')} value={q} onChange={setQ} />
       {!ready ? (
-        <p className="ux4g-text-neutral-secondary" style={{ marginTop: 16 }}>
-          {t('hint')}
-        </p>
+        <p className="ux4g-text-neutral-secondary ux4g-mt-m">{t('hint')}</p>
       ) : (
         <QueryView query={query} skeleton="row" skeletonCount={5}>
           {(res) => {
@@ -47,9 +45,8 @@ export default function SearchPage() {
             return (
               <>
                 <div
-                  className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+                  className="ux4g-d-flex ux4g-flex-wrap gap-xs ux4g-mt-m ux4g-mb-xs"
                   role="group"
-                  style={{ margin: '16px 0 8px' }}
                 >
                   {['', ...GROUPS.filter((g) => counts[g])].map((g) => (
                     <button
@@ -69,7 +66,7 @@ export default function SearchPage() {
                   return (
                     <section key={g} className="section" aria-label={t(`groups.${g}`)}>
                       <div className="section-head">
-                        <h2>
+                        <h2 className="ux4g-heading-m-strong">
                           {t(`groups.${g}`)}{' '}
                           <span className="ux4g-text-neutral-secondary ux4g-body-s-default">
                             ({counts[g]})

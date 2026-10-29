@@ -82,7 +82,11 @@ export function TextArea({
     <div
       className={`ux4g-textarea-container ux4g-textarea-m ${f.error ? 'ux4g-textarea-error' : 'ux4g-textarea-default'} field-wrap`}
     >
-      <label className="ux4g-label-m-default" htmlFor={id} id={`${id}-label`}>
+      <label
+        className="ux4g-label-l-default ux4g-text-neutral-secondary"
+        htmlFor={id}
+        id={`${id}-label`}
+      >
         {f.label}
         {f.required && <span aria-hidden="true"> *</span>}
         {f.required && <span className="sr-only"> ({t('ui.field.required')})</span>}
@@ -222,7 +226,11 @@ export function Select({
       ref={root}
       onKeyDown={key}
     >
-      <label htmlFor={id} id={`${id}-label`} className="ux4g-label-m-strong">
+      <label
+        htmlFor={id}
+        id={`${id}-label`}
+        className="ux4g-label-l-default ux4g-text-neutral-secondary"
+      >
         {f.label}
         {f.required && <span aria-hidden="true"> *</span>}
         {f.required && <span className="sr-only"> ({t('ui.field.required')})</span>}
@@ -352,7 +360,7 @@ export function DateRangePicker({
   const endError = a && b && b < a ? t('ui.errors.endBeforeStart') : undefined;
   return (
     <fieldset className="range">
-      <legend className="ux4g-label-m-strong">
+      <legend className="ux4g-label-l-default ux4g-text-neutral-secondary ux4g-mb-2xs">
         {f.label}
         {f.required && <span aria-hidden="true"> *</span>}
       </legend>
@@ -392,7 +400,7 @@ export function Checkbox({
   const id = `f-${name}`;
   return (
     <div className="ux4g-mb-s">
-      <label className="ux4g-checkbox ux4g-checkbox-md" htmlFor={id}>
+      <label className="ux4g-checkbox ux4g-checkbox-m" htmlFor={id}>
         <input
           id={id}
           name={name}
@@ -402,7 +410,7 @@ export function Checkbox({
           aria-describedby={help ? `${id}-help` : undefined}
           onChange={(e) => onChange(e.target.checked)}
         />
-        <span className="ux4g-radio-control">
+        <span className="ux4g-checkbox-control">
           <span className="ux4g-checkmark"></span>
         </span>
         <span className="ux4g-checkbox-content">{label}</span>
@@ -433,7 +441,7 @@ export function Switch({
   const id = `f-${name}`;
   return (
     <div className="ux4g-mb-s">
-      <label className="ux4g-switch ux4g-switch-md" htmlFor={id}>
+      <label className="ux4g-switch ux4g-switch-m" htmlFor={id}>
         <input
           id={id}
           name={name}
@@ -475,29 +483,31 @@ export function RadioGroup({
 }) {
   return (
     <fieldset className="ux4g-mb-m" aria-describedby={error ? `${name}-err` : undefined}>
-      <legend className="ux4g-label-m-strong ux4g-mb-xs">
+      <legend className="ux4g-label-l-default ux4g-text-neutral-secondary ux4g-mb-xs">
         {legend}
         {required && <span aria-hidden="true"> *</span>}
       </legend>
-      {options.map((o) => (
-        <label
-          key={o.value}
-          className={`ux4g-radio ux4g-radio-md${error ? ' ux4g-radio-error' : ''}`}
-        >
-          <input
-            type="radio"
-            name={name}
-            value={o.value}
-            className="ux4g-radio-input"
-            checked={value === o.value}
-            onChange={() => onChange(o.value)}
-          />
-          <span className="ux4g-radio-control">
-            <span className="ux4g-radiomark"></span>
-          </span>
-          <span className="ux4g-radio-content">{o.label}</span>
-        </label>
-      ))}
+      <div className="ux4g-d-flex ux4g-flex-wrap gap-l">
+        {options.map((o) => (
+          <label
+            key={o.value}
+            className={`ux4g-radio ux4g-radio-m${error ? ' ux4g-radio-error' : ''}`}
+          >
+            <input
+              type="radio"
+              name={name}
+              value={o.value}
+              className="ux4g-radio-input"
+              checked={value === o.value}
+              onChange={() => onChange(o.value)}
+            />
+            <span className="ux4g-radio-control">
+              <span className="ux4g-radiomark"></span>
+            </span>
+            <span className="ux4g-radio-content">{o.label}</span>
+          </label>
+        ))}
+      </div>
       {error && (
         <div id={`${name}-err`} className="ux4g-input-helper">
           <span className="ux4g-input-helper-text">{error}</span>

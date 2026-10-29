@@ -187,7 +187,7 @@ function RequestForm({
       title: t('form.steps.about'),
       content: (
         <div className="form-grid form-narrow">
-          <p className="ux4g-body-s-default ux4g-text-neutral-secondary full">
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary full ux4g-mb-m">
             {t('form.aboutHelp')}
           </p>
           <TextField
@@ -304,7 +304,7 @@ function RequestForm({
           {past === 'notice' && <Banner variant="warning">{t('form.pastNotice')}</Banner>}
           <section className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <div className="cardhead">
-              <h2>{t('form.steps.details')}</h2>
+              <h2 className="ux4g-heading-s-strong">{t('form.steps.details')}</h2>
               <button
                 type="button"
                 className="ux4g-btn-text-primary ux4g-btn-s"
@@ -326,7 +326,7 @@ function RequestForm({
           </section>
           <section className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <div className="cardhead">
-              <h2>{t('form.attachments')}</h2>
+              <h2 className="ux4g-heading-s-strong">{t('form.attachments')}</h2>
               <button
                 type="button"
                 className="ux4g-btn-text-primary ux4g-btn-s"

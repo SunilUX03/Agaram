@@ -44,7 +44,7 @@ export function ResponsiveTable<T>({ caption, columns, rows, rowKey, onRowClick 
       .filter((c) => c !== title && c.mobile !== 'hide')
       .sort((a, b) => (a.mobileOrder ?? 0) - (b.mobileOrder ?? 0));
     return (
-      <ul className="plain-list ux4g-d-flex ux4g-flex-column ux4g-gap-s" aria-label={caption}>
+      <ul className="plain-list ux4g-d-flex ux4g-flex-column gap-s" aria-label={caption}>
         {sorted.map((r) => (
           <li key={rowKey(r)} className="ux4g-card ux4g-card-outline ux4g-card-vertical">
             <div className="ux4g-card-body">

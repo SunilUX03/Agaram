@@ -44,7 +44,7 @@ export default function ArticlePage() {
           />
         }
         image={
-          <div className="article-lead card-image" style={{ margin: 0, borderRadius: 14 }}>
+          <div className="article-lead card-image">
             {a.leadImageUrl ? <img src={a.leadImageUrl} alt="" /> : <span className="lead-tint" />}
           </div>
         }
@@ -59,7 +59,7 @@ export default function ArticlePage() {
             <Tag key={x}>{x}</Tag>
           ))}
         </div>
-        <p style={{ fontSize: 18 }}>{a.summary}</p>
+        <p className="ux4g-body-l-default">{a.summary}</p>
         {a.sections.map((s) => (
           <section key={s.heading}>
             <h2 className="ux4g-heading-xs-strong">{s.heading}</h2>
@@ -80,7 +80,7 @@ export default function ArticlePage() {
       {related.length > 0 && (
         <section className="section">
           <div className="section-head">
-            <h2>{t('knowledge.related')}</h2>
+            <h2 className="ux4g-heading-m-strong">{t('knowledge.related')}</h2>
           </div>
           <div className="grid-cards">
             {related.map((r) => (

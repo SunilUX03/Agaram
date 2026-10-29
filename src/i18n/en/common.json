@@ -89,6 +89,7 @@
     "openMenu": "Open {{name}} menu"
   },
   "footer": {
+    "links": "Footer links",
     "helpDesk": "Help desk",
     "accessibility": "Accessibility statement",
     "terms": "Terms and privacy",

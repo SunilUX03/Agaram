@@ -16,17 +16,6 @@
   border: 0;
 }
 
-/* Page container: UX4G has .ux4g-container, but the app caps content width and keeps a 16px phone gutter. */
-.wrap {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding-inline: var(--ux4g-padding-m);
-}
-@media (min-width: 768px) {
-  .wrap {
-    padding-inline: var(--ux4g-padding-xl);
-  }
-}
 .main {
   padding-block: var(--ux4g-padding-xl) 4rem;
   min-height: 60vh;
@@ -46,9 +35,6 @@
   top: 0;
   z-index: 100;
   background: var(--ux4g-bg-neutral-elevated);
-}
-.topbar .ux4g-navbar-wrap {
-  padding-inline: var(--ux4g-padding-m);
 }
 .brand {
   display: inline-flex;
@@ -147,8 +133,8 @@
 .btn-start .ux4g-icon-outlined {
   display: none;
 }
-/* Between 1024 and 1279px the bar compacts: "Start a request" becomes a round + button, My Desk and the language switch move to the avatar menu. */
-@media (max-width: 1279px) {
+/* Between 1024 and 1399px (UX4G containers are narrower than the window) the bar compacts: "Start a request" becomes a round + button, My Desk and the language switch move to the avatar menu. */
+@media (max-width: 1399px) {
   .wide-only {
     display: none !important;
   }
@@ -156,6 +142,7 @@
     display: flex !important;
   }
   .btn-start {
+    white-space: nowrap;
     width: 2.75rem;
     min-width: 0;
     padding: 0 !important;
@@ -327,6 +314,9 @@
   .main {
     padding-bottom: 9rem;
   }
+}
+.page-header-actions {
+  flex-shrink: 0;
 }
 .page-header-image {
   flex: 0 0 17rem;
@@ -502,7 +492,10 @@
 .rich-bar {
   display: flex;
   gap: var(--ux4g-gap-row-xs);
-  margin-bottom: var(--ux4g-padding-xs);
+  padding: var(--ux4g-padding-xs) var(--ux4g-padding-s) 0;
+}
+.ux4g-textarea .rich {
+  width: 100%;
 }
 .stepper-bar {
   margin-top: var(--ux4g-padding-xl);
@@ -709,7 +702,9 @@
   }
 }
 .who-dept {
-  display: block;
+  display: flex;
+  align-items: center;
+  padding-block: var(--ux4g-padding-xs);
   width: 100%;
   min-height: 3rem;
   padding: 0 var(--ux4g-padding-s);
@@ -816,10 +811,20 @@
     display: none;
   }
 }
+/* UX4G's footer wrapper pads 64px/80px for its own layout; the container carries the page gutter here instead. */
+.ux4g-footer-wrapper {
+  padding: var(--ux4g-padding-3xl) 0 var(--ux4g-padding-2xl);
+}
 .footer-inner {
   display: flex;
   flex-direction: column;
-  gap: var(--ux4g-gap-row-s);
+  gap: var(--ux4g-gap-row-m);
+}
+.footer-link {
+  text-decoration: none;
+}
+.footer-link:hover {
+  text-decoration: underline;
 }
 .footer-link {
   color: inherit;
@@ -878,7 +883,7 @@
 .glance {
   display: grid;
   gap: var(--ux4g-gap-row-m);
-  align-items: center;
+  align-items: start;
 }
 @media (min-width: 768px) {
   .glance {
@@ -1062,6 +1067,14 @@
 .idea-card,
 .article-card {
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.idea-card .card-foot,
+.article-card .card-foot {
+  margin-top: auto;
+  padding-top: var(--ux4g-padding-m);
 }
 .idea-card button,
 .article-card button,
@@ -1087,7 +1100,10 @@
   background: var(--ux4g-bg-neutral-soft);
 }
 .post-row .list-row-main {
-  gap: 2px;
+  gap: var(--ux4g-gap-row-2xs);
+}
+.post-row .tags {
+  margin-bottom: var(--ux4g-margin-2xs);
 }
 .status-steps {
   display: flex;
@@ -1197,11 +1213,12 @@ h1:focus {
 .ux4g-input .ux4g-input-input {
   min-width: 0;
 }
-.ux4g-input .rich-area {
-  border: 0;
-  padding: 0;
-  background: transparent;
+.ux4g-textarea .rich-area {
+  min-height: 8.5rem;
+  height: auto;
   width: 100%;
+  border: 0;
+  overflow: auto;
   outline: none;
 }
 .field-wrap {
@@ -1229,4 +1246,46 @@ h1:focus {
   min-width: 0;
   white-space: normal;
   overflow-wrap: anywhere;
+}
+
+.card-image.article-lead {
+  margin: 0;
+  border-radius: var(--ux4g-radius-lg);
+}
+.link-label {
+  cursor: pointer;
+}
+a.list-row-main {
+  text-decoration: none;
+}
+
+/* UX4G's ux4g-gap-* utilities use the section scale (24px and up). Element gaps use its --ux4g-gap-row-* tokens. */
+.gap-xs {
+  gap: var(--ux4g-gap-row-xs);
+}
+.gap-s {
+  gap: var(--ux4g-gap-row-s);
+}
+.gap-m {
+  gap: var(--ux4g-gap-row-m);
+}
+.gap-l {
+  gap: var(--ux4g-gap-row-l);
+}
+.gap-xl {
+  gap: var(--ux4g-gap-row-xl);
+}
+
+.task-row {
+  padding-block: var(--ux4g-padding-xs);
+  border-bottom: var(--ux4g-border-width-sm) solid var(--ux4g-border-color-neutral-subtle);
+}
+.task-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ux4g-dropdown > label {
+  display: block;
+  margin-bottom: var(--ux4g-margin-2xs);
 }

@@ -21,14 +21,30 @@ export function Field({
   locked,
   children,
   size = 'lg',
-}: FieldProps & { children: ReactNode; size?: 'sm' | 'md' | 'lg' | 'xl' }) {
+  kind = 'input',
+}: FieldProps & {
+  children: ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** 'textarea' uses the UX4G textarea container for multi-line editors. */
+  kind?: 'input' | 'textarea';
+}) {
   const { t } = useTranslation();
   const state = error ? 'ux4g-input-error' : 'ux4g-input-default';
+  const box =
+    kind === 'textarea'
+      ? `ux4g-textarea-container ux4g-textarea-m ${error ? 'ux4g-textarea-error' : 'ux4g-textarea-default'}`
+      : `ux4g-input-container ux4g-input-${size === 'lg' ? 'l' : size === 'md' ? 'm' : size === 'sm' ? 's' : 'xl'} ${state}`;
   return (
-    <div
-      className={`ux4g-input-container ux4g-input-${size === 'lg' ? 'l' : size === 'md' ? 'm' : size === 'sm' ? 's' : 'xl'} ${state}${locked ? ' ux4g-input-is-disabled' : ''} field-wrap`}
-    >
-      <label htmlFor={id} id={`${id}-label`} className="ux4g-label-m-default">
+    <div className={`${box}${locked ? ' ux4g-input-is-disabled' : ''} field-wrap`}>
+      <label
+        htmlFor={id}
+        id={`${id}-label`}
+        className={
+          kind === 'textarea'
+            ? 'ux4g-label-l-default ux4g-text-neutral-secondary'
+            : 'ux4g-label-m-default'
+        }
+      >
         {label}
         {required && (
           <span className="req">
@@ -42,7 +58,7 @@ export function Field({
           </span>
         )}
       </label>
-      <div className="ux4g-input">{children}</div>
+      <div className={kind === 'textarea' ? 'ux4g-textarea' : 'ux4g-input'}>{children}</div>
       {help && !error && (
         <span id={`${id}-help`} className="ux4g-input-helper">
           <span className="ux4g-input-helper-text">{help}</span>

@@ -19,7 +19,7 @@ export default function ResourcesPage() {
     <>
       <RouteHeader id="learn.resources" main={{ onClick: () => setDlg(true) }} />
       <SearchField label={t('resources.search')} value={q} onChange={setQ} />
-      <div style={{ marginTop: 24 }}>
+      <div className="ux4g-mt-xl">
         <QueryView query={query} skeleton="card" skeletonCount={4}>
           {(all) => {
             const n = q.trim().toLowerCase();
@@ -30,15 +30,15 @@ export default function ResourcesPage() {
               <div className="grid-cards">
                 {rows.map((r) => (
                   <Card key={r.id}>
-                    <h3>{r.name}</h3>
+                    <h3 className="ux4g-heading-xs-strong">{r.name}</h3>
                     {r.note && (
                       <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{r.note}</p>
                     )}
-                    <ul className="plain-list" style={{ margin: '8px 0' }}>
+                    <ul className="plain-list ux4g-my-xs">
                       {r.links.map((l) => (
                         <li key={l.url}>
                           <a
-                            className="ux4g-text-link-md"
+                            className="ux4g-text-link-m"
                             href={l.url}
                             target="_blank"
                             rel="noopener noreferrer"

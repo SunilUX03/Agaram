@@ -25,7 +25,7 @@ export default function CareerPage() {
         <section className="section" aria-label={t('career.current')}>
           <Card>
             <h2 className="ux4g-heading-xs-strong">{t('career.current')}</h2>
-            <div className="tags" style={{ margin: '8px 0 12px' }}>
+            <div className="tags ux4g-mt-xs ux4g-mb-s">
               <Tag>{officer.data.currentPosting.postType}</Tag>
               <Tag>{officer.data.currentPosting.locationChange}</Tag>
             </div>
@@ -43,7 +43,7 @@ export default function CareerPage() {
         </section>
       )}
       <div
-        className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+        className="ux4g-d-flex ux4g-flex-wrap gap-xs ux4g-mb-s"
         role="group"
         aria-label={t('career.filter')}
       >

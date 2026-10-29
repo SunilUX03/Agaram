@@ -35,7 +35,7 @@ export default function AwardsPage() {
                   return (
                     <Card key={a.id}>
                       <StatusChip status={open ? 'award:open' : 'award:closed'} />
-                      <h3 style={{ marginTop: 8 }}>{a.name}</h3>
+                      <h3 className="ux4g-heading-xs-strong ux4g-mt-xs">{a.name}</h3>
                       <p>{a.description}</p>
                       <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                         <strong>{t('awards.eligibility')}:</strong> {a.eligibility}
