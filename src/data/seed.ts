@@ -1358,6 +1358,9 @@ export function buildSeed(now = new Date()): Db {
       ][i],
     }),
   );
+  lib
+    .filter((l) => l.kind === 'circular' || l.kind === 'go')
+    .forEach((l) => (l.number = l.number!.replace(/\/\d{4}$/, `/${l.date.slice(0, 4)}`)));
   const faqs: [string, string, string][] = [
     [
       'Who can claim LTC?',

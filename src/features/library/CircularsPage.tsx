@@ -17,6 +17,10 @@ export default function CircularsPage() {
   const clear = useUrlClear();
   const box = useRef<HTMLInputElement>(null);
   const query = useQ('library', ['circular', 'go']);
+  const years = [...new Set((query.data ?? []).map((r) => r.date.slice(0, 4)))]
+    .sort()
+    .reverse()
+    .map((y) => ({ value: y, label: y }));
   const active = [
     type && { key: 'type', label: t(`circulars.types.${type}`) },
     year && { key: 'year', label: year },
@@ -47,9 +51,7 @@ export default function CircularsPage() {
           value={year}
           onChange={setYear}
           placeholder={t('circulars.all')}
-          options={[0, 1, 2]
-            .map((d) => String(new Date().getFullYear() - d))
-            .map((y) => ({ value: y, label: y }))}
+          options={years}
         />
       </FilterBar>
       <QueryView query={query} skeleton="row" skeletonCount={6}>

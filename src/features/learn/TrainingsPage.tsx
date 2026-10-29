@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/Card';
 import { Icon } from '@/components/Icon';
@@ -38,6 +39,39 @@ export function downloadIcs(ev: TrainingEvent) {
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/** "{n} officers need this" plus the toggle. Count and state change at once, then settle. */
+function InterestToggle({
+  e,
+  onChange,
+}: {
+  e: TrainingEvent;
+  onChange: (on: boolean) => Promise<unknown>;
+}) {
+  const { t } = useTranslation('learn');
+  const [delta, setDelta] = useState<number | null>(null);
+  const shown = e.interestCount + (delta ?? 0);
+  return (
+    <>
+      <span className="card-meta" aria-live="polite">
+        {t('trainings.need', { count: shown })}
+      </span>
+      <ToggleButton
+        label={t('trainings.needBtn')}
+        onLabel={t('trainings.needOn')}
+        pressed={e.interestedByMe}
+        onChange={async (on) => {
+          setDelta(on ? 1 : -1);
+          try {
+            await onChange(on);
+          } finally {
+            setDelta(null);
+          }
+        }}
+      />
+    </>
+  );
 }
 
 export default function TrainingsPage() {
@@ -114,16 +148,7 @@ export default function TrainingsPage() {
                       </>
                     ) : (
                       <div className="card-foot">
-                        <span className="card-meta">
-                          {t('trainings.need', { count: e.interestCount })}
-                        </span>
-                        <ToggleButton
-                          label={t('trainings.needBtn')}
-                          onLabel={t('trainings.needOn')}
-                          pressed={e.interestedByMe}
-                          count={undefined}
-                          onChange={(on) => need.mutateAsync([e.id, on])}
-                        />
+                        <InterestToggle e={e} onChange={(on) => need.mutateAsync([e.id, on])} />
                       </div>
                     )}
                   </Card>

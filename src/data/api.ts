@@ -549,7 +549,7 @@ export const api = {
       },
       { write: true },
     ),
-  report: (_id: string, _reason: string) => run(() => true, { write: true }),
+  report: (id: string, reason: string) => run(() => !!id && !!reason, { write: true }),
   articles: () =>
     run(
       (db) =>
