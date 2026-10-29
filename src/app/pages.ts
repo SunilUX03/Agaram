@@ -1,7 +1,13 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
+import { ROUTES } from '@/config/routes';
 
 type Page = LazyExoticComponent<ComponentType>;
-const L = (loader: () => Promise<{ default: ComponentType }>): Page => lazy(loader);
+const loaders = new Map<Page, () => Promise<{ default: ComponentType }>>();
+const L = (loader: () => Promise<{ default: ComponentType }>): Page => {
+  const page = lazy(loader);
+  loaders.set(page, loader);
+  return page;
+};
 
 /** Route id to page. Anything missing here shows the placeholder. Each page loads on demand. */
 export const PAGES: Record<string, Page> = {
@@ -49,6 +55,9 @@ export const PAGES: Record<string, Page> = {
   login: L(() => import('@/features/auth/LoginPage')),
 };
 
-/** Prefetch a feature when the pointer is over a menu item. */
-export const prefetch = (id: string) =>
-  void (PAGES[id] as unknown as { _payload?: unknown } | undefined);
+/** Warm a page's code when the pointer is over a menu item that leads to it. */
+export function prefetchPath(path: string) {
+  const route = ROUTES.find((r) => r.path === path.split('?')[0]);
+  const page = route && PAGES[route.id];
+  if (page) void loaders.get(page)?.();
+}

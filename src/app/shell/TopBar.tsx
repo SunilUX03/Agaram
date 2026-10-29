@@ -90,8 +90,13 @@ export function TopBar({ desktop }: { desktop: boolean }) {
         {desktop && <DesktopMenu items={items} />}
         <div className="topbar-right">
           {desktop && (
-            <Link to="/requests/new" className="btn btn-primary">
-              {t('nav.startRequest')}
+            <Link
+              to="/requests/new"
+              className="btn btn-primary btn-start"
+              aria-label={t('nav.startRequest')}
+            >
+              <Icon name="plus" size={18} />
+              <span className="btn-label">{t('nav.startRequest')}</span>
             </Link>
           )}
           <Link to="/search" className="icon-btn" aria-label={t('nav.search')}>
@@ -100,10 +105,12 @@ export function TopBar({ desktop }: { desktop: boolean }) {
           <BellLink />
           {desktop && (
             <>
-              <Link to="/desk" className="icon-btn" aria-label={t('nav.myDesk')}>
+              <Link to="/desk" className="icon-btn wide-only" aria-label={t('nav.myDesk')}>
                 <Icon name="desk" />
               </Link>
-              <LangSwitch />
+              <span className="wide-only">
+                <LangSwitch />
+              </span>
               <AvatarMenu />
             </>
           )}

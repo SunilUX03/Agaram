@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@/components/Icon';
 import { useOutsideClick } from '@/components/hooks';
 import { isCurrent, type NavItem } from '@/config/nav';
+import { prefetchPath } from '@/app/pages';
 
 function Dropdown({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
   const groups = item.groups ?? [{ label: '', items: item.links ?? [] }];
@@ -20,7 +21,7 @@ function Dropdown({ item, onNavigate }: { item: NavItem; onNavigate: () => void 
               role="menuitem"
               tabIndex={-1}
               onClick={onNavigate}
-              onMouseEnter={() => import('@/app/RoutePlaceholder')}
+              onMouseEnter={() => prefetchPath(l.to)}
             >
               {t(l.label)}
             </Link>

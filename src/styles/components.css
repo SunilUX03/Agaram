@@ -2290,3 +2290,81 @@ fieldset {
     align-items: center;
   }
 }
+@media (min-width: 1024px) {
+  .topbar-inner {
+    padding: 0 20px;
+    gap: 4px;
+  }
+  .menu ul {
+    margin-left: 0;
+  }
+  .menu a,
+  .menu .menu-trigger {
+    padding: 0 7px;
+    font-size: 14px;
+  }
+  .menu-chevron {
+    min-width: 22px;
+  }
+  .topbar-right .btn {
+    padding: 8px 12px;
+  }
+  .brand {
+    font-size: 20px;
+  }
+  .lang button {
+    padding: 0 4px;
+    min-width: 28px;
+  }
+}
+@media (min-width: 1280px) {
+  .topbar-inner {
+    padding: 0 28px;
+    gap: 8px;
+  }
+  .menu a,
+  .menu .menu-trigger {
+    padding: 0 9px;
+    font-size: 15px;
+  }
+  .brand {
+    font-size: 22px;
+  }
+  .topbar-right .btn {
+    padding: 8px 16px;
+  }
+}
+
+.btn-start svg {
+  display: none;
+}
+.narrow-only {
+  display: none !important;
+}
+.dd-lang {
+  padding: 4px 12px;
+}
+@media (max-width: 1279px) {
+  .wide-only {
+    display: none !important;
+  }
+  .dd .narrow-only {
+    display: flex !important;
+  }
+  .btn-start {
+    padding: 0 !important;
+    width: 44px;
+    border-radius: var(--r-full);
+  }
+  .btn-start svg {
+    display: block;
+  }
+  .btn-start .btn-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
