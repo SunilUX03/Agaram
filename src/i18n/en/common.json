@@ -4,12 +4,21 @@
     "skipToMain": "Skip to main content",
     "title": "{{headline}} | Agaram"
   },
-  "language": { "switch": "Language", "en": "EN", "ta": "த" },
+  "language": {
+    "switch": "Language",
+    "en": "EN",
+    "ta": "த"
+  },
   "offline": "You are offline. Some things may not work.",
-  "notFound": { "title": "We could not find that page.", "button": "Go to Home" },
+  "notFound": {
+    "title": "We could not find that page.",
+    "button": "Go to Home"
+  },
   "error": {
     "load": "We could not load this. Check your connection and try again.",
-    "retry": "Retry"
+    "retry": "Retry",
+    "title": "Something went wrong",
+    "boundary": "We could not show this page."
   },
   "placeholder": "This page is built in a later phase.",
   "demo": {
@@ -20,5 +29,205 @@
     "forceEmpty": "Force empty",
     "forceError": "Force error",
     "advance": "Advance request"
+  },
+  "nav": {
+    "home": "Home",
+    "file": "My Service File",
+    "serviceFile": "Service File",
+    "requests": "Requests",
+    "community": "Community",
+    "people": "People",
+    "learnLibrary": "Learn and Library",
+    "learn": "Learn",
+    "library": "Library",
+    "more": "More",
+    "profile": "Profile and details",
+    "career": "Career",
+    "leave": "Leave",
+    "training": "Training",
+    "travel": "Travel",
+    "property": "Property returns",
+    "benefits": "Benefits",
+    "documents": "Orders and documents",
+    "myRequests": "My requests",
+    "startRequest": "Start a request",
+    "ideas": "Ideas and proposals",
+    "discussions": "Discussions",
+    "knowledge": "Knowledge hub",
+    "colleagues": "Colleagues",
+    "whoDoesWhat": "Who does what",
+    "experts": "Experts and NGOs",
+    "trainings": "Trainings",
+    "resources": "Learning resources",
+    "awards": "Awards",
+    "rules": "Rules",
+    "circulars": "Circulars and GOs",
+    "forms": "Forms",
+    "faqs": "FAQs",
+    "announcements": "Announcements",
+    "myDesk": "My Desk",
+    "account": "Account and settings",
+    "signOut": "Sign out",
+    "search": "Search",
+    "notifications": "Notifications",
+    "primary": "Main menu",
+    "sections": "Section pages",
+    "bottom": "Main navigation",
+    "avatarMenu": "Account menu",
+    "openMenu": "Open {{name}} menu"
+  },
+  "footer": {
+    "helpDesk": "Help desk",
+    "accessibility": "Accessibility statement",
+    "terms": "Terms and privacy",
+    "department": "Public Department, Government of Tamil Nadu",
+    "lastSignedIn": "Last signed in: {{date}}"
+  },
+  "status": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "withDesk": "With the desk",
+    "readyForApproval": "Ready for approval",
+    "returned": "Returned to you",
+    "approved": "Approved",
+    "rejected": "Not approved",
+    "withdrawn": "Withdrawn",
+    "underReview": "Under review",
+    "accepted": "Accepted",
+    "notTakenForward": "Not taken forward",
+    "awardOpen": "Open to apply",
+    "awardClosed": "Not accepting now",
+    "serving": "Serving"
+  },
+  "ui": {
+    "breadcrumb": "Breadcrumb",
+    "tabs": "Tabs",
+    "unreadCount": "{{count}} unread",
+    "unreadMany": "More than nine unread",
+    "search": {
+      "label": "Search",
+      "clear": "Clear search",
+      "results_one": "{{count}} result",
+      "results_other": "{{count}} results"
+    },
+    "filters": {
+      "title": "Filters",
+      "open": "Filters",
+      "apply": "Apply",
+      "clear": "Clear",
+      "remove": "Remove filter {{name}}",
+      "active": "Active filters"
+    },
+    "timeline": {
+      "current": "Current step"
+    },
+    "stepper": {
+      "step": "Step {{n}} of {{total}}",
+      "back": "Back",
+      "next": "Next",
+      "send": "Send",
+      "saveDraft": "Save draft",
+      "sending": "Sending",
+      "edit": "Edit",
+      "progress": "Progress"
+    },
+    "field": {
+      "required": "required",
+      "locked": "Filled in for you and locked",
+      "errorSummary": "Please fix the following before you continue",
+      "invalid": "Please fix the errors below."
+    },
+    "errors": {
+      "required": "This field is required.",
+      "badDate": "Enter a valid date in dd/mm/yyyy.",
+      "endBeforeStart": "The end date cannot be before the start date.",
+      "fileTooLarge": "This file is larger than {{size}}. Choose a smaller file.",
+      "fileType": "Upload a PDF, JPG or PNG file."
+    },
+    "date": {
+      "hint": "dd/mm/yyyy",
+      "from": "From",
+      "to": "To"
+    },
+    "upload": {
+      "choose": "Choose file",
+      "remove": "Remove {{name}}",
+      "hint": "PDF, JPG or PNG, up to {{size}} MB each"
+    },
+    "rich": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "list": "Bulleted list",
+      "link": "Link",
+      "editor": "Text editor"
+    },
+    "balance": {
+      "left": "{{remaining}} of {{allowed}} left",
+      "used": "{{used}} used"
+    },
+    "kv": {
+      "verified": "Verified by department",
+      "selfReported": "Self-reported"
+    },
+    "file": {
+      "view": "View",
+      "download": "Download",
+      "close": "Close",
+      "viewer": "File viewer",
+      "fallback": "Cannot show this file here."
+    },
+    "empty": {
+      "default": "Nothing here yet."
+    },
+    "loading": "Loading",
+    "toast": {
+      "dismiss": "Dismiss",
+      "region": "Messages"
+    },
+    "confirm": {
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "tag": {
+      "pinned": "Pinned"
+    },
+    "toggle": {
+      "on": "On",
+      "off": "Off"
+    },
+    "poll": {
+      "vote": "Vote",
+      "votes_one": "{{count}} vote",
+      "votes_other": "{{count}} votes",
+      "yours": "Your vote"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page",
+      "page": "Page {{n}}",
+      "loadMore": "Load more"
+    },
+    "banner": {
+      "info": "Information",
+      "warning": "Warning",
+      "critical": "Important"
+    },
+    "help": {
+      "open": "What is this?"
+    },
+    "notification": {
+      "request": "Request",
+      "reply": "Reply",
+      "idea-status": "Idea",
+      "circular": "Circular",
+      "training": "Training"
+    },
+    "sheet": {
+      "close": "Close"
+    },
+    "sort": {
+      "by": "Sort by {{name}}"
+    }
   }
 }

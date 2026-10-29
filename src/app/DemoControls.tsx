@@ -16,13 +16,9 @@ export function DemoControls() {
   const { t, i18n } = useTranslation();
   const stub = ['reset', 'forceLoading', 'forceEmpty', 'forceError', 'advance'] as const;
   return (
-    <aside
-      aria-label={t('demo.title')}
-      className="card"
-      style={{ position: 'fixed', right: 12, bottom: 76, zIndex: 900, width: 220, padding: 12 }}
-    >
-      <strong>{t('demo.title')}</strong>
-      <div style={{ display: 'grid', gap: 8, marginTop: 8 }}>
+    <details className="card demo-panel">
+      <summary>{t('demo.title')}</summary>
+      <div>
         <button
           type="button"
           className="btn"
@@ -36,6 +32,6 @@ export function DemoControls() {
           </button>
         ))}
       </div>
-    </aside>
+    </details>
   );
 }

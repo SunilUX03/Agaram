@@ -1,9 +1,25 @@
 {
-  "app": { "name": "", "skipToMain": "", "title": "" },
-  "language": { "switch": "", "en": "", "ta": "" },
+  "app": {
+    "name": "",
+    "skipToMain": "",
+    "title": ""
+  },
+  "language": {
+    "switch": "",
+    "en": "",
+    "ta": ""
+  },
   "offline": "",
-  "notFound": { "title": "", "button": "" },
-  "error": { "load": "", "retry": "" },
+  "notFound": {
+    "title": "",
+    "button": ""
+  },
+  "error": {
+    "load": "",
+    "retry": "",
+    "title": "",
+    "boundary": ""
+  },
   "placeholder": "",
   "demo": {
     "title": "",
@@ -13,5 +29,205 @@
     "forceEmpty": "",
     "forceError": "",
     "advance": ""
+  },
+  "nav": {
+    "home": "",
+    "file": "",
+    "serviceFile": "",
+    "requests": "",
+    "community": "",
+    "people": "",
+    "learnLibrary": "",
+    "learn": "",
+    "library": "",
+    "more": "",
+    "profile": "",
+    "career": "",
+    "leave": "",
+    "training": "",
+    "travel": "",
+    "property": "",
+    "benefits": "",
+    "documents": "",
+    "myRequests": "",
+    "startRequest": "",
+    "ideas": "",
+    "discussions": "",
+    "knowledge": "",
+    "colleagues": "",
+    "whoDoesWhat": "",
+    "experts": "",
+    "trainings": "",
+    "resources": "",
+    "awards": "",
+    "rules": "",
+    "circulars": "",
+    "forms": "",
+    "faqs": "",
+    "announcements": "",
+    "myDesk": "",
+    "account": "",
+    "signOut": "",
+    "search": "",
+    "notifications": "",
+    "primary": "",
+    "sections": "",
+    "bottom": "",
+    "avatarMenu": "",
+    "openMenu": ""
+  },
+  "footer": {
+    "helpDesk": "",
+    "accessibility": "",
+    "terms": "",
+    "department": "",
+    "lastSignedIn": ""
+  },
+  "status": {
+    "draft": "",
+    "submitted": "",
+    "withDesk": "",
+    "readyForApproval": "",
+    "returned": "",
+    "approved": "",
+    "rejected": "",
+    "withdrawn": "",
+    "underReview": "",
+    "accepted": "",
+    "notTakenForward": "",
+    "awardOpen": "",
+    "awardClosed": "",
+    "serving": ""
+  },
+  "ui": {
+    "breadcrumb": "",
+    "tabs": "",
+    "unreadCount": "",
+    "unreadMany": "",
+    "search": {
+      "label": "",
+      "clear": "",
+      "results_one": "",
+      "results_other": ""
+    },
+    "filters": {
+      "title": "",
+      "open": "",
+      "apply": "",
+      "clear": "",
+      "remove": "",
+      "active": ""
+    },
+    "timeline": {
+      "current": ""
+    },
+    "stepper": {
+      "step": "",
+      "back": "",
+      "next": "",
+      "send": "",
+      "saveDraft": "",
+      "sending": "",
+      "edit": "",
+      "progress": ""
+    },
+    "field": {
+      "required": "",
+      "locked": "",
+      "errorSummary": "",
+      "invalid": ""
+    },
+    "errors": {
+      "required": "",
+      "badDate": "",
+      "endBeforeStart": "",
+      "fileTooLarge": "",
+      "fileType": ""
+    },
+    "date": {
+      "hint": "",
+      "from": "",
+      "to": ""
+    },
+    "upload": {
+      "choose": "",
+      "remove": "",
+      "hint": ""
+    },
+    "rich": {
+      "bold": "",
+      "italic": "",
+      "list": "",
+      "link": "",
+      "editor": ""
+    },
+    "balance": {
+      "left": "",
+      "used": ""
+    },
+    "kv": {
+      "verified": "",
+      "selfReported": ""
+    },
+    "file": {
+      "view": "",
+      "download": "",
+      "close": "",
+      "viewer": "",
+      "fallback": ""
+    },
+    "empty": {
+      "default": ""
+    },
+    "loading": "",
+    "toast": {
+      "dismiss": "",
+      "region": ""
+    },
+    "confirm": {
+      "cancel": "",
+      "confirm": ""
+    },
+    "tag": {
+      "pinned": ""
+    },
+    "toggle": {
+      "on": "",
+      "off": ""
+    },
+    "poll": {
+      "vote": "",
+      "votes_one": "",
+      "votes_other": "",
+      "yours": ""
+    },
+    "pagination": {
+      "label": "",
+      "previous": "",
+      "next": "",
+      "page": "",
+      "loadMore": ""
+    },
+    "banner": {
+      "info": "",
+      "warning": "",
+      "critical": ""
+    },
+    "help": {
+      "open": ""
+    },
+    "notification": {
+      "request": "",
+      "reply": "",
+      "idea-status": "",
+      "circular": "",
+      "training": ""
+    },
+    "sheet": {
+      "close": ""
+    },
+    "sort": {
+      "by": ""
+    }
   }
 }

@@ -1,58 +1,62 @@
-/* Tokens taken from design.md, section 1 (App design system). */
+/* Tokens from design.md (Airbnb design analysis). Colours, type, radius, spacing, one shadow tier. */
 :root {
-  --navy: #1a1a1a;
-  --navy-h: #000000;
-  --gold: #4a4a4a;
-  --text: #141414;
-  --text2: #6a6a6a;
-  --text3: #9a9a9a;
-  --border: #e3e3e3;
-  --border-s: #ececec;
-  --page: #ffffff;
-  --bg-s: #f5f5f5;
-  --tag-bg: #efefef;
-  --surface: #ffffff;
-  --surface-2: #ffffff;
-  --surface-3: #f6f6f6;
-  --accent-soft: #f0f0f0;
-  --notif-red: #e5484d;
-  --like-red: #e0245e;
-  --avatar-active: #2563eb;
-  --avatar-active-soft: rgba(37, 99, 235, 0.25);
-  --hl-yellow: rgba(20, 20, 20, 0.12);
-  --on-navy: #ffffff;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.09);
-  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.14);
-  --ring: 0 0 0 3px rgba(0, 0, 0, 0.16);
-  --r-sm: 7px;
-  --r-md: 10px;
-  --r-lg: 14px;
-  --sans: 'Noto Sans', 'Noto Sans Tamil', -apple-system, system-ui, sans-serif;
-  --serif: var(--sans);
-  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-  --nav-h: 64px;
-  --nav-h-mobile: 56px;
-  --bottom-h: 60px;
-}
+  --primary: #ff385c;
+  --primary-active: #e00b41;
+  --primary-disabled: #ffd1da;
+  --error: #c13515;
+  --error-hover: #b32505;
+  --ink: #222222;
+  --body: #3f3f3f;
+  --muted: #6a6a6a;
+  --muted-soft: #929292;
+  --hairline: #dddddd;
+  --hairline-soft: #ebebeb;
+  --border-strong: #c1c1c1;
+  --canvas: #ffffff;
+  --surface-soft: #f7f7f7;
+  --surface-strong: #f2f2f2;
+  --on-primary: #ffffff;
+  --link: #428bff;
+  --scrim: rgba(0, 0, 0, 0.5);
 
-:root[data-theme='dark'] {
-  --navy: #ededed;
-  --navy-h: #ffffff;
-  --text: #ececec;
-  --text2: #a6a6a6;
-  --text3: #7a7a7a;
-  --border: #2a2a2a;
-  --border-s: #222222;
-  --page: #0e0e0e;
-  --bg-s: #161616;
-  --surface: #161616;
-  --surface-2: #1c1c1c;
-  --surface-3: #171717;
-  --on-navy: #141414;
-  --hl-yellow: rgba(255, 255, 255, 0.18);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.6);
-  --ring: 0 0 0 3px rgba(255, 255, 255, 0.22);
+  /* Status tones. design.md has no success/warning/info colours, so these are
+     the nearest neutral-leaning extensions (recorded in DECISIONS.md). */
+  --success-bg: #e8f5ee;
+  --success-fg: #0b6b3a;
+  --warn-bg: #fff4e0;
+  --warn-fg: #8a4b00;
+  --warn-strong-bg: #ffe0c2;
+  --warn-strong-fg: #7a3300;
+  --info-bg: #eef4ff;
+  --info-fg: #1f4fa8;
+  --critical-bg: #fdeceb;
+  --critical-fg: var(--error);
+
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 32px;
+  --r-full: 9999px;
+
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 12px;
+  --sp-base: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-xxl: 48px;
+  --sp-section: 64px;
+
+  --shadow:
+    rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0;
+
+  --sans:
+    'Airbnb Cereal VF', Circular, 'Inter', 'Noto Sans Tamil', -apple-system, system-ui, Roboto,
+    'Helvetica Neue', sans-serif;
+
+  --nav-h: 80px;
+  --nav-h-mobile: 56px;
+  --bottom-h: 64px;
+  --content-w: 1280px;
 }
