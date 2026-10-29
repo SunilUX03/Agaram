@@ -1,0 +1,29 @@
+{
+  "routes": {
+    "library_rules": {
+      "headline": "Rules",
+      "tagline": "The acts and rules that govern your service.",
+      "main": ""
+    },
+    "library_circulars": {
+      "headline": "Circulars and GOs",
+      "tagline": "Orders and circulars, searchable by number, year and subject.",
+      "main": "Search"
+    },
+    "library_forms": {
+      "headline": "Forms",
+      "tagline": "Blank forms to download and fill.",
+      "main": ""
+    },
+    "library_faqs": {
+      "headline": "Frequently asked questions",
+      "tagline": "Quick answers on LTC, medical claims, GPF, leave and more.",
+      "main": "Ask a question"
+    },
+    "library_announcements": {
+      "headline": "Announcements",
+      "tagline": "Notices from the Public Department.",
+      "main": "Notification settings"
+    }
+  }
+}

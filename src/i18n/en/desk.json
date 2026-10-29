@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "desk": {
+      "headline": "My Desk",
+      "tagline": "Your private space: tasks, notes, saved people and articles.",
+      "main": "Add a task"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "routes": {
+    "community": {
+      "headline": "Community",
+      "tagline": "Ideas, questions and field experience from officers across Tamil Nadu.",
+      "main": "Share an idea"
+    },
+    "community_ideas": {
+      "headline": "Ideas and proposals",
+      "tagline": "Put an improvement on record. Back the ones that matter.",
+      "main": "Share an idea"
+    },
+    "community_idea": {
+      "headline": "Idea",
+      "tagline": "",
+      "main": "Back this idea"
+    },
+    "community_ideas_new": {
+      "headline": "Share an idea",
+      "tagline": "A proposal the department will review. Be clear and short.",
+      "main": "Post idea"
+    },
+    "community_discussions": {
+      "headline": "Discussions",
+      "tagline": "Ask, answer and share what does not fit in a file note.",
+      "main": "Start a discussion"
+    },
+    "community_discussion": {
+      "headline": "Discussion",
+      "tagline": "",
+      "main": "Reply"
+    },
+    "community_discussions_new": {
+      "headline": "New post",
+      "tagline": "Post with your name, or without it.",
+      "main": "Post"
+    },
+    "community_knowledge": {
+      "headline": "Knowledge hub",
+      "tagline": "What worked in one district, written down for the rest.",
+      "main": "Write an article"
+    },
+    "community_article": {
+      "headline": "Article",
+      "tagline": "",
+      "main": "Save to My Desk"
+    },
+    "community_knowledge_new": {
+      "headline": "Write an article",
+      "tagline": "Tell other officers how you solved it.",
+      "main": "Publish"
+    }
+  }
+}

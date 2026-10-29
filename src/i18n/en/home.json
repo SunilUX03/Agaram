@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "home": {
+      "headline": "Good morning",
+      "tagline": "Your service record, requests and colleagues, all in one place.",
+      "main": "Start a request"
+    }
+  }
+}

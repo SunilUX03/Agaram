@@ -1,0 +1,17 @@
+{
+  "app": { "name": "", "skipToMain": "", "title": "" },
+  "language": { "switch": "", "en": "", "ta": "" },
+  "offline": "",
+  "notFound": { "title": "", "button": "" },
+  "error": { "load": "", "retry": "" },
+  "placeholder": "",
+  "demo": {
+    "title": "",
+    "language": "",
+    "reset": "",
+    "forceLoading": "",
+    "forceEmpty": "",
+    "forceError": "",
+    "advance": ""
+  }
+}

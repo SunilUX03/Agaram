@@ -1,0 +1,49 @@
+{
+  "routes": {
+    "file": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_profile": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_career": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_leave": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_training": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_travel": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_property": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_benefits": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "file_documents": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  }
+}

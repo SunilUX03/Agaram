@@ -1,0 +1,29 @@
+{
+  "routes": {
+    "people_colleagues": {
+      "headline": "Colleagues",
+      "tagline": "Find an officer by name, post, district or area of work.",
+      "main": "Search"
+    },
+    "people_colleague": {
+      "headline": "Colleague",
+      "tagline": "",
+      "main": "Save contact"
+    },
+    "people_whodoeswhat": {
+      "headline": "Who does what",
+      "tagline": "Find who handles a subject, department by department.",
+      "main": "Search a subject"
+    },
+    "people_section": {
+      "headline": "Section",
+      "tagline": "",
+      "main": "Open officer’s profile"
+    },
+    "people_experts": {
+      "headline": "Experts and NGOs",
+      "tagline": "Trusted outside help, one phone call away.",
+      "main": "Add an entry"
+    }
+  }
+}

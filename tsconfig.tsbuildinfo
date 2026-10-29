@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/theme-init.ts","./src/vite-env.d.ts","./src/app/App.tsx","./src/app/DemoControls.tsx","./src/app/NotFound.tsx","./src/app/RoutePlaceholder.tsx","./src/config/features.ts","./src/config/routes.ts","./src/i18n/index.ts","./src/test/routes.test.tsx","./src/test/setup.ts","./vite.config.ts"],"errors":true,"version":"6.0.3"}

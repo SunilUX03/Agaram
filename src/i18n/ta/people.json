@@ -1,0 +1,29 @@
+{
+  "routes": {
+    "people_colleagues": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "people_colleague": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "people_whodoeswhat": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "people_section": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "people_experts": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  }
+}

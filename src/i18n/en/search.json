@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "search": {
+      "headline": "Search",
+      "tagline": "Find officers, ideas, articles, circulars and your own requests.",
+      "main": ""
+    }
+  }
+}

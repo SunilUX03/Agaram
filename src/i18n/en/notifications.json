@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "notifications": {
+      "headline": "Notifications",
+      "tagline": "Updates on your requests and posts.",
+      "main": "Mark all as read"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "routes": {
+    "community": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_ideas": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_idea": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_ideas_new": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_discussions": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_discussion": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_discussions_new": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_knowledge": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_article": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "community_knowledge_new": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  }
+}

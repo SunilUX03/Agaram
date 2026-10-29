@@ -1,0 +1,29 @@
+{
+  "routes": {
+    "library_rules": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "library_circulars": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "library_forms": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "library_faqs": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "library_announcements": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  }
+}

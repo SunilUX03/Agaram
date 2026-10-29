@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "account": {
+      "headline": "Account and settings",
+      "tagline": "Your contact details, language and privacy.",
+      "main": "Save changes"
+    }
+  }
+}

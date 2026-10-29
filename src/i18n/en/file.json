@@ -1,0 +1,49 @@
+{
+  "routes": {
+    "file": {
+      "headline": "Your service file",
+      "tagline": "Your full record, as the department holds it.",
+      "main": "Update my details"
+    },
+    "file_profile": {
+      "headline": "Your profile",
+      "tagline": "Personal, contact and official details.",
+      "main": "Update my details"
+    },
+    "file_career": {
+      "headline": "Your career",
+      "tagline": "Every posting, transfer and promotion, newest first.",
+      "main": "Report a correction"
+    },
+    "file_leave": {
+      "headline": "Your leave",
+      "tagline": "Balances and history.",
+      "main": "Apply for leave"
+    },
+    "file_training": {
+      "headline": "Your training",
+      "tagline": "Courses you have attended.",
+      "main": "Request training"
+    },
+    "file_travel": {
+      "headline": "Your travel",
+      "tagline": "Foreign visits, official tours and private visits.",
+      "main": "Apply"
+    },
+    "file_property": {
+      "headline": "Your property returns",
+      "tagline": "Land, buildings and valuables on record. Only you and the department can see this.",
+      "main": "Report a new property"
+    },
+    "file_benefits": {
+      "headline": "Your benefits",
+      "tagline": "LTC, medical claims, housing advance, GPF and more.",
+      "main": "Make a claim"
+    },
+    "file_documents": {
+      "headline": "Your orders and documents",
+      "tagline": "Every order and file linked to your record.",
+      "main": ""
+    }
+  }
+}

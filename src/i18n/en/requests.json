@@ -1,0 +1,24 @@
+{
+  "routes": {
+    "requests": {
+      "headline": "Your requests",
+      "tagline": "Everything you have asked for, and where it stands.",
+      "main": "Start a request"
+    },
+    "requests_new": {
+      "headline": "What do you need?",
+      "tagline": "Pick what you want to do. We will ask only for what is needed.",
+      "main": ""
+    },
+    "requests_form": {
+      "headline": "Request form",
+      "tagline": "Your details are filled in. Add the rest.",
+      "main": "Send"
+    },
+    "requests_detail": {
+      "headline": "Request",
+      "tagline": "",
+      "main": "Withdraw"
+    }
+  }
+}

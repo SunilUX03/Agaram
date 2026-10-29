@@ -1,0 +1,19 @@
+{
+  "routes": {
+    "learn_trainings": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "learn_resources": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "learn_awards": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  }
+}

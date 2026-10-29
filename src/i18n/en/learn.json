@@ -1,0 +1,19 @@
+{
+  "routes": {
+    "learn_trainings": {
+      "headline": "Trainings",
+      "tagline": "Join what is scheduled. Ask for what is missing.",
+      "main": "Request training"
+    },
+    "learn_resources": {
+      "headline": "Learning resources",
+      "tagline": "Courses, videos and articles shared by officers.",
+      "main": "Share a resource"
+    },
+    "learn_awards": {
+      "headline": "Awards",
+      "tagline": "Recognition open to Tamil Nadu civil servants.",
+      "main": ""
+    }
+  }
+}

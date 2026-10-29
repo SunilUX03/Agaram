@@ -1,0 +1,24 @@
+{
+  "app": {
+    "name": "Agaram",
+    "skipToMain": "Skip to main content",
+    "title": "{{headline}} | Agaram"
+  },
+  "language": { "switch": "Language", "en": "EN", "ta": "த" },
+  "offline": "You are offline. Some things may not work.",
+  "notFound": { "title": "We could not find that page.", "button": "Go to Home" },
+  "error": {
+    "load": "We could not load this. Check your connection and try again.",
+    "retry": "Retry"
+  },
+  "placeholder": "This page is built in a later phase.",
+  "demo": {
+    "title": "Demo controls",
+    "language": "Language",
+    "reset": "Reset demo data",
+    "forceLoading": "Force loading",
+    "forceEmpty": "Force empty",
+    "forceError": "Force error",
+    "advance": "Advance request"
+  }
+}

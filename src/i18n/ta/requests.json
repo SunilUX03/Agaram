@@ -1,0 +1,24 @@
+{
+  "routes": {
+    "requests": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "requests_new": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "requests_form": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "requests_detail": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  }
+}
