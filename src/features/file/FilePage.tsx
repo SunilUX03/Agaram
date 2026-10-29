@@ -86,14 +86,14 @@ export default function FilePage() {
       <RouteHeader id="file" main={{ to: '/requests/new/update-details' }} />
       <QueryView query={o} skeleton="card" skeletonCount={1}>
         {(of) => (
-          <div className="card hub-card">
+          <div className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad hub-card">
             <div className="hub-head">
               <Avatar name={of.name} photoUrl={of.photoUrl} size={88} />
               <div>
                 <h2>
                   {of.salutation} {of.name}
                 </h2>
-                <p className="muted">
+                <p className="ux4g-text-neutral-secondary">
                   {t('hub.idLine', { year: of.batch })} · {t('hub.officerId', { id: of.officerId })}
                 </p>
                 <p>
@@ -109,16 +109,26 @@ export default function FilePage() {
         {!ready ? (
           <Skeleton variant="tile" count={8} />
         ) : (
-          <div className="tiles tiles-4 tiles-rows">
+          <div className="tiles-4">
             {tiles.map((x) => (
-              <Link key={x.id} to={x.to} className="tile">
-                <span className="tile-icon">
-                  <Icon name={x.icon} />
-                </span>
-                <span>
-                  {t(`hub.${x.id}.title`)}
-                  <small>{t(`hub.${x.id}.count`, x.n)}</small>
-                  <small>{upd(x.d)}</small>
+              <Link
+                key={x.id}
+                to={x.to}
+                className="ux4g-card ux4g-card-outline ux4g-card-vertical card-link"
+              >
+                <span className="ux4g-card-body ux4g-d-flex ux4g-gap-s ux4g-ai-center">
+                  <span className="tile-icon" aria-hidden="true">
+                    <Icon name={x.icon} size={28} />
+                  </span>
+                  <span className="ux4g-d-flex ux4g-flex-column">
+                    <span className="ux4g-label-l-strong">{t(`hub.${x.id}.title`)}</span>
+                    <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {t(`hub.${x.id}.count`, x.n)}
+                    </span>
+                    <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {upd(x.d)}
+                    </span>
+                  </span>
                 </span>
               </Link>
             ))}
@@ -126,7 +136,7 @@ export default function FilePage() {
         )}
       </section>
       <p>
-        <Link to="/requests/new/correction" className="link">
+        <Link to="/requests/new/correction" className="ux4g-text-link-md">
           {t('hub.report')}
         </Link>
       </p>

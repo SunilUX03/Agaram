@@ -12,7 +12,12 @@ export function OrderLink({ orderId }: { orderId?: string }) {
   if (!orderId) return null;
   return (
     <>
-      <button type="button" className="link-btn" onClick={() => setOpen(true)} disabled={!doc}>
+      <button
+        type="button"
+        className="ux4g-btn-text-primary ux4g-btn-s"
+        onClick={() => setOpen(true)}
+        disabled={!doc}
+      >
         {t('common.order')}
       </button>
       {open && doc && (

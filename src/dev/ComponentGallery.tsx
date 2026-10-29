@@ -78,28 +78,31 @@ export default function ComponentGallery() {
         headline="Component gallery"
         tagline="Every shared component in its states."
         main={
-          <button className="btn btn-primary" onClick={() => toast('Your request has been sent.')}>
+          <button
+            className="ux4g-btn-primary ux4g-btn-m"
+            onClick={() => toast('Your request has been sent.')}
+          >
             Show toast
           </button>
         }
         breadcrumb={[{ label: 'Dev', to: '/home' }, { label: 'Components' }]}
       />
       <S title="StatusChip">
-        <div className="row">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
           {[...REQUEST_STATUSES, 'idea:accepted', 'award:open', 'officer:serving'].map((s) => (
             <StatusChip key={s} status={s} />
           ))}
         </div>
       </S>
       <S title="Tag, Avatar">
-        <div className="row">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
           <Tag>Flagship initiative</Tag>
           <Avatar name="Meenakshi Sundaram" />
           <Avatar name="Asha Rao" photoUrl="/missing.png" />
         </div>
       </S>
       <S title="Card, ListRow, QuickActionTile">
-        <div className="row">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
           <Card>Plain card</Card>
           <Card to="/home">Interactive card</Card>
         </div>
@@ -252,7 +255,7 @@ export default function ComponentGallery() {
         <SimpleRichText name="g-rt" label="Rich text" value={rich} onChange={setRich} />
       </S>
       <S title="BalanceMeter, KeyValueList, HelpTip">
-        <div className="row">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
           <BalanceMeter label="Casual leave (CL)" allowed={12} used={4} />
           <HelpTip text="Casual leave." />
         </div>
@@ -264,11 +267,11 @@ export default function ComponentGallery() {
         />
       </S>
       <S title="FileViewer, ConfirmDialog, Toast">
-        <div className="row">
-          <button className="btn" onClick={() => setViewer(true)}>
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
+          <button className="ux4g-btn-outline-primary ux4g-btn-m" onClick={() => setViewer(true)}>
             Open viewer
           </button>
-          <button className="btn" onClick={() => setConfirm(true)}>
+          <button className="ux4g-btn-outline-primary ux4g-btn-m" onClick={() => setConfirm(true)}>
             Withdraw
           </button>
         </div>
@@ -298,7 +301,7 @@ export default function ComponentGallery() {
         ))}
       </S>
       <S title="ToggleButton, Accordion, PollBar">
-        <div className="row">
+        <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
           <ToggleButton
             label="Back this idea"
             onLabel="Backed"
@@ -322,7 +325,7 @@ export default function ComponentGallery() {
         />
         <PollBar label="Option A" votes={6} total={10} showResult={voted} />
         <PollBar label="Option B" votes={4} total={10} showResult={voted} />
-        <button className="btn" onClick={() => setVoted(true)}>
+        <button className="ux4g-btn-outline-primary ux4g-btn-m" onClick={() => setVoted(true)}>
           Vote
         </button>
       </S>

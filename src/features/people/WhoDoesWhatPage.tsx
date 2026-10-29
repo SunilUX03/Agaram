@@ -52,13 +52,15 @@ export default function WhoDoesWhatPage() {
                     <label className="sr-only" htmlFor="dept-filter">
                       {t('who.filterDepts')}
                     </label>
-                    <input
-                      id="dept-filter"
-                      className="input"
-                      placeholder={t('who.filterDepts')}
-                      value={filter}
-                      onChange={(e) => setFilter(e.target.value)}
-                    />
+                    <div className="ux4g-input-container ux4g-input-l ux4g-input-default">
+                      <input
+                        id="dept-filter"
+
+                        placeholder={t('who.filterDepts')}
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                      />
+                    </div>
                     <ul className="plain-list">
                       {depts.map((d) => (
                         <li key={d.id}>
@@ -72,7 +74,9 @@ export default function WhoDoesWhatPage() {
                           </button>
                         </li>
                       ))}
-                      {!depts.length && <li className="muted">{t('who.noMatch')}</li>}
+                      {!depts.length && (
+                        <li className="ux4g-text-neutral-secondary">{t('who.noMatch')}</li>
+                      )}
                     </ul>
                   </>
                 ) : (
@@ -90,8 +94,10 @@ export default function WhoDoesWhatPage() {
                 <SearchField ref={box} label={t('who.searchSubject')} value={q} onChange={setQ} />
                 {current ? (
                   <section aria-label={current.name} style={{ marginTop: 16 }}>
-                    <h2 className="h-sm">{current.name}</h2>
-                    <p className="small muted">{t('who.chain')}</p>
+                    <h2 className="ux4g-heading-xs-strong">{current.name}</h2>
+                    <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {t('who.chain')}
+                    </p>
                     <div className="stack-sm">
                       {current.posts.map((p) => {
                         const hit = matches(p, n);
@@ -101,16 +107,25 @@ export default function WhoDoesWhatPage() {
                             to={`/people/who-does-what/${current.id}/${p.id}`}
                             className={hit ? 'is-hit' : undefined}
                           >
-                            <div className="row" style={{ justifyContent: 'space-between' }}>
+                            <div
+                              className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+                              style={{ justifyContent: 'space-between' }}
+                            >
                               <h3>{p.title}</h3>
                               {hit && (
-                                <span className="chip chip-warning-soft">{t('who.match')}</span>
+                                <span className="ux4g-tag-tonal-neutral ux4g-tag-s chip-warning-soft">
+                                  {t('who.match')}
+                                </span>
                               )}
                             </div>
                             <p>
-                              {p.officerName ?? <span className="muted">{t('who.notOnFile')}</span>}
+                              {p.officerName ?? (
+                                <span className="ux4g-text-neutral-secondary">
+                                  {t('who.notOnFile')}
+                                </span>
+                              )}
                             </p>
-                            <p className="card-meta clamp-2">
+                            <p className="ux4g-body-s-default ux4g-text-neutral-secondary clamp-2">
                               {t('who.handles', { subjects: subjectsOf(p).slice(0, 6).join(', ') })}
                             </p>
                           </Card>
@@ -119,7 +134,7 @@ export default function WhoDoesWhatPage() {
                     </div>
                   </section>
                 ) : (
-                  <p className="muted" style={{ marginTop: 16 }}>
+                  <p className="ux4g-text-neutral-secondary" style={{ marginTop: 16 }}>
                     {t('who.selectDept')}
                   </p>
                 )}

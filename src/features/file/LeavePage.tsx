@@ -46,7 +46,7 @@ export default function LeavePage() {
                     />
                   ))}
                 </div>
-                <p className="muted">{t('leave.updatedNote')}</p>
+                <p className="ux4g-text-neutral-secondary">{t('leave.updatedNote')}</p>
               </>
             )}
           </QueryView>

@@ -61,10 +61,14 @@ function IdleGuard() {
       onClose={() => (setLeft(null), arm())}
       footer={
         <>
-          <button type="button" className="btn" onClick={out}>
+          <button type="button" className="ux4g-btn-outline-primary ux4g-btn-m" onClick={out}>
             {t('session.signOut')}
           </button>
-          <button type="button" className="btn btn-primary" onClick={() => (setLeft(null), arm())}>
+          <button
+            type="button"
+            className="ux4g-btn-primary ux4g-btn-m"
+            onClick={() => (setLeft(null), arm())}
+          >
             {t('session.stay')}
           </button>
         </>

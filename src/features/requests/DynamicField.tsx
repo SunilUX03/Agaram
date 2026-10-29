@@ -156,7 +156,7 @@ export function DynamicField({ type, def, values, errors, set, options }: Props)
               {rows.length > 1 && (
                 <button
                   type="button"
-                  className="link-btn"
+                  className="ux4g-btn-text-primary ux4g-btn-s"
                   onClick={() => put(rows.filter((_, j) => j !== i))}
                 >
                   {t('form.remove')}
@@ -164,7 +164,11 @@ export function DynamicField({ type, def, values, errors, set, options }: Props)
               )}
             </div>
           ))}
-          <button type="button" className="btn btn-sm" onClick={() => put([...rows, {}])}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-s"
+            onClick={() => put([...rows, {}])}
+          >
             {def.addLabel ? c(type, `add.${def.name}`, def.addLabel) : t('form.addAnother')}
           </button>
         </fieldset>

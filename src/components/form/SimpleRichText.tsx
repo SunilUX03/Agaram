@@ -27,20 +27,32 @@ export function SimpleRichText({ name, value, onChange, ...f }: Props) {
     <Field id={id} {...f}>
       <div className="rich">
         <div className="rich-bar" role="toolbar" aria-label={t('ui.rich.editor')}>
-          <button type="button" className="btn" onClick={() => cmd('bold')}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-s"
+            onClick={() => cmd('bold')}
+          >
             <b>B</b>
             <span className="sr-only">{t('ui.rich.bold')}</span>
           </button>
-          <button type="button" className="btn" onClick={() => cmd('italic')}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-s"
+            onClick={() => cmd('italic')}
+          >
             <i>I</i>
             <span className="sr-only">{t('ui.rich.italic')}</span>
           </button>
-          <button type="button" className="btn" onClick={() => cmd('insertUnorderedList')}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-s"
+            onClick={() => cmd('insertUnorderedList')}
+          >
             • <span className="sr-only">{t('ui.rich.list')}</span>
           </button>
           <button
             type="button"
-            className="btn"
+            className="ux4g-btn-outline-primary ux4g-btn-s"
             onClick={() => {
               const u = prompt('https://');
               if (u) cmd('createLink', u);
@@ -52,7 +64,7 @@ export function SimpleRichText({ name, value, onChange, ...f }: Props) {
         <div
           id={id}
           ref={ref}
-          className="input rich-area"
+          className="ux4g-input-input rich-area"
           contentEditable
           role="textbox"
           aria-multiline="true"

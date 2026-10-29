@@ -54,7 +54,7 @@ function InterestToggle({
   const shown = e.interestCount + (delta ?? 0);
   return (
     <>
-      <span className="card-meta" aria-live="polite">
+      <span className="ux4g-body-s-default ux4g-text-neutral-secondary" aria-live="polite">
         {t('trainings.need', { count: shown })}
       </span>
       <ToggleButton
@@ -96,15 +96,18 @@ export default function TrainingsPage() {
                 ? e.past
                 : !e.past && (tab === 'upcoming' ? e.kind === 'official' : e.kind === 'requested'),
             );
-            if (!rows.length) return <p className="muted">{t('trainings.empty')}</p>;
+            if (!rows.length)
+              return <p className="ux4g-text-neutral-secondary">{t('trainings.empty')}</p>;
             if (tab === 'past')
               return (
                 <ul className="plain-list">
                   {rows.map((e) => (
                     <li key={e.id} className="list-row">
                       <span className="list-row-main">
-                        <span className="list-row-title">{e.title}</span>
-                        <span className="list-row-meta">{e.date && formatDate(e.date, loc)}</span>
+                        <span className="ux4g-body-m-strong">{e.title}</span>
+                        <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                          {e.date && formatDate(e.date, loc)}
+                        </span>
                       </span>
                     </li>
                   ))}
@@ -115,7 +118,9 @@ export default function TrainingsPage() {
                 {rows.map((e) => (
                   <Card key={e.id}>
                     <h3>{e.title}</h3>
-                    <p className="card-meta">{e.description}</p>
+                    <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {e.description}
+                    </p>
                     {tab === 'upcoming' ? (
                       <>
                         <p style={{ marginTop: 8 }}>
@@ -128,7 +133,7 @@ export default function TrainingsPage() {
                         <div className="card-foot">
                           <button
                             type="button"
-                            className="btn btn-sm"
+                            className="ux4g-btn-outline-primary ux4g-btn-s"
                             onClick={() => downloadIcs(e)}
                           >
                             {t('trainings.addCal')}
@@ -136,7 +141,7 @@ export default function TrainingsPage() {
                           {e.links.map((l) => (
                             <a
                               key={l.url}
-                              className="link"
+                              className="ux4g-text-link-md"
                               href={l.url}
                               target="_blank"
                               rel="noopener noreferrer"

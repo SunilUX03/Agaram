@@ -28,7 +28,10 @@ export default function SectionPage() {
         tagline={dep.name}
         main={
           post.officerId ? (
-            <Link to={`/people/colleagues/${post.officerId}`} className="btn btn-primary">
+            <Link
+              to={`/people/colleagues/${post.officerId}`}
+              className="ux4g-btn-primary ux4g-btn-m"
+            >
               {t('routes.people_section.main')}
             </Link>
           ) : undefined
@@ -40,19 +43,24 @@ export default function SectionPage() {
         ]}
       />
       <div className="form-narrow stack">
-        <section className="card row" aria-label={t('section.inCharge')}>
+        <section
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+          aria-label={t('section.inCharge')}
+        >
           {officer ? (
             <Avatar name={officer.name} photoUrl={officer.photoUrl} size={56} />
           ) : (
             <Icon name="user" size={32} />
           )}
           <div>
-            <p className="card-meta">{t('section.inCharge')}</p>
+            <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+              {t('section.inCharge')}
+            </p>
             <strong>{post.officerName ?? t('section.notOnFile')}</strong>
           </div>
         </section>
         <section aria-labelledby="sec-h">
-          <h2 id="sec-h" className="h-sm">
+          <h2 id="sec-h" className="ux4g-heading-xs-strong">
             {t('section.oversees', { n: post.sections.length })}
           </h2>
           <ul className="accordion plain-list">
@@ -70,7 +78,7 @@ export default function SectionPage() {
                     >
                       <span>
                         {s.name}{' '}
-                        <span className="muted small">
+                        <span className="ux4g-text-neutral-secondary ux4g-body-s-default">
                           · {t('section.subjects', { count: s.subjects.length })}
                         </span>
                       </span>
@@ -80,7 +88,7 @@ export default function SectionPage() {
                   <div hidden={!isOpen}>
                     <div className="tags">
                       {s.subjects.map((x) => (
-                        <span key={x} className="tag">
+                        <span key={x} className="ux4g-tag-tonal-neutral ux4g-tag-s">
                           {x}
                         </span>
                       ))}

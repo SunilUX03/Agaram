@@ -13,7 +13,7 @@ function Row({ title, to, children }: { title: string; to: string; children: Rea
     <section className="section" aria-label={title}>
       <div className="section-head">
         <h2>{title}</h2>
-        <Link to={to} className="link">
+        <Link to={to} className="ux4g-text-link-md">
           {t('hub.seeAll')}
         </Link>
       </div>
@@ -34,10 +34,10 @@ export default function CommunityPage() {
         main={{ to: '/community/ideas/new' }}
         secondary={
           <>
-            <Link to="/community/discussions/new" className="btn">
+            <Link to="/community/discussions/new" className="ux4g-btn-outline-primary ux4g-btn-m">
               {t('hub.discussion')}
             </Link>
-            <Link to="/community/knowledge/new" className="btn">
+            <Link to="/community/knowledge/new" className="ux4g-btn-outline-primary ux4g-btn-m">
               {t('hub.article')}
             </Link>
           </>
@@ -66,7 +66,7 @@ export default function CommunityPage() {
       <Row title={t('hub.latestDiscussions')} to="/community/discussions">
         <QueryView query={posts} skeleton="row" skeletonCount={3}>
           {(d) => (
-            <div className="list">
+            <div className="ux4g-d-flex ux4g-flex-column">
               {d.slice(0, 3).map((p) => (
                 <PostRow key={p.id} post={p} />
               ))}

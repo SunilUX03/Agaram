@@ -42,7 +42,8 @@ export default function TravelPage() {
             const shown = rows
               .filter((r) => r.kind === tab)
               .sort((a, b) => b.from.localeCompare(a.from));
-            if (!shown.length) return <p className="muted">{t('travel.empty')}</p>;
+            if (!shown.length)
+              return <p className="ux4g-text-neutral-secondary">{t('travel.empty')}</p>;
             return (
               <ul className="plain-list">
                 {shown.map((r) => (
@@ -51,8 +52,8 @@ export default function TravelPage() {
                       <Icon name="plane" />
                     </span>
                     <span className="list-row-main">
-                      <span className="list-row-title">{r.place}</span>
-                      <span className="list-row-meta">
+                      <span className="ux4g-body-m-strong">{r.place}</span>
+                      <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                         {formatDate(r.from, loc)} – {formatDate(r.to, loc)}
                         {r.purpose ? ` · ${r.purpose}` : ''}
                       </span>

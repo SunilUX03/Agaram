@@ -28,7 +28,7 @@ export default function RulesPage() {
                 ))}
               </ul>
             ) : (
-              <p className="muted">{t('common.empty')}</p>
+              <p className="ux4g-text-neutral-secondary">{t('common.empty')}</p>
             );
           }}
         </QueryView>

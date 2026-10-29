@@ -63,18 +63,20 @@ function Tasks() {
           <label htmlFor="task-text" className="sr-only">
             {t('tasks.label')}
           </label>
-          <input
-            id="task-text"
-            ref={input}
-            className="input"
-            placeholder={t('tasks.placeholder')}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            aria-invalid={!!err}
-            aria-describedby={err ? 'task-err' : undefined}
-          />
+          <div className="ux4g-input-container ux4g-input-l ux4g-input-default">
+            <input
+              id="task-text"
+              ref={input}
+
+              placeholder={t('tasks.placeholder')}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              aria-invalid={!!err}
+              aria-describedby={err ? 'task-err' : undefined}
+            />
+          </div>
           {err && (
-            <div id="task-err" className="err">
+            <div id="task-err" className="ux4g-body-s-default ux4g-text-error">
               {err}
             </div>
           )}
@@ -82,7 +84,7 @@ function Tasks() {
         <div className="task-due">
           <DatePicker name="task-due" label={t('tasks.due')} value={due} onChange={setDue} />
         </div>
-        <button type="submit" className="btn btn-primary" disabled={add.isPending}>
+        <button type="submit" className="ux4g-btn-primary ux4g-btn-m" disabled={add.isPending}>
           {t('tasks.add')}
         </button>
       </form>
@@ -99,16 +101,16 @@ function Tasks() {
                 onChange={() => toggle.mutate([x.id])}
               />
               <label htmlFor={`tk-${x.id}`} className="list-row-main">
-                <span className={`list-row-title${x.done ? ' is-done' : ''}`}>{x.text}</span>
+                <span className={`ux4g-body-m-strong ${x.done ? ' is-done' : ''}`}>{x.text}</span>
                 {x.due && (
-                  <span className="list-row-meta">
+                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                     {t('tasks.due2', { date: formatDate(x.due, loc) })}
                   </span>
                 )}
               </label>
               <button
                 type="button"
-                className="icon-btn"
+                className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md"
                 aria-label={t('tasks.delete', { text: x.text })}
                 onClick={() => setRm(x)}
               >
@@ -123,7 +125,7 @@ function Tasks() {
                 <div>
                   <button
                     type="button"
-                    className="link-btn"
+                    className="ux4g-btn-text-primary ux4g-btn-s"
                     aria-expanded={showDone}
                     onClick={() => setShowDone(!showDone)}
                   >
@@ -160,23 +162,32 @@ function Notes() {
   return (
     <>
       {open ? (
-        <div className="card" style={{ marginBottom: 16 }}>
+        <div
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          style={{ marginBottom: 16 }}
+        >
           <label htmlFor="note-text" className="sr-only">
             {t('notes.label')}
           </label>
-          <textarea
-            id="note-text"
-            className="input"
-            rows={3}
-            placeholder={t('notes.placeholder')}
-            value={text}
-            autoFocus
-            onChange={(e) => setText(e.target.value)}
-          />
-          <div className="row" style={{ marginTop: 12 }}>
+          <div className="ux4g-textarea ux4g-textarea-default">
+            <textarea
+              className="ux4g-textarea-input"
+              id="note-text"
+
+              rows={3}
+              placeholder={t('notes.placeholder')}
+              value={text}
+              autoFocus
+              onChange={(e) => setText(e.target.value)}
+            />
+          </div>
+          <div
+            className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+            style={{ marginTop: 12 }}
+          >
             <button
               type="button"
-              className="btn btn-primary btn-sm"
+              className="ux4g-btn-primary ux4g-btn-s"
               disabled={!text.trim()}
               onClick={() =>
                 add.mutate([text.trim()], { onSuccess: () => (setText(''), setOpen(false)) })
@@ -184,7 +195,11 @@ function Notes() {
             >
               {t('notes.save')}
             </button>
-            <button type="button" className="btn btn-sm" onClick={() => setOpen(false)}>
+            <button
+              type="button"
+              className="ux4g-btn-outline-primary ux4g-btn-s"
+              onClick={() => setOpen(false)}
+            >
               {t('notes.cancel')}
             </button>
           </div>
@@ -192,7 +207,7 @@ function Notes() {
       ) : (
         <button
           type="button"
-          className="btn"
+          className="ux4g-btn-outline-primary ux4g-btn-m"
           style={{ marginBottom: 16 }}
           onClick={() => setOpen(true)}
         >
@@ -205,11 +220,16 @@ function Notes() {
             {all.map((n) => (
               <li key={n.id} className="sticky-note">
                 <p>{n.text}</p>
-                <div className="row" style={{ justifyContent: 'space-between' }}>
-                  <span className="small muted">{formatDate(n.createdAt, loc)}</span>
+                <div
+                  className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+                  style={{ justifyContent: 'space-between' }}
+                >
+                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                    {formatDate(n.createdAt, loc)}
+                  </span>
                   <button
                     type="button"
-                    className="icon-btn"
+                    className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-md"
                     aria-label={t('notes.delete')}
                     onClick={() => del.mutate([n.id])}
                   >
@@ -254,7 +274,7 @@ function People() {
           <ColleagueCard c={c} />
           <button
             type="button"
-            className="link-btn"
+            className="ux4g-btn-text-primary ux4g-btn-s"
             onClick={() => rm.mutate(['person', c.id, false])}
           >
             {t('people.remove')}
@@ -305,12 +325,14 @@ function Items() {
       {items.map((x) => (
         <li key={x.s.id} className="list-row">
           <Link to={x.to} className="list-row-main" style={{ textDecoration: 'none' }}>
-            <span className="list-row-title">{x.title}</span>
-            <span className="list-row-meta">{t(`items.kind.${x.s.kind}`)}</span>
+            <span className="ux4g-body-m-strong">{x.title}</span>
+            <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+              {t(`items.kind.${x.s.kind}`)}
+            </span>
           </Link>
           <button
             type="button"
-            className="link-btn"
+            className="ux4g-btn-text-primary ux4g-btn-s"
             aria-label={t('items.removeName', { name: x.title })}
             onClick={() => rm.mutate([x.s.kind, x.s.refId, false])}
           >

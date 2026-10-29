@@ -14,7 +14,7 @@ export function RoutePlaceholder({ route }: { route: RouteDef }) {
         tagline={t(`${key}.tagline`) || undefined}
         main={
           main ? (
-            <button type="button" className="btn btn-primary" disabled>
+            <button type="button" className="ux4g-btn-primary ux4g-btn-m" disabled>
               {main}
             </button>
           ) : undefined

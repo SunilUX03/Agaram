@@ -11,7 +11,7 @@ export interface FieldProps {
   locked?: boolean;
 }
 
-/** Label above, help text, inline error linked by aria-describedby, required marker, locked state. */
+/** UX4G input container: label above, helper text, inline error linked by aria-describedby, required marker, locked state. */
 export function Field({
   id,
   label,
@@ -20,11 +20,15 @@ export function Field({
   required,
   locked,
   children,
-}: FieldProps & { children: ReactNode }) {
+  size = 'lg',
+}: FieldProps & { children: ReactNode; size?: 'sm' | 'md' | 'lg' | 'xl' }) {
   const { t } = useTranslation();
+  const state = error ? 'ux4g-input-error' : 'ux4g-input-default';
   return (
-    <div className={`field${error ? ' has-error' : ''}`}>
-      <label htmlFor={id} id={`${id}-label`}>
+    <div
+      className={`ux4g-input-container ux4g-input-${size === 'lg' ? 'l' : size === 'md' ? 'm' : size === 'sm' ? 's' : 'xl'} ${state}${locked ? ' ux4g-input-is-disabled' : ''} field-wrap`}
+    >
+      <label htmlFor={id} id={`${id}-label`} className="ux4g-label-m-default">
         {label}
         {required && (
           <span className="req">
@@ -38,20 +42,23 @@ export function Field({
           </span>
         )}
       </label>
-      {help && (
-        <div id={`${id}-help`} className="help">
-          {help}
-        </div>
+      <div className="ux4g-input">{children}</div>
+      {help && !error && (
+        <span id={`${id}-help`} className="ux4g-input-helper">
+          <span className="ux4g-input-helper-text">{help}</span>
+        </span>
       )}
-      {children}
       {error && (
-        <div id={`${id}-err`} className="err">
-          <Icon name="warning" size={14} /> {error}
-        </div>
+        <span id={`${id}-err`} className="ux4g-input-helper">
+          <i className="ux4g-icon-outlined ux4g-input-helper-icon" aria-hidden="true">
+            warning
+          </i>
+          <span className="ux4g-input-helper-text">{error}</span>
+        </span>
       )}
     </div>
   );
 }
 
 export const describedBy = (id: string, p: { help?: string; error?: string }) =>
-  [p.help && `${id}-help`, p.error && `${id}-err`].filter(Boolean).join(' ') || undefined;
+  p.error ? `${id}-err` : p.help ? `${id}-help` : undefined;

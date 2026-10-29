@@ -10,10 +10,11 @@ interface Props {
   icon?: IconName;
   disabled?: boolean;
   title?: string;
-  /** Called with the new value. The button updates at once and rolls back if this rejects. */
+  /** Called with the new value. The button updates at once and settles when this finishes. */
   onChange: (next: boolean) => void | Promise<unknown>;
 }
 
+/** UX4G pill button that toggles: tonal when on, outline when off. */
 export function ToggleButton({
   label,
   onLabel,
@@ -44,7 +45,7 @@ export function ToggleButton({
   return (
     <button
       type="button"
-      className={`btn btn-toggle${on ? ' is-on' : ''}`}
+      className={`${on ? 'ux4g-btn-tonal-primary' : 'ux4g-btn-outline-primary'} ux4g-btn-s ux4g-radius-full`}
       aria-pressed={on}
       disabled={disabled}
       title={title}

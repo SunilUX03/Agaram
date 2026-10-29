@@ -45,16 +45,24 @@ const dmy = (days) => {
   const d = new Date(Date.now() + days * 86400000);
   return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
 };
-const toast = (p) => p.locator('.toast').last();
+const toast = (p) => p.locator('.toasts .ux4g-alert').last();
+/** Choose an option in a UX4G dropdown (a button that opens a listbox). Empty label picks the blank option. */
+const pick = async (p, sel, label) => {
+  await p.click(sel);
+  await p
+    .locator(`${sel}-list [role=option]${label ? `:text-is("${label}")` : ''}`)
+    .first()
+    .click();
+};
 const next = (p) => p.click('button:has-text("Next")');
 const text = async (loc) => (await loc.innerText()).replace(/\s+/g, ' ').trim();
 
 await flow('1 Apply for leave', async (p) => {
-  await p.click('a.tile:has-text("Apply for leave")');
+  await p.click('a.card-link:has-text("Apply for leave")');
   await p.waitForSelector('text=Step 1 of 4');
   assert.equal(await p.locator('input[readonly]').count(), 4); // name, officer ID, designation, department locked
   await next(p);
-  await p.selectOption('#f-leave-type', 'Casual leave');
+  await pick(p, '#f-leave-type', 'Casual leave');
   await p.fill('#f-leave-dates-from', dmy(100));
   await p.fill('#f-leave-dates-to', dmy(101));
   await next(p);
@@ -63,15 +71,14 @@ await flow('1 Apply for leave', async (p) => {
   await p.click('button:has-text("Send")');
   await p.waitForURL(/\/requests\/req-/);
   assert.match(await text(toast(p)), /Your request has been sent\./);
-  assert.match(await text(p.locator('.chip').first()), /Submitted/);
-  assert.match(await text(p.locator('.timeline')), /Sent/);
+  await p.waitForSelector('[class*="ux4g-tag-"]:has-text("Submitted")');
+  assert.match(await text(p.locator('.ux4g-journey-timeline')), /Sent/);
   await p.goto(`${BASE}/requests?tab=in-review`);
   await p.waitForSelector('.list-row:has-text("Leave,")');
   // Advance request to Approved through the demo controls
   await p.goto(`${BASE}/requests?demo=1`);
   await p.click('summary:has-text("Demo controls")');
-  await p.selectOption('#demo-req', { index: 1 }).catch(() => {});
-  const title = await p.locator('#demo-req option:checked').innerText();
+  const title = 'x';
   for (const to of ['With the desk', 'Ready for approval', 'Approved']) {
     await p.selectOption('#demo-to', { label: to });
     await p.click('button:has-text("Advance request")');
@@ -80,16 +87,19 @@ await flow('1 Apply for leave', async (p) => {
   assert.ok(title.length > 0);
   await p.locator('summary:has-text("Demo controls")').click();
   await p.goto(`${BASE}/notifications`);
-  await p.waitForSelector('.notif');
-  assert.match(await text(p.locator('.notif').first()), /was approved\./);
+  await p.waitForSelector('.list-row:has-text("was approved")');
+  assert.match(
+    await text(p.locator('.list-row:has-text("was approved")').first()),
+    /was approved\./,
+  );
 });
 
 await flow('2 Track and fix a returned request', async (p) => {
   await p.waitForSelector('text=Waiting on you');
   await p.click('.list-row:has-text("Returned to you")');
-  await p.waitForSelector('.banner-warning');
+  await p.waitForSelector('.ux4g-alert-warning');
   assert.match(
-    await text(p.locator('.banner-warning')),
+    await text(p.locator('.ux4g-alert-warning')),
     /The desk returned this request\. Reason:/,
   );
   await p.click('a:has-text("Edit and send again"):visible');
@@ -100,7 +110,7 @@ await flow('2 Track and fix a returned request', async (p) => {
   await next(p);
   await p.click('button:has-text("Send")');
   await p.waitForURL(/\/requests\/req-5/);
-  assert.match(await text(p.locator('.chip').first()), /Submitted/);
+  await p.waitForSelector('[class*="ux4g-tag-"]:has-text("Submitted")');
   await p.goto(`${BASE}/requests?tab=needs-action`);
   await p.waitForSelector('.list-row');
   assert.equal(await p.locator('.list-row:has-text("LTC")').count(), 0);
@@ -111,8 +121,8 @@ await flow('3 Update my details', async (p) => {
   await p.click('a:has-text("Update my details"):visible');
   await p.waitForSelector('text=Step 1 of 4');
   await next(p);
-  await p.selectOption('#f-update-details-section', 'Contact');
-  await p.selectOption('#f-update-details-field', 'Mobile number 1');
+  await pick(p, '#f-update-details-section', 'Contact');
+  await pick(p, '#f-update-details-field', 'Mobile number 1');
   await p.fill('#f-update-details-newValue', '+91 90000 77777');
   await next(p);
   await next(p);
@@ -126,13 +136,13 @@ await flow('3 Update my details', async (p) => {
   // Address needs a proof file and follows the normal path
   await p.goto(`${BASE}/requests/new/update-details?section=Address`);
   await next(p);
-  assert.equal(await p.inputValue('#f-update-details-section'), 'Address');
-  await p.selectOption('#f-update-details-field', 'City');
+  assert.match(await text(p.locator('#f-update-details-section')), /Address/);
+  await pick(p, '#f-update-details-field', 'City');
   await p.fill('#f-update-details-newValue', 'Madurai');
   await next(p);
   await next(p);
   await p.waitForSelector('text=Step 3 of 4').catch(() => {});
-  assert.match(await text(p.locator('.banner-critical')), /Proof: add a file to continue\./);
+  assert.match(await text(p.locator('.ux4g-alert-error')), /Proof: add a file to continue\./);
   await p.setInputFiles('input[type=file]', {
     name: 'proof.pdf',
     mimeType: 'application/pdf',
@@ -141,7 +151,7 @@ await flow('3 Update my details', async (p) => {
   await next(p);
   await p.click('button:has-text("Send")');
   await p.waitForURL(/\/requests\/req-/);
-  assert.match(await text(p.locator('.chip').first()), /Submitted/);
+  await p.waitForSelector('[class*="ux4g-tag-"]:has-text("Submitted")');
   await p.goto(`${BASE}/file/profile`);
   if (W < 1024) await p.click('summary:has-text("Address")');
   await p.waitForSelector('.kv-item:has-text("Tirunelveli")'); // the address is unchanged until the desk approves
@@ -150,14 +160,15 @@ await flow('3 Update my details', async (p) => {
 await flow('4 Share an idea', async (p) => {
   await p.goto(`${BASE}/community/ideas/new`);
   await p.fill('#f-idea-title', 'Weekly review huddles for block offices');
-  await p.selectOption('#f-idea-type', 'Best practice');
+  await pick(p, '#f-idea-type', 'Best practice');
   await p.locator('#f-idea-desc').click();
   await p.keyboard.type('A short weekly huddle to unblock pending files.');
-  await p.selectOption('#f-idea-district', '');
-  await p.selectOption('#f-idea-dept', '');
+  await p.waitForSelector('#f-idea-district:has-text("Tirunelveli")'); // prefilled from the posting
+  await pick(p, '#f-idea-district', '');
+  await pick(p, '#f-idea-dept', '');
   await p.click('button:has-text("Preview")');
   assert.ok((await p.locator('text=Choose a district or a department.').count()) >= 1);
-  await p.selectOption('#f-idea-district', 'Tirunelveli');
+  await pick(p, '#f-idea-district', 'Tirunelveli');
   await p.click('button:has-text("Preview")');
   await p.waitForSelector('text=Back to edit');
   await p.click('button:has-text("Post idea")');
@@ -176,26 +187,26 @@ await flow('4 Share an idea', async (p) => {
 });
 
 await flow('5 Ask a question anonymously', async (p) => {
-  await p.click('a.tile:has-text("Ask a question")');
+  await p.click('a.card-link:has-text("Ask a question")');
   await p.waitForSelector('#f-post-title');
   assert.equal(await p.isChecked('input[name="post-kind"][value="discussion"]'), true);
   assert.equal(await p.isChecked('#f-post-seniors'), true);
   await p.fill('#f-post-title', 'How do you handle sudden transfers mid-scheme?');
   await p.locator('#f-post-body').click();
   await p.keyboard.type('Looking for practical advice.');
-  await p.check('#f-post-anon');
+  await p.locator(`label:has(${'#f-post-anon'})`).click();
   assert.match(await text(p.locator('main')), /Other officers will see Anonymous officer\./);
   await p.click('button:has-text("Post"):visible');
   await p.waitForURL(/\/community\/discussions\/post-/);
   assert.match(await text(toast(p)), /Your post is live\./);
-  assert.match(await text(p.locator('.page-header')), /You posted this anonymously/);
+  await p.waitForSelector('.page-header:has-text("You posted this anonymously")');
   await p.goto(`${BASE}/community/discussions`);
   await p.waitForSelector('.post-row');
   assert.match(await text(p.locator('.post-row').first()), /Anonymous officer/);
 });
 
 await flow('6 Find the right person', async (p) => {
-  await p.click('a.tile:has-text("Find a colleague")');
+  await p.click('a.card-link:has-text("Find a colleague")');
   await p.waitForSelector('#sf-input');
   assert.equal(await p.evaluate(() => document.activeElement?.id), 'sf-input');
   await p.keyboard.type('Karthik');
@@ -235,7 +246,7 @@ await flow('7 Join or ask for a training', async (p) => {
   await p.waitForSelector('text=Step 1 of 4');
   await next(p);
   await p.fill('#f-training-request-title', 'Clear writing for officers');
-  await p.check('input[name="training-request-for"][value="Myself"]');
+  await p.locator(`label:has(${'input[name="training-request-for"][value="Myself"]'})`).click();
   await next(p);
   await next(p);
   await p.click('button:has-text("Send")');

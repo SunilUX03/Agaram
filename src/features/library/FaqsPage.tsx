@@ -20,12 +20,16 @@ export default function FaqsPage() {
         main={{ to: '/community/discussions/new?type=discussion&ask=1' }}
       />
       <SearchField label={t('faqs.search')} value={q} onChange={setQ} />
-      <div className="pick-chips" role="group" style={{ margin: '16px 0' }}>
+      <div
+        className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+        role="group"
+        style={{ margin: '16px 0' }}
+      >
         {TOPICS.map((x) => (
           <button
             key={x}
             type="button"
-            className="pick"
+            className={`ux4g-filter-chip-m${topic === x ? ' active' : ''}`}
             aria-pressed={topic === x}
             onClick={() => setTopic(x)}
           >
@@ -46,7 +50,7 @@ export default function FaqsPage() {
               items={rows.map((f) => ({ id: f.id, title: f.title, content: <p>{f.answer}</p> }))}
             />
           ) : (
-            <p className="muted">{t('common.empty')}</p>
+            <p className="ux4g-text-neutral-secondary">{t('common.empty')}</p>
           );
         }}
       </QueryView>

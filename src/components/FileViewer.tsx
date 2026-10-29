@@ -9,7 +9,7 @@ interface Props {
   onClose: () => void;
 }
 
-/** Opens a PDF or image inside the portal. Full-screen on mobile. A Download link is always offered. */
+/** Opens a PDF or image inside the portal in a large UX4G modal. A Download link is always offered. */
 export function FileViewer({ title, url = SAMPLE_PDF, onClose }: Props) {
   const { t } = useTranslation();
   const isImage = /\.(png|jpe?g)$/i.test(url);
@@ -20,10 +20,10 @@ export function FileViewer({ title, url = SAMPLE_PDF, onClose }: Props) {
       onClose={onClose}
       footer={
         <>
-          <a className="btn" href={url} download>
+          <a className="ux4g-btn-outline-primary ux4g-btn-m" href={url} download>
             {t('ui.file.download')}
           </a>
-          <button type="button" className="btn btn-primary" onClick={onClose}>
+          <button type="button" className="ux4g-btn-primary ux4g-btn-m" onClick={onClose}>
             {t('ui.file.close')}
           </button>
         </>

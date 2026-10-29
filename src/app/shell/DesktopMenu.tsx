@@ -10,10 +10,18 @@ function Dropdown({ item, onNavigate }: { item: NavItem; onNavigate: () => void 
   const groups = item.groups ?? [{ label: '', items: item.links ?? [] }];
   const { t } = useTranslation();
   return (
-    <div className="dd" role="menu" aria-label={t(item.label)}>
+    <div
+      className="menu-pop ux4g-card ux4g-card-outline ux4g-shadow-l2"
+      role="menu"
+      aria-label={t(item.label)}
+    >
       {groups.map((g, gi) => (
         <div key={gi} role="group" aria-label={g.label ? t(g.label) : undefined}>
-          {g.label && <div className="dd-group">{t(g.label)}</div>}
+          {g.label && (
+            <div className="ux4g-label-s-strong ux4g-text-neutral-secondary menu-group">
+              {t(g.label)}
+            </div>
+          )}
           {g.items.map((l) => (
             <Link
               key={l.to}
@@ -86,7 +94,7 @@ function Item({ item }: { item: NavItem }) {
           {hasMenu && (
             <button
               type="button"
-              className="menu-chevron"
+              className="menu-chevron ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-xs"
               aria-haspopup="menu"
               aria-expanded={open}
               aria-label={t('nav.openMenu', { name: label })}
@@ -115,14 +123,13 @@ function Item({ item }: { item: NavItem }) {
 }
 
 export const DesktopMenu = ({ items }: { items: NavItem[] }) => {
-  const { t } = useTranslation();
   return (
-    <nav aria-label={t('nav.primary')} className="menu">
-      <ul>
+    <div className="menu">
+      <ul className="ux4g-navbar-links">
         {items.map((it) => (
           <Item key={it.id} item={it} />
         ))}
       </ul>
-    </nav>
+    </div>
   );
 };

@@ -98,7 +98,7 @@ export default function NewIdeaPage() {
           step === 'preview' ? (
             <button
               type="button"
-              className="btn btn-primary"
+              className="ux4g-btn-primary ux4g-btn-m"
               disabled={create.isPending}
               onClick={post}
             >
@@ -188,7 +188,7 @@ export default function NewIdeaPage() {
           />
           <button
             type="button"
-            className="btn btn-primary"
+            className="ux4g-btn-primary ux4g-btn-m"
             onClick={() => (setTried(true), ok && setStep('preview'))}
           >
             {t('ideas.new.preview')}
@@ -197,7 +197,7 @@ export default function NewIdeaPage() {
       ) : (
         <div className="form-narrow stack-sm">
           <Banner variant="info">{t('ideas.new.previewTitle')}</Banner>
-          <article className="card">
+          <article className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <StatusChip status="idea:submitted" />
             <h2 style={{ margin: '12px 0 4px' }}>{v.title}</h2>
             <div className="tags">
@@ -209,7 +209,11 @@ export default function NewIdeaPage() {
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(v.description) }}
             />
           </article>
-          <button type="button" className="btn" onClick={() => setStep('edit')}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-m"
+            onClick={() => setStep('edit')}
+          >
             {t('ideas.new.backEdit')}
           </button>
         </div>

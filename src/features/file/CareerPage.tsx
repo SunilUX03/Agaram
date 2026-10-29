@@ -24,7 +24,7 @@ export default function CareerPage() {
       {officer.data && (
         <section className="section" aria-label={t('career.current')}>
           <Card>
-            <h2 className="h-sm">{t('career.current')}</h2>
+            <h2 className="ux4g-heading-xs-strong">{t('career.current')}</h2>
             <div className="tags" style={{ margin: '8px 0 12px' }}>
               <Tag>{officer.data.currentPosting.postType}</Tag>
               <Tag>{officer.data.currentPosting.locationChange}</Tag>
@@ -42,12 +42,16 @@ export default function CareerPage() {
           </Card>
         </section>
       )}
-      <div className="pick-chips" role="group" aria-label={t('career.filter')}>
+      <div
+        className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+        role="group"
+        aria-label={t('career.filter')}
+      >
         {FILTERS.map((f) => (
           <button
             key={f}
             type="button"
-            className="pick"
+            className={`ux4g-filter-chip-m${filter === f ? ' active' : ''}`}
             aria-pressed={filter === f}
             onClick={() => setFilter(f)}
           >
@@ -58,7 +62,8 @@ export default function CareerPage() {
       <QueryView query={career} skeleton="row" empty={{ message: t('career.empty') }}>
         {(rows) => {
           const shown = rows.filter((c) => filter === 'all' || c.kind === filter);
-          if (!shown.length) return <p className="muted">{t('career.empty')}</p>;
+          if (!shown.length)
+            return <p className="ux4g-text-neutral-secondary">{t('career.empty')}</p>;
           return (
             <Timeline
               label={t('career.timeline')}

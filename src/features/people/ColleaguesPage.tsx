@@ -21,11 +21,14 @@ const SERVICES = ['IAS', 'IPS', 'IFS', 'TNCS'];
 export function ColleagueCard({ c }: { c: Colleague }) {
   const { t } = useTranslation('people');
   return (
-    <Link to={`/people/colleagues/${c.id}`} className="card card-link colleague-card">
+    <Link
+      to={`/people/colleagues/${c.id}`}
+      className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad card-link colleague-card"
+    >
       <Avatar name={c.name} photoUrl={c.photoUrl} size={56} />
       <div className="colleague-main">
         <h3>{c.name}</h3>
-        <p className="card-meta">{c.designation}</p>
+        <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{c.designation}</p>
         <div className="tags" style={{ margin: '6px 0' }}>
           <Tag>
             {c.service}
@@ -33,7 +36,7 @@ export function ColleagueCard({ c }: { c: Colleague }) {
           </Tag>
           {c.statusNote && <Tag>{t(`colleagues.status.${c.statusNote}`)}</Tag>}
         </div>
-        <p className="card-meta clamp-2">
+        <p className="ux4g-body-s-default ux4g-text-neutral-secondary clamp-2">
           {t('colleagues.posting', { district: c.district, department: c.department })}
         </p>
       </div>
@@ -92,12 +95,16 @@ export default function ColleaguesPage() {
           options={toOptions(DEPARTMENTS)}
         />
       </FilterBar>
-      <div className="pick-chips" role="group" aria-label={t('colleagues.services')}>
+      <div
+        className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+        role="group"
+        aria-label={t('colleagues.services')}
+      >
         {['', ...SERVICES].map((s) => (
           <button
             key={s || 'all'}
             type="button"
-            className="pick"
+            className={`ux4g-filter-chip-m${service === s ? ' active' : ''}`}
             aria-pressed={service === s}
             onClick={() => setService(s)}
           >
@@ -120,7 +127,7 @@ export default function ColleaguesPage() {
           );
           return (
             <>
-              <p className="muted" aria-live="polite">
+              <p className="ux4g-text-neutral-secondary" aria-live="polite">
                 {t('colleagues.found', { count: rows.length })}
               </p>
               {rows.length === 0 ? (

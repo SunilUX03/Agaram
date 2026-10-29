@@ -145,6 +145,7 @@
     },
     "field": {
       "required": "",
+      "noSelection": "",
       "locked": "",
       "errorSummary": "",
       "invalid": ""
@@ -271,5 +272,11 @@
     "to": "",
     "days": "",
     "status": ""
+  },
+  "a11y": {
+    "textSize": "",
+    "smaller": "",
+    "default": "",
+    "larger": ""
   }
 }

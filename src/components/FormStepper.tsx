@@ -64,16 +64,37 @@ export function FormStepper({
 
   return (
     <form className="stepper" noValidate onSubmit={(e) => e.preventDefault()}>
-      <div className="stepper-progress">
-        <span>{t('ui.stepper.step', { n: i + 1, total: steps.length })}</span>
-        <progress max={steps.length} value={i + 1} aria-label={t('ui.stepper.progress')} />
-        <strong>{steps[i].title}</strong>
+      <div className="ux4g-mb-l">
+        <p className="ux4g-body-m-default ux4g-text-neutral-secondary">
+          {t('ui.stepper.step', { n: i + 1, total: steps.length })}
+        </p>
+        <div
+          className="ux4g-progress-bar ux4g-my-xs"
+          data-ux-progress-bar
+          data-ux-shape="rounded"
+          role="progressbar"
+          aria-label={t('ui.stepper.progress')}
+          aria-valuemin={1}
+          aria-valuemax={steps.length}
+          aria-valuenow={i + 1}
+          style={{ '--ux4g-progress-value': ((i + 1) / steps.length) * 100 } as React.CSSProperties}
+        >
+          <div className="ux4g-progress-bar-track">
+            <div className="ux4g-progress-bar-fill" />
+          </div>
+        </div>
+        <h2 className="ux4g-heading-s-strong">{steps[i].title}</h2>
       </div>
       {errors.length > 0 && (
-        <div ref={summary} tabIndex={-1} role="alert" className="banner banner-critical">
-          <div>
-            <strong>{t('ui.field.errorSummary')}</strong>
-            <ul>
+        <div
+          ref={summary}
+          tabIndex={-1}
+          role="alert"
+          className="ux4g-alert ux4g-alert-error ux4g-mb-m"
+        >
+          <div className="ux4g-alert-content">
+            <strong className="ux4g-alert-title">{t('ui.field.errorSummary')}</strong>
+            <ul className="ux4g-alert-message">
               {errors.map((e, k) => (
                 <li key={k}>{e}</li>
               ))}
@@ -81,23 +102,27 @@ export function FormStepper({
           </div>
         </div>
       )}
-      <div className="stepper-body">{steps[i].content}</div>
-      <div className="stepper-bar">
+      <div>{steps[i].content}</div>
+      <div className="stepper-bar ux4g-d-flex ux4g-ai-center ux4g-gap-s">
         {i > 0 && (
-          <button type="button" className="btn" onClick={() => (setErrors([]), setI(i - 1))}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-m"
+            onClick={() => (setErrors([]), setI(i - 1))}
+          >
             {t('ui.stepper.back')}
           </button>
         )}
         {onSaveDraft && (
-          <button type="button" className="btn" onClick={onSaveDraft}>
+          <button type="button" className="ux4g-btn-text-primary ux4g-btn-m" onClick={onSaveDraft}>
             {t('ui.stepper.saveDraft')}
           </button>
         )}
-        <span className="spacer" />
+        <span className="ux4g-flex-1" />
         {last ? (
           <button
             type="button"
-            className="btn btn-primary"
+            className="ux4g-btn-primary ux4g-btn-m"
             disabled={busy}
             aria-busy={busy}
             onClick={send}
@@ -105,7 +130,7 @@ export function FormStepper({
             {busy ? t('ui.stepper.sending') : (sendLabel ?? t('ui.stepper.send'))}
           </button>
         ) : (
-          <button type="button" className="btn btn-primary" onClick={next}>
+          <button type="button" className="ux4g-btn-primary ux4g-btn-m" onClick={next}>
             {t('ui.stepper.next')}
           </button>
         )}

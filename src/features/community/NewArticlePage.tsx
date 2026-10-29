@@ -62,7 +62,11 @@ export default function NewArticlePage() {
         id="community.knowledge.new"
         main={{ onClick: () => go('published'), disabled: create.isPending }}
         secondary={
-          <button type="button" className="btn" onClick={() => go('draft')}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-m"
+            onClick={() => go('draft')}
+          >
             {t('knowledge.new.saveDraft')}
           </button>
         }
@@ -115,7 +119,7 @@ export default function NewArticlePage() {
           {sections.map((s, i) => (
             <section
               key={i}
-              className="card"
+              className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
               aria-label={`${t('knowledge.new.sections')} ${i + 1}`}
             >
               <TextField
@@ -139,7 +143,7 @@ export default function NewArticlePage() {
               {sections.length > 1 && (
                 <button
                   type="button"
-                  className="link-btn"
+                  className="ux4g-btn-text-primary ux4g-btn-s"
                   onClick={() => setSections(sections.filter((_, j) => j !== i))}
                 >
                   {t('knowledge.new.removeSection')}
@@ -149,7 +153,7 @@ export default function NewArticlePage() {
           ))}
           <button
             type="button"
-            className="btn btn-sm"
+            className="ux4g-btn-outline-primary ux4g-btn-s"
             onClick={() => setSections([...sections, { heading: '', body: '' }])}
           >
             {t('knowledge.new.addSection')}

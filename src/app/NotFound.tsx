@@ -8,7 +8,7 @@ export function NotFound() {
     <PageHeader
       headline={t('notFound.title')}
       main={
-        <Link to="/home" className="btn btn-primary">
+        <Link to="/home" className="ux4g-btn-primary ux4g-btn-m">
           {t('notFound.button')}
         </Link>
       }

@@ -145,6 +145,7 @@
     },
     "field": {
       "required": "required",
+      "noSelection": "No selection",
       "locked": "Filled in for you and locked",
       "errorSummary": "Please fix the following before you continue",
       "invalid": "Please fix the errors below."
@@ -271,5 +272,11 @@
     "to": "To",
     "days": "Days",
     "status": "Status"
+  },
+  "a11y": {
+    "textSize": "Text size",
+    "smaller": "A- Decrease text size",
+    "default": "Default text size",
+    "larger": "A+ Increase text size"
   }
 }

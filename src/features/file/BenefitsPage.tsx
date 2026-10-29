@@ -38,7 +38,8 @@ export default function BenefitsPage() {
             const shown = rows
               .filter((r) => r.kind === tab)
               .sort((a, b) => b.date.localeCompare(a.date));
-            if (!shown.length) return <p className="muted">{t('benefits.empty')}</p>;
+            if (!shown.length)
+              return <p className="ux4g-text-neutral-secondary">{t('benefits.empty')}</p>;
             const total = shown.reduce((s, r) => s + (r.amount ?? 0), 0);
             const strip =
               tab === 'ltc'

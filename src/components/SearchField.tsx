@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from './Icon';
 import { useDebounced } from './hooks';
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
   count?: number;
 }
 
-/** Debounced 250 ms. Typing updates the box at once; `onChange` fires after the pause. */
+/** UX4G search field, debounced 250 ms. Typing updates the box at once; `onChange` fires after the pause. */
 export const SearchField = forwardRef<HTMLInputElement, Props>(function SearchField(
   { label, placeholder, value, onChange, count },
   ref,
@@ -26,37 +25,46 @@ export const SearchField = forwardRef<HTMLInputElement, Props>(function SearchFi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounced]);
   return (
-    <div className="search" role="search">
-      <label className="sr-only" htmlFor="sf-input">
-        {label}
-      </label>
-      <Icon name="search" size={18} />
-      <input
-        id="sf-input"
-        ref={ref}
-        type="search"
-        autoComplete="off"
-        placeholder={placeholder ?? label}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      {text && (
-        <button
-          type="button"
-          className="icon-btn icon-btn-sm"
-          aria-label={t('ui.search.clear')}
-          onClick={() => {
-            setText('');
-            onChange('');
-          }}
-        >
-          <Icon name="close" size={16} />
-        </button>
-      )}
+    <div role="search">
+      <div className="ux4g-search-container ux4g-search-m">
+        <label className="sr-only" htmlFor="sf-input">
+          {label}
+        </label>
+        <div className="ux4g-search">
+          <i className="ux4g-icon-outlined ux4g-search-leading-icon" aria-hidden="true">
+            search
+          </i>
+          <input
+            id="sf-input"
+            ref={ref}
+            type="search"
+            className="ux4g-search-input"
+            autoComplete="off"
+            placeholder={placeholder ?? label}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          {text && (
+            <button
+              type="button"
+              className="ux4g-search-clear"
+              aria-label={t('ui.search.clear')}
+              onClick={() => (setText(''), onChange(''))}
+            >
+              <i className="ux4g-icon-outlined" aria-hidden="true">
+                close
+              </i>
+            </button>
+          )}
+        </div>
+      </div>
       {count !== undefined && (
-        <span className="search-count" aria-live="polite">
+        <p
+          className="ux4g-body-s-default ux4g-text-neutral-secondary ux4g-mt-xs"
+          aria-live="polite"
+        >
           {t('ui.search.results', { count })}
-        </span>
+        </p>
       )}
     </div>
   );

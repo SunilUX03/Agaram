@@ -8,7 +8,6 @@ import {
   type ReactNode,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from './Icon';
 
 interface ToastItem {
   id: number;
@@ -21,7 +20,7 @@ export const useToast = () => useContext(Ctx);
 export const TOAST_MS = 5000;
 const MAX = 3;
 
-/** Short messages that stay about 5 seconds, stack at most three, and are announced politely. */
+/** UX4G success alerts stacked at the corner: stay about 5 seconds, at most three, announced politely. */
 export function ToastProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const [items, setItems] = useState<ToastItem[]>([]);
@@ -47,15 +46,19 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         aria-atomic="false"
       >
         {items.map((it) => (
-          <div key={it.id} className="toast" role="status">
-            <span>{it.text}</span>
+          <div key={it.id} className="ux4g-alert ux4g-alert-success" role="status">
+            <div className="ux4g-alert-content">
+              <span className="ux4g-alert-message">{it.text}</span>
+            </div>
             <button
               type="button"
-              className="icon-btn icon-btn-sm"
+              className="ux4g-alert-close"
               aria-label={t('ui.toast.dismiss')}
               onClick={() => dismiss(it.id)}
             >
-              <Icon name="close" size={16} />
+              <i className="ux4g-icon-outlined" aria-hidden="true">
+                close
+              </i>
             </button>
           </div>
         ))}

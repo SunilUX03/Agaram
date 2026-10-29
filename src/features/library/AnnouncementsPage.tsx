@@ -28,10 +28,10 @@ export default function AnnouncementsPage() {
               .map((a) => (
                 <li key={a.id} className="list-row">
                   <span className="list-row-main">
-                    <span className="list-row-title">
+                    <span className="ux4g-body-m-strong">
                       {a.title} {a.pinned && <Tag>{t('ui.tag.pinned', { ns: 'common' })}</Tag>}
                     </span>
-                    <span className="list-row-meta">
+                    <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                       {formatDate(a.date, loc)} · {a.description}
                     </span>
                   </span>

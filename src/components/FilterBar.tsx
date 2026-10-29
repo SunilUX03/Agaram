@@ -17,35 +17,48 @@ interface Props {
   onClear: () => void;
 }
 
-/** Filters above a list. On mobile they open in a bottom sheet with Apply and Clear. */
+/** Filters above a list. On mobile they open in a bottom sheet with Apply and Clear. Active filters are UX4G input chips. */
 export function FilterBar({ children, active, onRemove, onClear }: Props) {
   const { t } = useTranslation();
   const mobile = useIsMobile();
   const [open, setOpen] = useState(false);
   return (
-    <div className="filterbar">
+    <div className="ux4g-my-m">
       {mobile ? (
-        <button type="button" className="btn" onClick={() => setOpen(true)}>
-          <Icon name="plus" size={16} />
+        <button
+          type="button"
+          className="ux4g-btn-outline-primary ux4g-btn-m"
+          onClick={() => setOpen(true)}
+        >
+          <Icon name="plus" size={18} />
           {t('ui.filters.open')}
-          {active.length > 0 && <span className="tab-count">{active.length}</span>}
+          {active.length > 0 && (
+            <span className="ux4g-badge-digit-primary ux4g-badge-s ux4g-ml-xs">
+              {active.length}
+            </span>
+          )}
         </button>
       ) : (
         <div className="filterbar-controls">{children}</div>
       )}
       {active.length > 0 && (
-        <ul className="chips" aria-label={t('ui.filters.active')}>
+        <ul
+          className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-s ux4g-mt-s plain-list"
+          aria-label={t('ui.filters.active')}
+        >
           {active.map((f) => (
             <li key={f.key}>
-              <button
-                type="button"
-                className="chip chip-neutral"
-                onClick={() => onRemove(f.key)}
-                aria-label={t('ui.filters.remove', { name: f.label })}
-              >
+              <span className="ux4g-input-chip-m">
                 {f.label}
-                <Icon name="close" size={14} />
-              </button>
+                <button
+                  type="button"
+                  className="ux4g-chip-close"
+                  onClick={() => onRemove(f.key)}
+                  aria-label={t('ui.filters.remove', { name: f.label })}
+                >
+                  &times;
+                </button>
+              </span>
             </li>
           ))}
         </ul>
@@ -57,16 +70,24 @@ export function FilterBar({ children, active, onRemove, onClear }: Props) {
           onClose={() => setOpen(false)}
           footer={
             <>
-              <button type="button" className="btn" onClick={onClear}>
+              <button
+                type="button"
+                className="ux4g-btn-outline-primary ux4g-btn-m"
+                onClick={onClear}
+              >
                 {t('ui.filters.clear')}
               </button>
-              <button type="button" className="btn btn-primary" onClick={() => setOpen(false)}>
+              <button
+                type="button"
+                className="ux4g-btn-primary ux4g-btn-m"
+                onClick={() => setOpen(false)}
+              >
                 {t('ui.filters.apply')}
               </button>
             </>
           }
         >
-          <div className="filterbar-sheet">{children}</div>
+          {children}
         </Dialog>
       )}
     </div>

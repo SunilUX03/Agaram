@@ -48,7 +48,11 @@ export default function LoginPage() {
           <span>{t('app.name', { ns: 'common' })}</span>
         </div>
         <PageHeader headline={p.headline} tagline={p.tagline} />
-        <form className="card login-card" onSubmit={submit} noValidate>
+        <form
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad login-card"
+          onSubmit={submit}
+          noValidate
+        >
           <TextField
             name="login-id"
             label={t('login.idLabel')}
@@ -71,21 +75,29 @@ export default function LoginPage() {
           />
           <button
             type="submit"
-            className="btn btn-primary btn-block"
+            className="ux4g-btn-primary ux4g-btn-m ux4g-w-100"
             disabled={busy}
             aria-busy={busy}
           >
             {busy ? t('login.signingIn') : p.main}
           </button>
           <div className="login-links">
-            <button type="button" className="link-btn" onClick={() => setDialog('forgot')}>
+            <button
+              type="button"
+              className="ux4g-btn-text-primary ux4g-btn-s"
+              onClick={() => setDialog('forgot')}
+            >
               {t('login.forgot')}
             </button>
-            <button type="button" className="link-btn" onClick={() => setDialog('access')}>
+            <button
+              type="button"
+              className="ux4g-btn-text-primary ux4g-btn-s"
+              onClick={() => setDialog('access')}
+            >
               {t('login.askAccess')}
             </button>
           </div>
-          <p className="small muted">{t('login.demoHint')}</p>
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{t('login.demoHint')}</p>
         </form>
         <LangSwitch />
       </div>
@@ -94,7 +106,11 @@ export default function LoginPage() {
           title={t('login.forgotTitle')}
           onClose={() => setDialog(null)}
           footer={
-            <button type="button" className="btn btn-primary" onClick={() => setDialog(null)}>
+            <button
+              type="button"
+              className="ux4g-btn-primary ux4g-btn-m"
+              onClick={() => setDialog(null)}
+            >
               {t('login.close')}
             </button>
           }
@@ -124,12 +140,12 @@ function AccessDialog({ onClose, onSent }: { onClose: () => void; onSent: () => 
       onClose={onClose}
       footer={
         <>
-          <button type="button" className="btn" onClick={onClose}>
+          <button type="button" className="ux4g-btn-outline-primary ux4g-btn-m" onClick={onClose}>
             {t('login.cancel')}
           </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className="ux4g-btn-primary ux4g-btn-m"
             onClick={() => (setTried(true), v.name && v.email && v.service && onSent())}
           >
             {t('login.send')}

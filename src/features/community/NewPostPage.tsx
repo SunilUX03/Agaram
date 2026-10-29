@@ -130,7 +130,11 @@ export default function NewPostPage() {
               />
             ))}
             {opts.length < 6 && (
-              <button type="button" className="btn btn-sm" onClick={() => setOpts([...opts, ''])}>
+              <button
+                type="button"
+                className="ux4g-btn-outline-primary ux4g-btn-s"
+                onClick={() => setOpts([...opts, ''])}
+              >
                 {t('discussions.new.addOption')}
               </button>
             )}
@@ -154,7 +158,9 @@ export default function NewPostPage() {
               checked={v.anonymous}
               onChange={set('anonymous')}
             />
-            <p className="help">{t('discussions.new.anonNote')}</p>
+            <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+              {t('discussions.new.anonNote')}
+            </p>
           </>
         )}
         {features.features.askSeniors && (

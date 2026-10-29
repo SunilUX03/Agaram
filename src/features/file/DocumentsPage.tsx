@@ -63,7 +63,7 @@ export default function DocumentsPage() {
                 />
               </div>
               {shown.length === 0 ? (
-                <p className="muted">{t('documents.empty')}</p>
+                <p className="ux4g-text-neutral-secondary">{t('documents.empty')}</p>
               ) : (
                 <ResponsiveTable
                   caption={t('documents.search')}
@@ -93,7 +93,7 @@ export default function DocumentsPage() {
                       header: t('documents.cols.linked'),
                       render: (d) =>
                         d.linkedTo ? (
-                          <Link className="link" to={d.linkedTo.to}>
+                          <Link className="ux4g-text-link-md" to={d.linkedTo.to}>
                             {d.linkedTo.label}
                           </Link>
                         ) : (
@@ -104,11 +104,18 @@ export default function DocumentsPage() {
                       key: 'actions',
                       header: t('documents.cols.view'),
                       render: (d) => (
-                        <span className="row" style={{ gap: 12 }}>
-                          <button type="button" className="link-btn" onClick={() => setView(d)}>
+                        <span
+                          className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+                          style={{ gap: 12 }}
+                        >
+                          <button
+                            type="button"
+                            className="ux4g-btn-text-primary ux4g-btn-s"
+                            onClick={() => setView(d)}
+                          >
                             {t('documents.cols.view')}
                           </button>
-                          <a className="link" href={d.fileUrl} download>
+                          <a className="ux4g-text-link-md" href={d.fileUrl} download>
                             {t('documents.cols.download')}
                           </a>
                         </span>

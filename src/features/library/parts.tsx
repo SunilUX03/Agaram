@@ -15,22 +15,30 @@ export function LibraryRow({ item, save }: { item: LibraryItem; save?: boolean }
   return (
     <li className="lib-row">
       <div className="lib-main">
-        <p className="card-meta">
+        <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
           {[item.number, formatDate(item.date, loc)].filter(Boolean).join(' · ')}
         </p>
         <h3>{item.title}</h3>
-        {item.description && <p className="card-meta">{item.description}</p>}
+        {item.description && (
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{item.description}</p>
+        )}
         {item.situation && (
-          <p className="card-meta">{t('forms.use', { situation: item.situation })}</p>
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+            {t('forms.use', { situation: item.situation })}
+          </p>
         )}
       </div>
       <div className="lib-actions">
         {item.fileUrl && (
           <>
-            <button type="button" className="btn btn-sm" onClick={() => setView(true)}>
+            <button
+              type="button"
+              className="ux4g-btn-outline-primary ux4g-btn-s"
+              onClick={() => setView(true)}
+            >
               {t('common.view')}
             </button>
-            <a className="btn btn-sm" href={item.fileUrl} download>
+            <a className="ux4g-btn-outline-primary ux4g-btn-s" href={item.fileUrl} download>
               {t('common.download')}
             </a>
           </>

@@ -53,13 +53,13 @@ export function RouteHeader({
   ) {
     const label = spec.label ?? p.main;
     mainNode = spec.to ? (
-      <Link to={spec.to} className="btn btn-primary">
+      <Link to={spec.to} className="ux4g-btn-primary ux4g-btn-m">
         {label}
       </Link>
     ) : (
       <button
         type="button"
-        className="btn btn-primary"
+        className="ux4g-btn-primary ux4g-btn-m"
         onClick={spec.onClick}
         disabled={spec.disabled}
       >

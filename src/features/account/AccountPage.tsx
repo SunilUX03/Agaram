@@ -84,9 +84,9 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
           disabled: save.isPending,
         }}
         image={
-          <div className="row">
+          <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s">
             <Avatar name={officer.name} photoUrl={photo ?? officer.photoUrl} size={72} />
-            <label className="link" style={{ cursor: 'pointer' }}>
+            <label className="ux4g-text-link-md" style={{ cursor: 'pointer' }}>
               {t('photo')}
               <input
                 type="file"
@@ -102,8 +102,12 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
         }
       />
       <div className="form-narrow stack">
-        <section id="contact" className="card" aria-labelledby="h-contact">
-          <h2 id="h-contact" className="h-sm">
+        <section
+          id="contact"
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          aria-labelledby="h-contact"
+        >
+          <h2 id="h-contact" className="ux4g-heading-xs-strong">
             {t('contact.title')}
           </h2>
           <TextField
@@ -137,8 +141,12 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
             locked
           />
         </section>
-        <section id="password" className="card" aria-labelledby="h-pw">
-          <h2 id="h-pw" className="h-sm">
+        <section
+          id="password"
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          aria-labelledby="h-pw"
+        >
+          <h2 id="h-pw" className="ux4g-heading-xs-strong">
             {t('password.title')}
           </h2>
           <PasswordField
@@ -168,12 +176,16 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
             error={pwErr.confirm}
             {...{ showLabel: sw.show, hideLabel: sw.hide }}
           />
-          <button type="button" className="btn" onClick={changePw}>
+          <button type="button" className="ux4g-btn-outline-primary ux4g-btn-m" onClick={changePw}>
             {t('password.change')}
           </button>
         </section>
-        <section id="language" className="card" aria-labelledby="h-lang">
-          <h2 id="h-lang" className="h-sm">
+        <section
+          id="language"
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          aria-labelledby="h-lang"
+        >
+          <h2 id="h-lang" className="ux4g-heading-xs-strong">
             {t('language.title')}
           </h2>
           <RadioGroup
@@ -187,11 +199,17 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
             }))}
           />
         </section>
-        <section id="notifications" className="card" aria-labelledby="h-notif">
-          <h2 id="h-notif" className="h-sm">
+        <section
+          id="notifications"
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          aria-labelledby="h-notif"
+        >
+          <h2 id="h-notif" className="ux4g-heading-xs-strong">
             {t('notifications.title')}
           </h2>
-          <p className="help">{t('notifications.help')}</p>
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+            {t('notifications.help')}
+          </p>
           {(['requests', 'replies', 'circulars', 'trainings'] as const).map((k) => (
             <Checkbox
               key={k}
@@ -202,11 +220,15 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
             />
           ))}
         </section>
-        <section id="privacy" className="card" aria-labelledby="h-priv">
-          <h2 id="h-priv" className="h-sm">
+        <section
+          id="privacy"
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          aria-labelledby="h-priv"
+        >
+          <h2 id="h-priv" className="ux4g-heading-xs-strong">
             {t('privacy.title')}
           </h2>
-          <p className="help">{t('privacy.help')}</p>
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{t('privacy.help')}</p>
           <Checkbox
             name="acc-sp"
             label={t('privacy.phone')}
@@ -223,7 +245,7 @@ function Form({ officer, settings }: { officer: Officer; settings: Settings }) {
         <div>
           <button
             type="button"
-            className="btn"
+            className="ux4g-btn-outline-primary ux4g-btn-m"
             onClick={() => (session.end(), qc.clear(), nav('/login'))}
           >
             {t('signOut')}

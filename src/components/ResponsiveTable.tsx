@@ -22,7 +22,7 @@ interface Props<T> {
   onRowClick?: (row: T) => void;
 }
 
-/** A table on desktop, stacked cards below 640 px. The first column is the card title unless set. */
+/** A UX4G table on desktop, stacked UX4G cards below 640 px. The first column is the card title unless set. */
 export function ResponsiveTable<T>({ caption, columns, rows, rowKey, onRowClick }: Props<T>) {
   const { t } = useTranslation();
   const mobile = useIsMobile();
@@ -44,26 +44,32 @@ export function ResponsiveTable<T>({ caption, columns, rows, rowKey, onRowClick 
       .filter((c) => c !== title && c.mobile !== 'hide')
       .sort((a, b) => (a.mobileOrder ?? 0) - (b.mobileOrder ?? 0));
     return (
-      <ul className="rt-cards" aria-label={caption}>
+      <ul className="plain-list ux4g-d-flex ux4g-flex-column ux4g-gap-s" aria-label={caption}>
         {sorted.map((r) => (
-          <li key={rowKey(r)} className="card">
-            <div className="rt-card-title">
-              {onRowClick ? (
-                <button type="button" className="link-btn" onClick={() => onRowClick(r)}>
-                  {cell(title, r)}
-                </button>
-              ) : (
-                cell(title, r)
-              )}
+          <li key={rowKey(r)} className="ux4g-card ux4g-card-outline ux4g-card-vertical">
+            <div className="ux4g-card-body">
+              <div className="ux4g-label-l-strong ux4g-mb-xs">
+                {onRowClick ? (
+                  <button
+                    type="button"
+                    className="ux4g-btn-text-primary ux4g-btn-s"
+                    onClick={() => onRowClick(r)}
+                  >
+                    {cell(title, r)}
+                  </button>
+                ) : (
+                  cell(title, r)
+                )}
+              </div>
+              <dl className="kv-mobile">
+                {rest.map((c) => (
+                  <div key={c.key}>
+                    <dt className="ux4g-body-s-default ux4g-text-neutral-secondary">{c.header}</dt>
+                    <dd>{cell(c, r)}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
-            <dl>
-              {rest.map((c) => (
-                <div key={c.key}>
-                  <dt>{c.header}</dt>
-                  <dd>{cell(c, r)}</dd>
-                </div>
-              ))}
-            </dl>
           </li>
         ))}
       </ul>
@@ -71,8 +77,10 @@ export function ResponsiveTable<T>({ caption, columns, rows, rowKey, onRowClick 
   }
 
   return (
-    <div className="rt-wrap">
-      <table className="rt">
+    <div className="ux4g-table-responsive">
+      <table
+        className={`ux4g-table ux4g-table-m ux4g-table-rounded${onRowClick ? ' ux4g-table-interactive' : ''}`}
+      >
         <caption className="sr-only">{caption}</caption>
         <thead>
           <tr>
@@ -87,7 +95,7 @@ export function ResponsiveTable<T>({ caption, columns, rows, rowKey, onRowClick 
                 {c.sortValue ? (
                   <button
                     type="button"
-                    className="link-btn"
+                    className="ux4g-btn-text-neutral ux4g-btn-xs"
                     aria-label={t('ui.sort.by', { name: c.header })}
                     onClick={() =>
                       setSort({ key: c.key, dir: sort?.key === c.key && sort.dir === 1 ? -1 : 1 })
@@ -105,17 +113,13 @@ export function ResponsiveTable<T>({ caption, columns, rows, rowKey, onRowClick 
         </thead>
         <tbody>
           {sorted.map((r) => (
-            <tr
-              key={rowKey(r)}
-              className={onRowClick ? 'is-click' : undefined}
-              onClick={() => onRowClick?.(r)}
-            >
+            <tr key={rowKey(r)} onClick={() => onRowClick?.(r)}>
               {columns.map((c, i) => (
                 <td key={c.key}>
                   {i === 0 && onRowClick ? (
                     <button
                       type="button"
-                      className="link-btn"
+                      className="ux4g-btn-text-primary ux4g-btn-s"
                       onClick={(e) => (e.stopPropagation(), onRowClick(r))}
                     >
                       {cell(c, r)}

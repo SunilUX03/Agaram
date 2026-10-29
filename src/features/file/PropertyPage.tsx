@@ -23,14 +23,14 @@ export default function PropertyPage() {
       <RouteHeader
         id="file.property"
         tagline={
-          <span className="row" style={{ gap: 6 }}>
+          <span className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s" style={{ gap: 6 }}>
             <Icon name="lock" size={16} label={t('property.private')} />
             {p.tagline}
           </span>
         }
         main={{ to: '/requests/new/immovable' }}
         secondary={
-          <Link to="/requests/new/intimation" className="btn">
+          <Link to="/requests/new/intimation" className="ux4g-btn-outline-primary ux4g-btn-m">
             {t('property.secondary')}
           </Link>
         }
@@ -46,11 +46,15 @@ export default function PropertyPage() {
         <QueryView query={q} skeleton="card" skeletonCount={2}>
           {(rows) => {
             const shown = rows.filter((r) => r.kind === tab);
-            if (!shown.length) return <p className="muted">{t('property.empty')}</p>;
+            if (!shown.length)
+              return <p className="ux4g-text-neutral-secondary">{t('property.empty')}</p>;
             return (
               <div className="grid-cards">
                 {shown.map((r) => (
-                  <div key={r.id} className="card">
+                  <div
+                    key={r.id}
+                    className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+                  >
                     <h3>{r.type}</h3>
                     <p>{r.details}</p>
                     <dl className="kv" style={{ marginTop: 12 }}>

@@ -26,8 +26,8 @@ export default function TrainingPage() {
                     <Icon name="book" />
                   </span>
                   <span className="list-row-main">
-                    <span className="list-row-title">{r.type}</span>
-                    <span className="list-row-meta">
+                    <span className="ux4g-body-m-strong">{r.type}</span>
+                    <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                       {t('training.dates', {
                         from: formatDate(r.from, loc),
                         to: formatDate(r.to, loc),

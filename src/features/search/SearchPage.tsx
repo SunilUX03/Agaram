@@ -27,7 +27,7 @@ export default function SearchPage() {
       <RouteHeader id="search" />
       <SearchField ref={box} label={t('label')} value={q} onChange={setQ} />
       {!ready ? (
-        <p className="muted" style={{ marginTop: 16 }}>
+        <p className="ux4g-text-neutral-secondary" style={{ marginTop: 16 }}>
           {t('hint')}
         </p>
       ) : (
@@ -46,12 +46,16 @@ export default function SearchPage() {
               );
             return (
               <>
-                <div className="pick-chips" role="group" style={{ margin: '16px 0 8px' }}>
+                <div
+                  className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
+                  role="group"
+                  style={{ margin: '16px 0 8px' }}
+                >
                   {['', ...GROUPS.filter((g) => counts[g])].map((g) => (
                     <button
                       key={g || 'all'}
                       type="button"
-                      className="pick"
+                      className={`ux4g-filter-chip-m${only === g ? ' active' : ''}`}
                       aria-pressed={only === g}
                       onClick={() => setOnly(g)}
                     >
@@ -66,12 +70,15 @@ export default function SearchPage() {
                     <section key={g} className="section" aria-label={t(`groups.${g}`)}>
                       <div className="section-head">
                         <h2>
-                          {t(`groups.${g}`)} <span className="muted small">({counts[g]})</span>
+                          {t(`groups.${g}`)}{' '}
+                          <span className="ux4g-text-neutral-secondary ux4g-body-s-default">
+                            ({counts[g]})
+                          </span>
                         </h2>
                         {!only && counts[g] > SHOWN && (
                           <button
                             type="button"
-                            className="link-btn"
+                            className="ux4g-btn-text-primary ux4g-btn-s"
                             onClick={() =>
                               setExpanded(open ? expanded.filter((x) => x !== g) : [...expanded, g])
                             }
@@ -87,8 +94,8 @@ export default function SearchPage() {
                               <Link className="list-row" to={`/people/colleagues/${r.id}`}>
                                 <Avatar name={r.name} photoUrl={r.photoUrl} size={40} />
                                 <span className="list-row-main">
-                                  <span className="list-row-title">{r.name}</span>
-                                  <span className="list-row-meta">
+                                  <span className="ux4g-body-m-strong">{r.name}</span>
+                                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                                     {r.designation}, {r.district}
                                   </span>
                                 </span>
@@ -97,8 +104,10 @@ export default function SearchPage() {
                             {g === 'ideas' && (
                               <Link className="list-row" to={`/community/ideas/${r.id}`}>
                                 <span className="list-row-main">
-                                  <span className="list-row-title">{r.title}</span>
-                                  <span className="list-row-meta">{r.type}</span>
+                                  <span className="ux4g-body-m-strong">{r.title}</span>
+                                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                                    {r.type}
+                                  </span>
                                 </span>
                                 <StatusChip status={`idea:${r.status}`} />
                               </Link>
@@ -106,8 +115,8 @@ export default function SearchPage() {
                             {g === 'discussions' && (
                               <Link className="list-row" to={`/community/discussions/${r.id}`}>
                                 <span className="list-row-main">
-                                  <span className="list-row-title">{r.title}</span>
-                                  <span className="list-row-meta">
+                                  <span className="ux4g-body-m-strong">{r.title}</span>
+                                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                                     {r.anonymous ? '' : r.author?.name}
                                   </span>
                                 </span>
@@ -116,8 +125,8 @@ export default function SearchPage() {
                             {g === 'articles' && (
                               <Link className="list-row" to={`/community/knowledge/${r.id}`}>
                                 <span className="list-row-main">
-                                  <span className="list-row-title">{r.title}</span>
-                                  <span className="list-row-meta">
+                                  <span className="ux4g-body-m-strong">{r.title}</span>
+                                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
                                     {r.tags?.map((x: string) => (
                                       <Tag key={x}>{x}</Tag>
                                     ))}
@@ -141,16 +150,20 @@ export default function SearchPage() {
                                 }
                               >
                                 <span className="list-row-main">
-                                  <span className="list-row-title">{r.title}</span>
-                                  <span className="list-row-meta">{r.number}</span>
+                                  <span className="ux4g-body-m-strong">{r.title}</span>
+                                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                                    {r.number}
+                                  </span>
                                 </span>
                               </Link>
                             )}
                             {g === 'requests' && (
                               <Link className="list-row" to={`/requests/${r.id}`}>
                                 <span className="list-row-main">
-                                  <span className="list-row-title">{r.title}</span>
-                                  <span className="list-row-meta">{r.ref}</span>
+                                  <span className="ux4g-body-m-strong">{r.title}</span>
+                                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                                    {r.ref}
+                                  </span>
                                 </span>
                                 <StatusChip status={r.status} />
                               </Link>

@@ -42,6 +42,7 @@ function stages(r: Request, t: (k: string) => string, loc: string): TimelineStep
     role: x.ev?.role ? t(`detail.roles.${x.ev.role}`) : undefined,
     note: x.ev?.note,
     current: i === lastDone,
+    pending: !x.ev,
   }));
 }
 
@@ -76,7 +77,7 @@ export default function RequestPage() {
       case 'draft':
         return (
           <Link
-            className="btn btn-primary"
+            className="ux4g-btn-primary ux4g-btn-m"
             to={`/requests/new/${r.type}?draft=${r.id}&step=${r.lastStep ?? 0}`}
           >
             {t('detail.continue')}
@@ -84,7 +85,10 @@ export default function RequestPage() {
         );
       case 'returned':
         return (
-          <Link className="btn btn-primary" to={`/requests/new/${r.type}?draft=${r.id}&step=1`}>
+          <Link
+            className="ux4g-btn-primary ux4g-btn-m"
+            to={`/requests/new/${r.type}?draft=${r.id}&step=1`}
+          >
             {t('detail.editSend')}
           </Link>
         );
@@ -92,7 +96,7 @@ export default function RequestPage() {
         return (
           <button
             type="button"
-            className="btn btn-primary"
+            className="ux4g-btn-primary ux4g-btn-m"
             onClick={() => setViewer(r.orderId ?? 'sample')}
           >
             {t('detail.downloadOrder')}
@@ -101,13 +105,17 @@ export default function RequestPage() {
       case 'rejected':
       case 'withdrawn':
         return (
-          <Link className="btn btn-primary" to="/requests/new">
+          <Link className="ux4g-btn-primary ux4g-btn-m" to="/requests/new">
             {t('detail.startNew')}
           </Link>
         );
       default:
         return canWithdraw(r.status) ? (
-          <button type="button" className="btn btn-primary" onClick={() => setConfirm(true)}>
+          <button
+            type="button"
+            className="ux4g-btn-primary ux4g-btn-m"
+            onClick={() => setConfirm(true)}
+          >
             {t('detail.withdraw')}
           </button>
         ) : null;
@@ -136,18 +144,24 @@ export default function RequestPage() {
       )}
       <div className="layout-side request-layout">
         <div className="stack">
-          <section className="card order-1" aria-labelledby="rq-tl">
+          <section
+            className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad order-1"
+            aria-labelledby="rq-tl"
+          >
             <div className="cardhead">
               <h2 id="rq-tl">{t('detail.timeline')}</h2>
               <StatusChip status={r.status} />
             </div>
-            <p className="small muted">
+            <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
               {t('detail.ref')}: <strong>{r.ref}</strong>
             </p>
             <Timeline steps={stages(r, t, loc)} label={t('detail.timeline')} />
           </section>
-          <section className="card order-2" aria-labelledby="rq-sum">
-            <h2 id="rq-sum" className="h-sm">
+          <section
+            className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad order-2"
+            aria-labelledby="rq-sum"
+          >
+            <h2 id="rq-sum" className="ux4g-heading-xs-strong">
               {t('detail.summary')}
             </h2>
             {def && (
@@ -163,21 +177,32 @@ export default function RequestPage() {
               />
             )}
           </section>
-          <section className="card order-2" aria-labelledby="rq-att">
-            <h2 id="rq-att" className="h-sm">
+          <section
+            className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad order-2"
+            aria-labelledby="rq-att"
+          >
+            <h2 id="rq-att" className="ux4g-heading-xs-strong">
               {t('detail.attachments')}
             </h2>
             {r.attachments.length === 0 ? (
-              <p className="muted">{t('detail.noAttachments')}</p>
+              <p className="ux4g-text-neutral-secondary">{t('detail.noAttachments')}</p>
             ) : (
               <ul className="files">
                 {r.attachments.map((a, i) => (
                   <li key={i}>
                     <span className="grow">{a.name}</span>
-                    <button type="button" className="link-btn" onClick={() => setViewer('sample')}>
+                    <button
+                      type="button"
+                      className="ux4g-btn-text-primary ux4g-btn-s"
+                      onClick={() => setViewer('sample')}
+                    >
                       {t('detail.view')}
                     </button>
-                    <a className="link" href={`${import.meta.env.BASE_URL}sample.pdf`} download>
+                    <a
+                      className="ux4g-text-link-md"
+                      href={`${import.meta.env.BASE_URL}sample.pdf`}
+                      download
+                    >
                       {t('detail.download')}
                     </a>
                   </li>
@@ -186,18 +211,23 @@ export default function RequestPage() {
             )}
           </section>
         </div>
-        <section className="card order-3 sticky" aria-labelledby="rq-notes">
-          <h2 id="rq-notes" className="h-sm">
+        <section
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad order-3 sticky"
+          aria-labelledby="rq-notes"
+        >
+          <h2 id="rq-notes" className="ux4g-heading-xs-strong">
             {t('detail.notes')}
           </h2>
           {r.notes.length === 0 ? (
-            <p className="muted">{t('detail.notesEmpty')}</p>
+            <p className="ux4g-text-neutral-secondary">{t('detail.notesEmpty')}</p>
           ) : (
             <ul className="notes">
               {r.notes.map((n) => (
-                <li key={n.id} className={`note note-${n.from}`}>
+                <li key={n.id} className={`note note- ${n.from}`}>
                   <strong>{n.from === 'officer' ? t('detail.you') : t('detail.desk')}</strong>{' '}
-                  <span className="muted small">{formatDate(n.createdAt, loc)}</span>
+                  <span className="ux4g-text-neutral-secondary ux4g-body-s-default">
+                    {formatDate(n.createdAt, loc)}
+                  </span>
                   <p>{n.text}</p>
                 </li>
               ))}
@@ -212,7 +242,7 @@ export default function RequestPage() {
           />
           <button
             type="button"
-            className="btn"
+            className="ux4g-btn-outline-primary ux4g-btn-m"
             disabled={!note.trim() || addNote.isPending}
             onClick={() => addNote.mutate([r.id, note.trim()], { onSuccess: () => setNote('') })}
           >

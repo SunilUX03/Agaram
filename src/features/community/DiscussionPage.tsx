@@ -58,21 +58,25 @@ export default function DiscussionPage() {
         {c.author !== 'anonymous' && c.author.designation?.includes('earlier batch') && (
           <Tag>{t('discussions.seniors')}</Tag>
         )}
-        <span className="muted">{formatDate(c.createdAt, loc)}</span>
+        <span className="ux4g-text-neutral-secondary">{formatDate(c.createdAt, loc)}</span>
       </div>
       <p>{c.text}</p>
-      <div className="row" style={{ gap: 16 }}>
+      <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s" style={{ gap: 16 }}>
         {depth === 0 && (
           <button
             type="button"
-            className="link-btn"
+            className="ux4g-btn-text-primary ux4g-btn-s"
             onClick={() => (setReplyTo(c), box.current?.focus())}
           >
             {t('discussions.reply')}
           </button>
         )}
         {!c.mine && (
-          <button type="button" className="link-btn" onClick={() => setRep(c)}>
+          <button
+            type="button"
+            className="ux4g-btn-text-primary ux4g-btn-s"
+            onClick={() => setRep(c)}
+          >
             {t('discussions.report')}
           </button>
         )}
@@ -92,7 +96,11 @@ export default function DiscussionPage() {
           date: formatDate(p.createdAt, loc),
         })}
         main={
-          <button type="button" className="btn btn-primary" onClick={() => box.current?.focus()}>
+          <button
+            type="button"
+            className="ux4g-btn-primary ux4g-btn-m"
+            onClick={() => box.current?.focus()}
+          >
             {t('routes.community_discussion.main')}
           </button>
         }
@@ -102,7 +110,7 @@ export default function DiscussionPage() {
         ]}
       />
       <div className="form-narrow stack">
-        <section className="card">
+        <section className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
           <div className="tags">
             <Tag>{t(`common.kind.${p.kind}`)}</Tag>
             {p.askSeniors && <Tag>{t('common.asked')}</Tag>}
@@ -136,7 +144,7 @@ export default function DiscussionPage() {
                   />
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="ux4g-btn-primary ux4g-btn-m"
                     disabled={!choice || vote.isPending}
                     onClick={() => vote.mutate([p.id, choice])}
                   >
@@ -144,7 +152,7 @@ export default function DiscussionPage() {
                   </button>
                 </>
               )}
-              <p className="small muted">
+              <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                 {closed
                   ? t('discussions.closed')
                   : t('discussions.closes', { date: formatDate(p.poll.closesAt, loc) })}
@@ -152,19 +160,26 @@ export default function DiscussionPage() {
             </div>
           )}
         </section>
-        <section className="card" aria-label={t('discussions.reply')}>
+        <section
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          aria-label={t('discussions.reply')}
+        >
           {cm.isPending ? (
             <Skeleton variant="row" count={2} />
           ) : roots.length ? (
             <ul className="thread">{roots.map((c) => node(c, 0))}</ul>
           ) : (
-            <p className="muted">{t('discussions.noReplies')}</p>
+            <p className="ux4g-text-neutral-secondary">{t('discussions.noReplies')}</p>
           )}
           <div style={{ marginTop: 16 }}>
             {replyTo && (
-              <p className="small">
+              <p className="ux4g-body-s-default">
                 {t('discussions.replyTo', { name: author(replyTo.author, replyTo.mine) })}{' '}
-                <button type="button" className="link-btn" onClick={() => setReplyTo(null)}>
+                <button
+                  type="button"
+                  className="ux4g-btn-text-primary ux4g-btn-s"
+                  onClick={() => setReplyTo(null)}
+                >
                   {t('discussions.cancel')}
                 </button>
               </p>
@@ -172,18 +187,21 @@ export default function DiscussionPage() {
             <label className="sr-only" htmlFor="reply-box">
               {t('discussions.replyBox')}
             </label>
-            <textarea
-              id="reply-box"
-              ref={box}
-              className="input"
-              rows={3}
-              placeholder={t('discussions.replyBox')}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
+            <div className="ux4g-textarea ux4g-textarea-default">
+              <textarea
+                className="ux4g-textarea-input"
+                id="reply-box"
+                ref={box}
+
+                rows={3}
+                placeholder={t('discussions.replyBox')}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </div>
             <button
               type="button"
-              className="btn btn-primary"
+              className="ux4g-btn-primary ux4g-btn-m"
               style={{ marginTop: 12 }}
               disabled={!text.trim() || add.isPending}
               onClick={send}
@@ -199,12 +217,16 @@ export default function DiscussionPage() {
           onClose={() => setRep(null)}
           footer={
             <>
-              <button type="button" className="btn" onClick={() => setRep(null)}>
+              <button
+                type="button"
+                className="ux4g-btn-outline-primary ux4g-btn-m"
+                onClick={() => setRep(null)}
+              >
                 {t('discussions.cancel')}
               </button>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="ux4g-btn-primary ux4g-btn-m"
                 disabled={!reason}
                 onClick={() =>
                   report.mutate([rep.id, reason], {

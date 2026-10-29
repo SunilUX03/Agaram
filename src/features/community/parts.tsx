@@ -37,8 +37,11 @@ export function IdeaCard({ idea }: { idea: Idea }) {
   const { t } = useTranslation('community');
   const loc = useLoc();
   return (
-    <article className="card idea-card">
-      <div className="row" style={{ justifyContent: 'space-between' }}>
+    <article className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad idea-card">
+      <div
+        className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+        style={{ justifyContent: 'space-between' }}
+      >
         <StatusChip status={`idea:${idea.status}`} />
         <div className="tags">
           <Tag>{idea.type}</Tag>
@@ -50,14 +53,14 @@ export function IdeaCard({ idea }: { idea: Idea }) {
           {idea.title}
         </Link>
       </h3>
-      <p className="card-meta clamp-2">{idea.description}</p>
-      <p className="card-meta" style={{ marginTop: 8 }}>
+      <p className="ux4g-body-s-default ux4g-text-neutral-secondary clamp-2">{idea.description}</p>
+      <p className="ux4g-body-s-default ux4g-text-neutral-secondary" style={{ marginTop: 8 }}>
         {idea.author.name}
         {idea.department ? `, ${idea.department}` : ''} · {formatDate(idea.createdAt, loc)}
       </p>
       <div className="card-foot">
         <BackButton idea={idea} />
-        <span className="card-meta">
+        <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
           <Icon name="community" size={14} /> {t('common.comments', { count: idea.commentCount })}
         </span>
       </div>
@@ -71,23 +74,25 @@ export function PostRow({ post }: { post: Post }) {
   const author = useAuthor();
   const excerpt = post.body.replace(/<[^>]+>/g, ' ');
   return (
-    <Link to={`/community/discussions/${post.id}`} className="list-row post-row">
-      <span className="list-row-main">
-        <span className="tags">
-          <Tag>{t(`common.kind.${post.kind}`)}</Tag>
-          <Tag>{t(`common.audience.${post.audience}`)}</Tag>
-          {post.askSeniors && <Tag>{t('common.asked')}</Tag>}
+    <Link to={`/community/discussions/${post.id}`} className="ux4g-list-item list-row post-row">
+      <span className="ux4g-list-item-row">
+        <span className="ux4g-list-item-start list-row-main">
+          <span className="tags">
+            <Tag>{t(`common.kind.${post.kind}`)}</Tag>
+            <Tag>{t(`common.audience.${post.audience}`)}</Tag>
+            {post.askSeniors && <Tag>{t('common.asked')}</Tag>}
+          </span>
+          <span className="ux4g-body-m-strong">{post.title}</span>
+          <span className="ux4g-body-s-default ux4g-text-neutral-secondary clamp-2">{excerpt}</span>
+          <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+            {author(post.author, false)} · {t('common.replies', { count: post.replyCount })} ·{' '}
+            {t('common.lastActivity', { date: formatDate(post.lastActivityAt, loc) })}
+          </span>
         </span>
-        <span className="list-row-title" style={{ marginTop: 6 }}>
-          {post.title}
-        </span>
-        <span className="list-row-meta clamp-2">{excerpt}</span>
-        <span className="list-row-meta">
-          {author(post.author, false)} · {t('common.replies', { count: post.replyCount })} ·{' '}
-          {t('common.lastActivity', { date: formatDate(post.lastActivityAt, loc) })}
+        <span className="ux4g-list-item-end">
+          <Icon name="chevron" size={20} />
         </span>
       </span>
-      <Icon name="chevron" size={18} />
     </Link>
   );
 }
@@ -96,7 +101,7 @@ export function ArticleCard({ a }: { a: Article }) {
   const { t } = useTranslation('community');
   const save = useMut('toggleSaved');
   return (
-    <article className="card article-card">
+    <article className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad article-card">
       <div className="card-image article-lead" aria-hidden="true">
         {a.leadImageUrl ? <img src={a.leadImageUrl} alt="" /> : <span className="lead-tint" />}
       </div>
@@ -109,7 +114,7 @@ export function ArticleCard({ a }: { a: Article }) {
           {a.title}
         </Link>
       </h3>
-      <p className="card-meta">
+      <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
         {a.authorRole}
         {a.district ? `, ${a.district}` : ''}
       </p>

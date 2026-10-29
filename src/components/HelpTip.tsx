@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from './Icon';
 import { useOutsideClick, useUid } from './hooks';
 
-/** "What is this?" icon with a popover. Use on first appearance of an abbreviation. */
+/** "What is this?" icon with a UX4G tooltip-style popover. Use on first appearance of an abbreviation. */
 export function HelpTip({ text }: { text: string }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -11,19 +11,23 @@ export function HelpTip({ text }: { text: string }) {
   const id = useUid('tip');
   useOutsideClick(ref, () => setOpen(false), open);
   return (
-    <span className="helptip" ref={ref} onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}>
+    <span
+      className="ux4g-tooltip-wrapper helptip"
+      ref={ref}
+      onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}
+    >
       <button
         type="button"
-        className="icon-btn icon-btn-sm"
+        className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-sm"
         aria-expanded={open}
         aria-controls={id}
         aria-label={t('ui.help.open')}
         onClick={() => setOpen(!open)}
       >
-        <Icon name="help" size={16} />
+        <Icon name="help" size={18} />
       </button>
       {open && (
-        <span id={id} role="note" className="helptip-pop">
+        <span id={id} role="note" className="ux4g-tooltip ux4g-tooltip-bottom-center-m helptip-pop">
           {text}
         </span>
       )}

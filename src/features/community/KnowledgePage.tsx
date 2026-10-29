@@ -50,7 +50,7 @@ export default function KnowledgePage() {
             return (
               <>
                 <div
-                  className="pick-chips"
+                  className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-xs ux4g-mb-s"
                   role="group"
                   aria-label={t('knowledge.tags')}
                   style={{ marginTop: 12 }}
@@ -59,7 +59,7 @@ export default function KnowledgePage() {
                     <button
                       key={x}
                       type="button"
-                      className="pick"
+                      className={`ux4g-filter-chip-m${tag === x ? ' active' : ''}`}
                       aria-pressed={tag === x}
                       onClick={() => setTag(tag === x ? '' : x)}
                     >
@@ -74,7 +74,7 @@ export default function KnowledgePage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="muted">{t('knowledge.empty')}</p>
+                  <p className="ux4g-text-neutral-secondary">{t('knowledge.empty')}</p>
                 )}
               </>
             );

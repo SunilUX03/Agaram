@@ -22,6 +22,7 @@ export function useUrlTab(tabs: TabDef[], param = 'tab') {
   return [active, setActive] as const;
 }
 
+/** UX4G underline tabs with arrow-key navigation. On phones the row scrolls sideways with the active tab in view. */
 export function UrlTabs({
   tabs,
   param = 'tab',
@@ -33,7 +34,7 @@ export function UrlTabs({
 }) {
   const { t } = useTranslation();
   const [active, setActive] = useUrlTab(tabs, param);
-  const list = useRef<HTMLDivElement>(null);
+  const list = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     list.current
@@ -54,29 +55,37 @@ export function UrlTabs({
   };
 
   return (
-    <div
-      className="tabs"
-      role="tablist"
-      aria-label={label ?? t('ui.tabs')}
-      ref={list}
-      onKeyDown={onKey}
-    >
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          type="button"
-          role="tab"
-          data-tab={tab.id}
-          id={`tab-${tab.id}`}
-          aria-selected={tab.id === active}
-          aria-controls="tabpanel"
-          tabIndex={tab.id === active ? 0 : -1}
-          onClick={() => setActive(tab.id)}
-        >
-          {tab.label}
-          {tab.count !== undefined && <span className="tab-count">{tab.count}</span>}
-        </button>
-      ))}
+    <div className="ux4g-tab ux4g-tab-underline ux4g-tab-m tabs-scroll ux4g-mb-l">
+      <ul
+        className="ux4g-tab-list"
+        role="tablist"
+        aria-label={label ?? t('ui.tabs')}
+        ref={list}
+        onKeyDown={onKey}
+      >
+        {tabs.map((tab) => (
+          <li key={tab.id} role="presentation" className="tab-li">
+            <button
+              type="button"
+              role="tab"
+              data-tab={tab.id}
+              id={`tab-${tab.id}`}
+              className={`ux4g-tab-item${tab.id === active ? ' is-active active' : ''}`}
+              aria-selected={tab.id === active}
+              aria-controls="tabpanel"
+              tabIndex={tab.id === active ? 0 : -1}
+              onClick={() => setActive(tab.id)}
+            >
+              {tab.label}
+              {tab.count !== undefined && (
+                <span className="ux4g-badge-digit-neutral ux4g-badge-s ux4g-ml-xs">
+                  {tab.count}
+                </span>
+              )}
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

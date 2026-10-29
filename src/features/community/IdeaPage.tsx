@@ -38,7 +38,9 @@ function StatusSteps({ idea }: { idea: Idea }) {
         ))}
       </ol>
       {idea.statusReason && (
-        <p className="muted">{t('ideas.page.reason', { reason: idea.statusReason })}</p>
+        <p className="ux4g-text-neutral-secondary">
+          {t('ideas.page.reason', { reason: idea.statusReason })}
+        </p>
       )}
     </div>
   );
@@ -83,19 +85,19 @@ export default function IdeaPage() {
       />
       <div className="layout-side">
         <div className="stack">
-          <section className="card">
+          <section className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <StatusSteps idea={i} />
             <div className="tags">
               <Tag>{i.type}</Tag>
               {i.budget && <Tag>{t('ideas.page.cost', { amount: i.budget })}</Tag>}
             </div>
-            <h2 className="h-sm" style={{ marginTop: 16 }}>
+            <h2 className="ux4g-heading-xs-strong" style={{ marginTop: 16 }}>
               {t('ideas.page.description')}
             </h2>
             <p>{i.description}</p>
             {i.attachments.length > 0 && (
               <>
-                <h2 className="h-sm">{t('ideas.page.attachments')}</h2>
+                <h2 className="ux4g-heading-xs-strong">{t('ideas.page.attachments')}</h2>
                 <ul className="files">
                   {i.attachments.map((a, k) => (
                     <li key={k}>{a.name}</li>
@@ -106,7 +108,7 @@ export default function IdeaPage() {
             {i.mine && i.status === 'submitted' && (
               <button
                 type="button"
-                className="link-btn"
+                className="ux4g-btn-text-primary ux4g-btn-s"
                 onClick={() => (
                   setDraft({ title: i.title, description: i.description }),
                   setEdit(true)
@@ -116,8 +118,11 @@ export default function IdeaPage() {
               </button>
             )}
           </section>
-          <section className="card" aria-labelledby="idea-disc">
-            <h2 id="idea-disc" className="h-sm">
+          <section
+            className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+            aria-labelledby="idea-disc"
+          >
+            <h2 id="idea-disc" className="ux4g-heading-xs-strong">
               {t('ideas.page.discussion')}
             </h2>
             {comments.isPending ? (
@@ -128,7 +133,7 @@ export default function IdeaPage() {
                   <li key={c.id} className="comment">
                     <div className="comment-head">
                       <strong>{author(c.author, c.mine)}</strong>
-                      <span className="muted">
+                      <span className="ux4g-text-neutral-secondary">
                         {formatDate(c.createdAt, loc)}, {formatTime(c.createdAt, loc)}
                       </span>
                     </div>
@@ -137,7 +142,7 @@ export default function IdeaPage() {
                 ))}
               </ul>
             ) : (
-              <p className="muted">{t('ideas.page.noComments')}</p>
+              <p className="ux4g-text-neutral-secondary">{t('ideas.page.noComments')}</p>
             )}
             <TextArea
               name="idea-comment"
@@ -148,7 +153,7 @@ export default function IdeaPage() {
             />
             <button
               type="button"
-              className="btn btn-primary"
+              className="ux4g-btn-primary ux4g-btn-m"
               disabled={!text.trim() || add.isPending}
               onClick={submit}
             >
@@ -163,12 +168,16 @@ export default function IdeaPage() {
           onClose={() => setEdit(false)}
           footer={
             <>
-              <button type="button" className="btn" onClick={() => setEdit(false)}>
+              <button
+                type="button"
+                className="ux4g-btn-outline-primary ux4g-btn-m"
+                onClick={() => setEdit(false)}
+              >
                 {t('ideas.page.cancel')}
               </button>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="ux4g-btn-primary ux4g-btn-m"
                 onClick={() => upd.mutate([i.id, draft], { onSuccess: () => setEdit(false) })}
               >
                 {t('ideas.page.save')}

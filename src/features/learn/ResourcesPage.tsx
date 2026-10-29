@@ -31,12 +31,14 @@ export default function ResourcesPage() {
                 {rows.map((r) => (
                   <Card key={r.id}>
                     <h3>{r.name}</h3>
-                    {r.note && <p className="card-meta">{r.note}</p>}
+                    {r.note && (
+                      <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{r.note}</p>
+                    )}
                     <ul className="plain-list" style={{ margin: '8px 0' }}>
                       {r.links.map((l) => (
                         <li key={l.url}>
                           <a
-                            className="link"
+                            className="ux4g-text-link-md"
                             href={l.url}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -46,12 +48,14 @@ export default function ResourcesPage() {
                         </li>
                       ))}
                     </ul>
-                    <p className="card-meta">{t('resources.sharedBy', { name: r.sharedBy })}</p>
+                    <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {t('resources.sharedBy', { name: r.sharedBy })}
+                    </p>
                   </Card>
                 ))}
               </div>
             ) : (
-              <p className="muted">{t('resources.empty')}</p>
+              <p className="ux4g-text-neutral-secondary">{t('resources.empty')}</p>
             );
           }}
         </QueryView>
@@ -91,10 +95,15 @@ function ShareDialog({ onClose }: { onClose: () => void }) {
       onClose={onClose}
       footer={
         <>
-          <button type="button" className="btn" onClick={onClose}>
+          <button type="button" className="ux4g-btn-outline-primary ux4g-btn-m" onClick={onClose}>
             {t('resources.cancel')}
           </button>
-          <button type="button" className="btn btn-primary" disabled={add.isPending} onClick={go}>
+          <button
+            type="button"
+            className="ux4g-btn-primary ux4g-btn-m"
+            disabled={add.isPending}
+            onClick={go}
+          >
             {t('resources.share')}
           </button>
         </>
@@ -135,7 +144,7 @@ function ShareDialog({ onClose }: { onClose: () => void }) {
       ))}
       <button
         type="button"
-        className="btn btn-sm"
+        className="ux4g-btn-outline-primary ux4g-btn-s"
         onClick={() => setLinks([...links, { label: '', url: '' }])}
       >
         {t('resources.addLink')}

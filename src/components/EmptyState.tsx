@@ -10,24 +10,27 @@ interface Props {
   icon?: IconName;
 }
 
+/** UX4G empty state with an optional main action. */
 export function EmptyState({ message, actionLabel, to, onAction, icon = 'check' }: Props) {
   const { t } = useTranslation();
   return (
-    <div className="empty">
-      <span className="empty-art" aria-hidden="true">
-        <Icon name={icon} size={32} />
+    <div className="ux4g-empty-state">
+      <span className="ux4g-empty-state-icon" aria-hidden="true">
+        <Icon name={icon} size={40} />
       </span>
-      <p>{message ?? t('ui.empty.default')}</p>
-      {actionLabel &&
-        (to ? (
-          <Link className="btn btn-primary" to={to}>
-            {actionLabel}
-          </Link>
-        ) : (
-          <button type="button" className="btn btn-primary" onClick={onAction}>
-            {actionLabel}
-          </button>
-        ))}
+      <div className="ux4g-empty-state-content">
+        <p>{message ?? t('ui.empty.default')}</p>
+        {actionLabel &&
+          (to ? (
+            <Link className="ux4g-btn-primary ux4g-btn-m" to={to}>
+              {actionLabel}
+            </Link>
+          ) : (
+            <button type="button" className="ux4g-btn-primary ux4g-btn-m" onClick={onAction}>
+              {actionLabel}
+            </button>
+          ))}
+      </div>
     </div>
   );
 }
@@ -36,14 +39,16 @@ export function EmptyState({ message, actionLabel, to, onAction, icon = 'check' 
 export function ErrorState({ onRetry }: { onRetry: () => void }) {
   const { t } = useTranslation();
   return (
-    <div className="empty" role="alert">
-      <span className="empty-art" aria-hidden="true">
-        <Icon name="warning" size={32} />
+    <div className="ux4g-empty-state" role="alert">
+      <span className="ux4g-empty-state-icon" aria-hidden="true">
+        <Icon name="warning" size={40} />
       </span>
-      <p>{t('error.load')}</p>
-      <button type="button" className="btn btn-primary" onClick={onRetry}>
-        {t('error.retry')}
-      </button>
+      <div className="ux4g-empty-state-content">
+        <p>{t('error.load')}</p>
+        <button type="button" className="ux4g-btn-primary ux4g-btn-m" onClick={onRetry}>
+          {t('error.retry')}
+        </button>
+      </div>
     </div>
   );
 }

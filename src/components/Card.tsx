@@ -9,18 +9,20 @@ interface Props {
   className?: string;
 }
 
+/** UX4G outline card. Pass `to` to make the whole card a link. */
 export function Card({ children, to, image, className = '' }: Props) {
   const body = (
     <>
-      {image && <div className="card-image">{image}</div>}
-      <div className="card-body">{children}</div>
+      {image && <div className="ux4g-ratio-16-9">{image}</div>}
+      <div className="ux4g-card-body">{children}</div>
     </>
   );
+  const cls = `ux4g-card ux4g-card-outline ux4g-card-vertical ${className}`;
   return to ? (
-    <Link to={to} className={`card card-link ${className}`}>
+    <Link to={to} className={`${cls} card-link`}>
       {body}
     </Link>
   ) : (
-    <div className={`card ${className}`}>{body}</div>
+    <div className={cls}>{body}</div>
   );
 }

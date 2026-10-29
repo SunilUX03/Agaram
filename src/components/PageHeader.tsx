@@ -37,22 +37,26 @@ export function PageHeader({
     document.title = t('app.title', { headline });
   }, [headline, t]);
   return (
-    <header className="page-header">
+    <header className="page-header ux4g-mb-l">
       {breadcrumb && <Breadcrumb items={breadcrumb} />}
-      <div className="page-header-row">
+      <div className="ux4g-d-flex ux4g-jc-between ux4g-gap-xl">
         <div className="page-header-text">
-          <h1 ref={h1} tabIndex={-1}>
+          <h1 ref={h1} tabIndex={-1} className="ux4g-heading-l-strong">
             {headline}
           </h1>
-          {tagline && <p className="tagline">{tagline}</p>}
+          {tagline && (
+            <p className="ux4g-body-m-default ux4g-text-neutral-secondary ux4g-mt-xs">{tagline}</p>
+          )}
           {(main || secondary) && (
-            <div className={`page-header-actions${stickyMain ? ' hide-mobile' : ''}`}>
+            <div
+              className={`ux4g-d-flex ux4g-flex-wrap ux4g-gap-s ux4g-mt-m${stickyMain ? ' hide-mobile' : ''}`}
+            >
               {main}
               {secondary}
             </div>
           )}
         </div>
-        {image && <div className="page-header-image">{image}</div>}
+        {image && <div className="ux4g-d-none ux4g-lg-d-block page-header-image">{image}</div>}
       </div>
       {stickyMain && main && <div className="sticky-bar">{main}</div>}
     </header>
@@ -60,4 +64,6 @@ export function PageHeader({
 }
 
 /** Neutral placeholder until real art exists (brief, section 4). Decorative. */
-export const ImagePlaceholder = () => <div className="img-placeholder" aria-hidden="true" />;
+export const ImagePlaceholder = () => (
+  <div className="ux4g-ratio-16-9 ux4g-bg-neutral-soft" aria-hidden="true" />
+);

@@ -6,16 +6,21 @@ export interface Crumb {
   to?: string;
 }
 
-/** Desktop only (hidden by CSS below 1024px). The last item is plain text. */
+/** UX4G breadcrumb. Desktop only. The last item is plain text. */
 export function Breadcrumb({ items }: { items: Crumb[] }) {
   const { t } = useTranslation();
   return (
-    <nav aria-label={t('ui.breadcrumb')} className="breadcrumb">
-      <ol>
+    <nav
+      aria-label={t('ui.breadcrumb')}
+      className="ux4g-breadcrumb ux4g-breadcrumb-divider ux4g-d-none ux4g-lg-d-block ux4g-mb-s"
+    >
+      <ol className="ux4g-breadcrumb-list ux4g-d-flex plain-list">
         {items.map((c, i) => (
-          <li key={i}>
+          <li key={i} className={`ux4g-breadcrumb-item${i === items.length - 1 ? ' active' : ''}`}>
             {c.to && i < items.length - 1 ? (
-              <Link to={c.to}>{c.label}</Link>
+              <Link to={c.to} className="ux4g-breadcrumb-link">
+                {c.label}
+              </Link>
             ) : (
               <span aria-current={i === items.length - 1 ? 'page' : undefined}>{c.label}</span>
             )}

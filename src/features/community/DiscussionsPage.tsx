@@ -31,13 +31,13 @@ export default function DiscussionsPage() {
           {(all) => {
             const rows = all.filter((p) => tab === 'all' || p.kind === tab);
             return rows.length ? (
-              <div className="list">
+              <div className="ux4g-d-flex ux4g-flex-column">
                 {rows.map((p) => (
                   <PostRow key={p.id} post={p} />
                 ))}
               </div>
             ) : (
-              <p className="muted">{t('discussions.empty')}</p>
+              <p className="ux4g-text-neutral-secondary">{t('discussions.empty')}</p>
             );
           }}
         </QueryView>

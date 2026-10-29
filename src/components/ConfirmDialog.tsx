@@ -28,16 +28,21 @@ export function ConfirmDialog({
       initialFocus="[data-cancel]"
       footer={
         <>
-          <button type="button" className="btn" data-cancel onClick={onCancel}>
+          <button
+            type="button"
+            className="ux4g-btn-outline-primary ux4g-btn-m"
+            data-cancel
+            onClick={onCancel}
+          >
             {cancelLabel ?? t('ui.confirm.cancel')}
           </button>
-          <button type="button" className="btn btn-danger" onClick={onConfirm}>
+          <button type="button" className="ux4g-btn-danger ux4g-btn-m" onClick={onConfirm}>
             {confirmLabel}
           </button>
         </>
       }
     >
-      {body && <p>{body}</p>}
+      {body && <p className="ux4g-body-m-default">{body}</p>}
     </Dialog>
   );
 }

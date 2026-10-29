@@ -37,21 +37,27 @@ export default function ExpertsPage() {
                 (tab === 'all' || e.kind === tab) &&
                 (!n || `${e.name} ${e.description}`.toLowerCase().includes(n)),
             );
-            if (!rows.length) return <p className="muted">{t('experts.empty')}</p>;
+            if (!rows.length)
+              return <p className="ux4g-text-neutral-secondary">{t('experts.empty')}</p>;
             return (
               <div className="grid-cards">
                 {rows.map((e) => (
-                  <article key={e.id} className="card">
+                  <article
+                    key={e.id}
+                    className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+                  >
                     <div className="tags">
                       <Tag>{e.kind === 'organisation' ? t('experts.org') : t('experts.indiv')}</Tag>
                       {e.pending && <Tag>{t('experts.pending')}</Tag>}
                     </div>
                     <h3 style={{ marginTop: 8 }}>{e.name}</h3>
-                    <p className="card-meta">{e.description}</p>
+                    <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {e.description}
+                    </p>
                     <div className="card-foot">
                       {e.website && (
                         <a
-                          className="link"
+                          className="ux4g-text-link-md"
                           href={e.website}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -60,7 +66,7 @@ export default function ExpertsPage() {
                         </a>
                       )}
                       {e.phone && (
-                        <a className="link" href={`tel:${e.phone.replace(/\s/g, '')}`}>
+                        <a className="ux4g-text-link-md" href={`tel:${e.phone.replace(/\s/g, '')}`}>
                           {t('experts.phone', { phone: e.phone })}
                         </a>
                       )}
@@ -106,10 +112,15 @@ function AddDialog({ onClose }: { onClose: () => void }) {
       onClose={onClose}
       footer={
         <>
-          <button type="button" className="btn" onClick={onClose}>
+          <button type="button" className="ux4g-btn-outline-primary ux4g-btn-m" onClick={onClose}>
             {t('experts.cancel')}
           </button>
-          <button type="button" className="btn btn-primary" disabled={add.isPending} onClick={go}>
+          <button
+            type="button"
+            className="ux4g-btn-primary ux4g-btn-m"
+            disabled={add.isPending}
+            onClick={go}
+          >
             {t('experts.add')}
           </button>
         </>

@@ -62,13 +62,13 @@ export default function ArticlePage() {
         <p style={{ fontSize: 18 }}>{a.summary}</p>
         {a.sections.map((s) => (
           <section key={s.heading}>
-            <h2 className="h-sm">{s.heading}</h2>
+            <h2 className="ux4g-heading-xs-strong">{s.heading}</h2>
             <div className="rich-out" dangerouslySetInnerHTML={{ __html: sanitizeHtml(s.body) }} />
           </section>
         ))}
         {a.attachments.length > 0 && (
           <section>
-            <h2 className="h-sm">{t('knowledge.attachments')}</h2>
+            <h2 className="ux4g-heading-xs-strong">{t('knowledge.attachments')}</h2>
             <ul className="files">
               {a.attachments.map((f, i) => (
                 <li key={i}>{f.name}</li>

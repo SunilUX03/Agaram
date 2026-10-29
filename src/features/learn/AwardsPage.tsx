@@ -37,14 +37,14 @@ export default function AwardsPage() {
                       <StatusChip status={open ? 'award:open' : 'award:closed'} />
                       <h3 style={{ marginTop: 8 }}>{a.name}</h3>
                       <p>{a.description}</p>
-                      <p className="card-meta">
+                      <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                         <strong>{t('awards.eligibility')}:</strong> {a.eligibility}
                       </p>
-                      <p className="card-meta">
+                      <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                         <strong>{t('awards.timeline')}:</strong> {a.timeline}
                       </p>
                       {a.opensOn && a.closesOn && (
-                        <p className="card-meta">
+                        <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                           {t('awards.window', {
                             from: formatDate(a.opensOn, loc),
                             to: formatDate(a.closesOn, loc),
@@ -54,7 +54,7 @@ export default function AwardsPage() {
                       {open && a.link && (
                         <div className="card-foot">
                           <a
-                            className="btn btn-primary btn-sm"
+                            className="ux4g-btn-primary ux4g-btn-s"
                             href={a.link}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -78,11 +78,12 @@ export default function AwardsPage() {
                 />
                 {(() => {
                   const a = all.find((x) => x.id === (pick || all[0]?.id));
-                  if (!a?.awardees.length) return <p className="muted">{t('awards.empty')}</p>;
+                  if (!a?.awardees.length)
+                    return <p className="ux4g-text-neutral-secondary">{t('awards.empty')}</p>;
                   const years = [...new Set(a.awardees.map((w) => w.year))].sort((x, y) => y - x);
                   return years.map((y) => (
                     <section key={y} className="section">
-                      <h3 className="h-sm">{y}</h3>
+                      <h3 className="ux4g-heading-xs-strong">{y}</h3>
                       <ul className="plain-list">
                         {a.awardees
                           .filter((w) => w.year === y)

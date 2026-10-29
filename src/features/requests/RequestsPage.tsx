@@ -82,7 +82,7 @@ export default function RequestsPage() {
             );
             if (!rows.length) return <EmptyState message={t('list.noMatch')} icon="search" />;
             return (
-              <div className="list">
+              <div className="ux4g-d-flex ux4g-flex-column">
                 {rows.map((r) => (
                   <ListRow
                     key={r.id}
@@ -108,7 +108,7 @@ export default function RequestsPage() {
           }}
         </QueryView>
       </div>
-      <Link to="/requests/new" className="fab btn btn-primary btn-pill">
+      <Link to="/requests/new" className="ux4g-btn-primary ux4g-btn-m ux4g-radius-full fab">
         <Icon name="plus" /> {t('list.emptyBtn')}
       </Link>
     </>

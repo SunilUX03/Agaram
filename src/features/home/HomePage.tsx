@@ -47,7 +47,7 @@ export default function HomePage() {
       <section className="hero">
         <div>
           <PageHeaderlessHero headline={headline} tagline={p.tagline} />
-          <p className="small muted">
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
             {officer.data
               ? t('today', {
                   date: formatDate(new Date(), loc),
@@ -55,11 +55,11 @@ export default function HomePage() {
                 })
               : ' '}
           </p>
-          <div className="page-header-actions">
-            <Link to="/requests/new" className="btn btn-primary">
+          <div className="ux4g-d-flex ux4g-flex-wrap ux4g-gap-s ux4g-mt-m">
+            <Link to="/requests/new" className="ux4g-btn-primary ux4g-btn-m">
               {p.main}
             </Link>
-            <Link to="/file" className="btn">
+            <Link to="/file" className="ux4g-btn-outline-primary ux4g-btn-m">
               {t('openFile')}
             </Link>
           </div>
@@ -76,7 +76,11 @@ export default function HomePage() {
       <Glance />
       <MyRequests />
       <WhatIsNew />
-      <Link to="/requests/new" className="fab btn btn-primary btn-pill" aria-label={p.main}>
+      <Link
+        to="/requests/new"
+        className="ux4g-btn-primary ux4g-btn-m ux4g-radius-full fab"
+        aria-label={p.main}
+      >
         <Icon name="plus" /> {p.main}
       </Link>
     </>
@@ -109,7 +113,7 @@ function Section({
           <p>{tagline}</p>
         </div>
         {link && to && (
-          <Link to={to} className="link">
+          <Link to={to} className="ux4g-text-link-md">
             {link}
           </Link>
         )}
@@ -206,7 +210,11 @@ function WaitingOnYou() {
       {pending ? (
         <Skeleton variant="row" count={3} />
       ) : failed ? (
-        <button type="button" className="btn" onClick={() => q.forEach((x) => void x.refetch())}>
+        <button
+          type="button"
+          className="ux4g-btn-outline-primary ux4g-btn-m"
+          onClick={() => q.forEach((x) => void x.refetch())}
+        >
           {t('error.retry', { ns: 'common' })}
         </button>
       ) : rows.length === 0 ? (
@@ -215,7 +223,7 @@ function WaitingOnYou() {
           <p>{t('waiting.empty')}</p>
         </div>
       ) : (
-        <div className="list">
+        <div className="ux4g-d-flex ux4g-flex-column">
           {rows.slice(0, 5).map((r) => (
             <ListRow
               key={r.key}
@@ -317,7 +325,7 @@ function MyRequests() {
     >
       <QueryView query={q} skeleton="row" skeletonCount={3}>
         {(rs) => (
-          <div className="list">
+          <div className="ux4g-d-flex ux4g-flex-column">
             {rs.slice(0, 3).map((r) => (
               <ListRow
                 key={r.id}
@@ -412,15 +420,17 @@ function WhatIsNew() {
             <Card key={c.id}>
               <div className="section-head">
                 <h3>{c.title}</h3>
-                <Link to={c.to} className="link small">
+                <Link to={c.to} className="ux4g-text-link-md ux4g-body-s-default">
                   {t('new.seeAll')}
                 </Link>
               </div>
-              <div className="list">
+              <div className="ux4g-d-flex ux4g-flex-column">
                 {c.rows.map((r) => (
                   <Link key={r.k} to={r.to} className="mini-row">
                     <span className="clamp-2">{r.title}</span>
-                    <span className="card-meta">{r.meta}</span>
+                    <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                      {r.meta}
+                    </span>
                   </Link>
                 ))}
               </div>

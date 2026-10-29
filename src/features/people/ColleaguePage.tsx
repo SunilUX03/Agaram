@@ -48,7 +48,7 @@ export default function ColleaguePage() {
         ]}
       />
       <div className="layout-side">
-        <section className="card">
+        <section className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
           <KeyValueList
             items={[
               { label: t('profile.service'), value: c.service },
@@ -59,29 +59,38 @@ export default function ColleaguePage() {
             ].filter((x) => x.value)}
           />
         </section>
-        <section className="card" aria-labelledby="contact-h">
-          <h2 id="contact-h" className="h-sm">
+        <section
+          className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+          aria-labelledby="contact-h"
+        >
+          <h2 id="contact-h" className="ux4g-heading-xs-strong">
             {t('profile.contact')}
           </h2>
           {shared?.phone || shared?.email ? (
             <ul className="plain-list">
               {shared.phone && (
                 <li>
-                  <a className="link row" href={`tel:${shared.phone.replace(/\s/g, '')}`}>
+                  <a
+                    className="ux4g-text-link-md ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+                    href={`tel:${shared.phone.replace(/\s/g, '')}`}
+                  >
                     <Icon name="user" size={16} /> {shared.phone}
                   </a>
                 </li>
               )}
               {shared.email && (
                 <li>
-                  <a className="link row" href={`mailto:${shared.email}`}>
+                  <a
+                    className="ux4g-text-link-md ux4g-d-flex ux4g-flex-wrap ux4g-ai-center ux4g-gap-s"
+                    href={`mailto:${shared.email}`}
+                  >
                     <Icon name="requests" size={16} /> {shared.email}
                   </a>
                 </li>
               )}
             </ul>
           ) : (
-            <p className="muted">{t('profile.none')}</p>
+            <p className="ux4g-text-neutral-secondary">{t('profile.none')}</p>
           )}
         </section>
       </div>

@@ -187,7 +187,9 @@ function RequestForm({
       title: t('form.steps.about'),
       content: (
         <div className="form-grid form-narrow">
-          <p className="help full">{t('form.aboutHelp')}</p>
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary full">
+            {t('form.aboutHelp')}
+          </p>
           <TextField
             name="about-name"
             label={t('form.name')}
@@ -260,10 +262,10 @@ function RequestForm({
       content: (
         <div className="form-narrow">
           {def.documents.length === 0 ? (
-            <p className="muted">{t('form.docsNone')}</p>
+            <p className="ux4g-text-neutral-secondary">{t('form.docsNone')}</p>
           ) : (
             <>
-              <p className="help">
+              <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
                 {t('form.docsExpected', {
                   items: def.documents
                     .map(
@@ -298,12 +300,16 @@ function RequestForm({
       title: t('form.steps.review'),
       content: (
         <div className="form-narrow stack-sm">
-          <p className="help">{t('form.reviewHelp')}</p>
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">{t('form.reviewHelp')}</p>
           {past === 'notice' && <Banner variant="warning">{t('form.pastNotice')}</Banner>}
-          <section className="card">
+          <section className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <div className="cardhead">
               <h2>{t('form.steps.details')}</h2>
-              <button type="button" className="link-btn" onClick={() => stepper.current?.goTo(1)}>
+              <button
+                type="button"
+                className="ux4g-btn-text-primary ux4g-btn-s"
+                onClick={() => stepper.current?.goTo(1)}
+              >
                 {t('form.edit')}
               </button>
             </div>
@@ -318,10 +324,14 @@ function RequestForm({
               }))}
             />
           </section>
-          <section className="card">
+          <section className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <div className="cardhead">
               <h2>{t('form.attachments')}</h2>
-              <button type="button" className="link-btn" onClick={() => stepper.current?.goTo(2)}>
+              <button
+                type="button"
+                className="ux4g-btn-text-primary ux4g-btn-s"
+                onClick={() => stepper.current?.goTo(2)}
+              >
                 {t('form.edit')}
               </button>
             </div>
@@ -334,7 +344,7 @@ function RequestForm({
                   ))}
               </ul>
             ) : (
-              <p className="muted">{t('form.none')}</p>
+              <p className="ux4g-text-neutral-secondary">{t('form.none')}</p>
             )}
           </section>
         </div>

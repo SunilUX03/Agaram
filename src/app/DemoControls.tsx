@@ -60,71 +60,69 @@ export function DemoControls() {
   };
 
   return (
-    <details className="card demo-panel">
+    <details className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad demo-panel">
       <summary>{t('demo.title')}</summary>
       <div>
         <button
           type="button"
-          className="btn"
+          className="ux4g-btn-outline-primary ux4g-btn-m"
           onClick={() => setLanguage(i18n.language === 'ta' ? 'en' : 'ta')}
         >
           {t('demo.language')}: {i18n.language === 'ta' ? 'EN' : 'த'}
         </button>
-        <button type="button" className="btn" onClick={reset}>
+        <button type="button" className="ux4g-btn-outline-primary ux4g-btn-m" onClick={reset}>
           {t('demo.reset')}
         </button>
         {(['forceLoading', 'forceEmpty', 'forceError'] as const).map((k) => (
           <button
             key={k}
             type="button"
-            className="btn"
+            className="ux4g-btn-outline-primary ux4g-btn-m"
             aria-pressed={flags[k]}
-            style={flags[k] ? { background: 'var(--ink)', color: '#fff' } : undefined}
+            style={
+              flags[k] ? { background: 'var(--ux4g-bg-primary-strong)', color: '#fff' } : undefined
+            }
             onClick={() => flip(k)}
           >
             {t(`demo.${k}`)}
           </button>
         ))}
-        <label className="small" htmlFor="demo-req">
+        <label className="ux4g-body-s-default" htmlFor="demo-req">
           {t('demo.request')}
         </label>
-        <select
-          id="demo-req"
-          className="input"
-          style={{ minHeight: 40 }}
-          value={rid}
-          onChange={(e) => setRid(e.target.value)}
-        >
-          <option value="">
-            {requests.data?.length
-              ? requests.data.find((r) => r.status !== 'draft')?.title
-              : t('demo.none')}
-          </option>
-          {requests.data
-            ?.filter((r) => r.status !== 'draft')
-            .map((r) => (
-              <option key={r.id} value={r.id}>
-                {r.title}
-              </option>
-            ))}
-        </select>
-        <label className="small" htmlFor="demo-to">
+        <div className="ux4g-input-container ux4g-input-s ux4g-input-default">
+          <select id="demo-req" value={rid} onChange={(e) => setRid(e.target.value)}>
+            <option value="">
+              {requests.data?.length
+                ? requests.data.find((r) => r.status !== 'draft')?.title
+                : t('demo.none')}
+            </option>
+            {requests.data
+              ?.filter((r) => r.status !== 'draft')
+              .map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.title}
+                </option>
+              ))}
+          </select>
+        </div>
+        <label className="ux4g-body-s-default" htmlFor="demo-to">
           {t('demo.moveTo')}
         </label>
-        <select
-          id="demo-to"
-          className="input"
-          style={{ minHeight: 40 }}
-          value={target}
-          onChange={(e) => setTarget(e.target.value as RequestStatus)}
-        >
-          {TARGETS.map(([v, k]) => (
-            <option key={v} value={v}>
-              {t(k)}
-            </option>
-          ))}
-        </select>
-        <button type="button" className="btn btn-primary" onClick={apply}>
+        <div className="ux4g-input-container ux4g-input-s ux4g-input-default">
+          <select
+            id="demo-to"
+            value={target}
+            onChange={(e) => setTarget(e.target.value as RequestStatus)}
+          >
+            {TARGETS.map(([v, k]) => (
+              <option key={v} value={v}>
+                {t(k)}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button type="button" className="ux4g-btn-primary ux4g-btn-m" onClick={apply}>
           {t('demo.advance')}
         </button>
       </div>

@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { features } from '@/config/features';
 import { Icon } from '../Icon';
-import { Field, describedBy, type FieldProps } from './Field';
+import { describedBy, type FieldProps } from './Field';
 
 export interface UploadedFile {
   name: string;
@@ -30,7 +30,7 @@ interface Props extends Omit<FieldProps, 'id'> {
   accept?: string[] | 'any';
 }
 
-/** Checks type and size in the browser before accepting a file. Up to 5 per field. */
+/** UX4G file upload. Checks type and size in the browser before accepting a file. Up to 5 per field. */
 export function FileUpload({
   name,
   files,
@@ -44,6 +44,7 @@ export function FileUpload({
   const input = useRef<HTMLInputElement>(null);
   const [localError, setLocalError] = useState<string>();
   const error = f.error ?? localError;
+  const help = f.help ?? t('ui.upload.hint', { size: maxMB });
 
   const add = (list: FileList | null) => {
     if (!list) return;
@@ -66,36 +67,50 @@ export function FileUpload({
   };
 
   return (
-    <Field id={id} {...f} error={error} help={f.help ?? t('ui.upload.hint', { size: maxMB })}>
-      <input
-        ref={input}
-        id={id}
-        name={name}
-        type="file"
-        className="input"
-        multiple
-        aria-describedby={describedBy(id, { help: 'x', error })}
-        aria-invalid={!!error}
-        onChange={(e) => add(e.target.files)}
-      />
+    <div className="ux4g-mb-m">
+      <label htmlFor={id} className="ux4g-label-m-strong">
+        {f.label}
+        {f.required && <span aria-hidden="true"> *</span>}
+        {f.required && <span className="sr-only"> ({t('ui.field.required')})</span>}
+      </label>
+      <div
+        className={`ux4g-upload ${error ? 'ux4g-upload-state-error' : files.length ? 'ux4g-upload-state-uploaded' : 'ux4g-upload-state-default'} ux4g-mt-xs`}
+      >
+        <input
+          ref={input}
+          id={id}
+          name={name}
+          type="file"
+          multiple
+          aria-invalid={!!error}
+          aria-describedby={describedBy(id, { help, error })}
+          onChange={(e) => add(e.target.files)}
+        />
+      </div>
+      <p
+        id={error ? `${id}-err` : `${id}-help`}
+        className={`ux4g-body-s-default ${error ? 'ux4g-text-error' : 'ux4g-text-neutral-secondary'}`}
+      >
+        {error ?? help}
+      </p>
       {files.length > 0 && (
-        <ul className="files">
+        <ul className="plain-list ux4g-mt-xs">
           {files.map((file, i) => (
-            <li key={`${file.name}-${i}`}>
-              <Icon name="file" size={16} />
-              <span>{file.name}</span>
+            <li key={`${file.name}-${i}`} className="ux4g-d-flex ux4g-ai-center ux4g-gap-s">
+              <Icon name="file" size={18} />
+              <span className="ux4g-body-m-default ux4g-flex-1">{file.name}</span>
               <button
                 type="button"
-                className="icon-btn icon-btn-sm"
+                className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-sm"
                 aria-label={t('ui.upload.remove', { name: file.name })}
                 onClick={() => onChange(files.filter((_, j) => j !== i))}
               >
-                <Icon name="close" size={16} />
+                <Icon name="close" size={18} />
               </button>
             </li>
           ))}
         </ul>
       )}
-    </Field>
+    </div>
   );
 }

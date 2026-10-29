@@ -160,7 +160,10 @@ describe('Timeline and FileViewer', () => {
         ]}
       />,
     );
-    expect(screen.getByText('With desk').closest('li')).toHaveAttribute('aria-current', 'step');
+    expect(screen.getByText('With desk').closest('[role=listitem]')).toHaveAttribute(
+      'aria-current',
+      'step',
+    );
   });
   it('offers Download and Close, and closes on Escape', async () => {
     const onClose = vi.fn();

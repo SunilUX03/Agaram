@@ -19,12 +19,12 @@ function MoreSheet({ onClose }: { onClose: () => void }) {
   return (
     <Dialog title={t('nav.more')} variant="sheet" onClose={onClose}>
       {groups.map((g) => (
-        <section key={g.label} className="more-group">
-          <h3>{t(g.label)}</h3>
-          <ul>
+        <section key={g.label} className="ux4g-mb-m">
+          <h3 className="ux4g-label-m-strong ux4g-text-neutral-secondary">{t(g.label)}</h3>
+          <ul className="ux4g-list ux4g-list-default ux4g-list-m">
             {g.links.map((l) => (
-              <li key={l.to}>
-                <Link to={l.to} onClick={onClose}>
+              <li key={l.to} className="ux4g-list-item">
+                <Link to={l.to} className="ux4g-list-item-row more-link" onClick={onClose}>
                   {t(l.label)}
                 </Link>
               </li>
@@ -32,22 +32,28 @@ function MoreSheet({ onClose }: { onClose: () => void }) {
           </ul>
         </section>
       ))}
-      <ul className="more-list">
-        <li>
-          <Link to="/desk" onClick={onClose}>
+      <ul className="ux4g-list ux4g-list-default ux4g-list-m">
+        <li className="ux4g-list-item">
+          <Link to="/desk" className="ux4g-list-item-row more-link" onClick={onClose}>
             <Icon name="desk" /> {t('nav.myDesk')}
           </Link>
         </li>
-        <li>
-          <Link to="/account" onClick={onClose}>
+        <li className="ux4g-list-item">
+          <Link to="/account" className="ux4g-list-item-row more-link" onClick={onClose}>
             <Icon name="user" /> {t('nav.account')}
           </Link>
         </li>
-        <li>
-          <Icon name="globe" /> <LangSwitch />
+        <li className="ux4g-list-item">
+          <span className="ux4g-list-item-row">
+            <Icon name="globe" /> <LangSwitch />
+          </span>
         </li>
-        <li>
-          <button type="button" onClick={() => (onClose(), nav('/login'))}>
+        <li className="ux4g-list-item">
+          <button
+            type="button"
+            className="ux4g-list-item-row more-link"
+            onClick={() => (onClose(), nav('/login'))}
+          >
             {t('nav.signOut')}
           </button>
         </li>
@@ -56,7 +62,7 @@ function MoreSheet({ onClose }: { onClose: () => void }) {
   );
 }
 
-/** Five fixed items. "More" is highlighted while the current page lives under it. */
+/** Five fixed items on phones and tablets. "More" is highlighted while the current page lives under it. UX4G has no bottom bar, so this is custom (see app.css). */
 export function BottomBar() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
@@ -72,8 +78,8 @@ export function BottomBar() {
             className={isCurrent(pathname, b.match) ? 'is-current' : undefined}
             aria-current={isCurrent(pathname, b.match) ? 'page' : undefined}
           >
-            <Icon name={b.icon} />
-            <span>{t(b.label)}</span>
+            <Icon name={b.icon} size={24} />
+            <span className="ux4g-label-s-default">{t(b.label)}</span>
           </NavLink>
         ))}
         <button
@@ -82,8 +88,8 @@ export function BottomBar() {
           aria-haspopup="dialog"
           onClick={() => setMore(true)}
         >
-          <Icon name="more" />
-          <span>{t('nav.more')}</span>
+          <Icon name="more" size={24} />
+          <span className="ux4g-label-s-default">{t('nav.more')}</span>
         </button>
       </nav>
       {more && <MoreSheet onClose={() => setMore(false)} />}

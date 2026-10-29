@@ -8,15 +8,16 @@ interface Props {
   mine?: boolean;
 }
 
+/** One poll option with a UX4G progress bar after the officer has voted. */
 export function PollBar({ label, votes, total, showResult, mine }: Props) {
   const { t } = useTranslation();
   const pct = total ? Math.round((votes / total) * 100) : 0;
   return (
-    <div className="pollbar">
-      <div className="pollbar-top">
+    <div className="ux4g-mb-m">
+      <div className="ux4g-d-flex ux4g-jc-between ux4g-gap-m ux4g-body-m-default">
         <span>
-          {label}
-          {mine && <span className="tag">{t('ui.poll.yours')}</span>}
+          {label}{' '}
+          {mine && <span className="ux4g-tag-tonal-neutral ux4g-tag-s">{t('ui.poll.yours')}</span>}
         </span>
         {showResult && (
           <span>
@@ -25,8 +26,17 @@ export function PollBar({ label, votes, total, showResult, mine }: Props) {
         )}
       </div>
       {showResult && (
-        <div className="pollbar-track" role="img" aria-label={`${label}: ${pct}%`}>
-          <div className="pollbar-fill" style={{ width: `${pct}%` }} />
+        <div
+          className="ux4g-progress-bar ux4g-mt-xs"
+          data-ux-progress-bar
+          data-ux-shape="rounded"
+          role="img"
+          aria-label={`${label}: ${pct}%`}
+          style={{ '--ux4g-progress-value': pct } as React.CSSProperties}
+        >
+          <div className="ux4g-progress-bar-track">
+            <div className="ux4g-progress-bar-fill" />
+          </div>
         </div>
       )}
     </div>

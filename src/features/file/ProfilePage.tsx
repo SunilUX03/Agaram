@@ -29,7 +29,7 @@ function Block({
   const [open, setOpen] = useState(!!defaultOpen);
   const update = (
     <Link
-      className="link small"
+      className="ux4g-text-link-md ux4g-body-s-default"
       to={`/requests/new/update-details?section=${encodeURIComponent(section)}`}
     >
       {t('profile.update')}
@@ -37,7 +37,10 @@ function Block({
   );
   if (desktop)
     return (
-      <section className="card" aria-label={title}>
+      <section
+        className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
+        aria-label={title}
+      >
         <div className="cardhead">
           <h2>{title}</h2>
           {update}

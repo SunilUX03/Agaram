@@ -111,7 +111,7 @@ export default function IdeasPage() {
               return (
                 <div className="empty">
                   <p>{t('ideas.empty')}</p>
-                  <a className="btn btn-primary" href="/community/ideas/new">
+                  <a className="ux4g-btn-primary ux4g-btn-m" href="/community/ideas/new">
                     {t('ideas.emptyBtn')}
                   </a>
                 </div>

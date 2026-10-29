@@ -53,8 +53,13 @@ export default function NewRequestPage() {
                   <Icon name={x.icon} />
                 </span>
                 <h3>{c(x.key, 'card', x.cardName)}</h3>
-                <p className="card-meta">{c(x.key, 'help', x.help)}</p>
-                <p className="card-meta" style={{ marginTop: 8 }}>
+                <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                  {c(x.key, 'help', x.help)}
+                </p>
+                <p
+                  className="ux4g-body-s-default ux4g-text-neutral-secondary"
+                  style={{ marginTop: 8 }}
+                >
                   {t('new.keepReady', { items: c(x.key, 'keep', x.keepReady) })}
                 </p>
               </Card>
@@ -64,7 +69,11 @@ export default function NewRequestPage() {
       ))}
       {features.requests.uploadOnlyOption && (
         <p>
-          <button type="button" className="link-btn" onClick={() => setDialog(true)}>
+          <button
+            type="button"
+            className="ux4g-btn-text-primary ux4g-btn-s"
+            onClick={() => setDialog(true)}
+          >
             {t('new.haveForm')}
           </button>
         </p>
@@ -98,12 +107,12 @@ function UploadOnly({ onClose }: { onClose: () => void }) {
       onClose={onClose}
       footer={
         <>
-          <button type="button" className="btn" onClick={onClose}>
+          <button type="button" className="ux4g-btn-outline-primary ux4g-btn-m" onClick={onClose}>
             {t('new.dlgCancel')}
           </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className="ux4g-btn-primary ux4g-btn-m"
             disabled={save.isPending}
             onClick={send}
           >

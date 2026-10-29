@@ -36,7 +36,7 @@ export function Illustration({ name, size = 240 }: { name: keyof typeof art; siz
       height={size * 0.75}
       viewBox="0 0 240 180"
       fill="none"
-      stroke="var(--ink)"
+      stroke="var(--ux4g-text-neutral-primary)"
       strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -49,13 +49,13 @@ export function Illustration({ name, size = 240 }: { name: keyof typeof art; siz
         width="236"
         height="176"
         rx="20"
-        fill="var(--surface-strong)"
+        fill="var(--ux4g-bg-primary-subtle)"
         stroke="none"
       />
       <g transform={name === 'tick' || name === 'bell' ? 'translate(60 20)' : undefined}>
         {art[name]}
       </g>
-      <circle cx="205" cy="30" r="6" fill="var(--primary)" stroke="none" />
+      <circle cx="205" cy="30" r="6" fill="var(--ux4g-bg-primary-strong)" stroke="none" />
     </svg>
   );
 }

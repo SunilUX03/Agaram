@@ -9,7 +9,10 @@ export const initials = (name: string) =>
     .join('')
     .toUpperCase();
 
-/** Round photo, or initials on a tinted circle. The photo's alt text is the person's name. */
+const sizeClass = (px: number) =>
+  px <= 24 ? 'xs' : px <= 32 ? 's' : px <= 40 ? 'm' : px <= 56 ? 'l' : px <= 72 ? 'xl' : '2xl';
+
+/** UX4G profile avatar. Photo, or initials when there is none. */
 export function Avatar({
   name,
   photoUrl,
@@ -23,26 +26,24 @@ export function Avatar({
   decorative?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
-  const style = { width: size, height: size, fontSize: size * 0.38 };
+  const cls = `ux4g-avatar ux4g-avatar-profile ux4g-avatar-${sizeClass(size)}`;
   return photoUrl && !failed ? (
-    <img
-      className="avatar"
-      style={style}
-      src={photoUrl}
-      alt={decorative ? '' : name}
-      loading="lazy"
-      onError={() => setFailed(true)}
-    />
+    <div className={cls}>
+      <img
+        src={photoUrl}
+        alt={decorative ? '' : name}
+        loading="lazy"
+        onError={() => setFailed(true)}
+      />
+    </div>
   ) : (
-    <span
-      className="avatar avatar-initials"
-      style={style}
+    <div
+      className={cls}
       role={decorative ? undefined : 'img'}
       aria-label={decorative ? undefined : name}
       aria-hidden={decorative || undefined}
-      data-initials={decorative ? initials(name) : undefined}
     >
-      {decorative ? null : initials(name)}
-    </span>
+      {initials(name)}
+    </div>
   );
 }

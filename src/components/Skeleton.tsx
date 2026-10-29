@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 export type SkeletonVariant = 'text' | 'row' | 'card' | 'tile' | 'header' | 'table';
 
-/** Placeholder sized like the real thing so the page does not jump. Announced once, not per shape. */
+/** Placeholder sized like the real thing so the page does not jump. Announced once. UX4G has no skeleton component, so this is custom (see app.css). */
 export function Skeleton({
   variant = 'row',
   count = 1,
