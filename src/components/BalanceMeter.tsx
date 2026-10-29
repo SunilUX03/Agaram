@@ -1,7 +1,8 @@
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  label: string;
+  label: ReactNode;
   allowed: number;
   used: number;
 }

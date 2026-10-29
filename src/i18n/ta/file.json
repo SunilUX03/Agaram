@@ -45,5 +45,220 @@
       "tagline": "",
       "main": ""
     }
+  },
+  "hub": {
+    "idLine": "",
+    "officerId": "",
+    "report": "",
+    "updated": "",
+    "profile": {
+      "title": "",
+      "count": ""
+    },
+    "career": {
+      "title": "",
+      "count": ""
+    },
+    "leave": {
+      "title": "",
+      "count": ""
+    },
+    "training": {
+      "title": "",
+      "count": ""
+    },
+    "travel": {
+      "title": "",
+      "count": ""
+    },
+    "property": {
+      "title": "",
+      "count": ""
+    },
+    "benefits": {
+      "title": "",
+      "count": ""
+    },
+    "documents": {
+      "title": "",
+      "count": ""
+    }
+  },
+  "profile": {
+    "update": "",
+    "personal": "",
+    "contact": "",
+    "qualifications": "",
+    "address": "",
+    "officer": "",
+    "other": "",
+    "name": "",
+    "gender": "",
+    "dob": "",
+    "homeState": "",
+    "nativeDistrict": "",
+    "languages": "",
+    "mobile1": "",
+    "mobile2": "",
+    "landline": "",
+    "officialEmail": "",
+    "personalEmail": "",
+    "level": "",
+    "degree": "",
+    "specialisation": "",
+    "institute": "",
+    "year": "",
+    "line": "",
+    "city": "",
+    "pincode": "",
+    "officerId": "",
+    "ifhrmsId": "",
+    "joining": "",
+    "retirement": "",
+    "batch": "",
+    "recruitment": "",
+    "grade": "",
+    "payLevel": "",
+    "seniority": "",
+    "class": "",
+    "religion": "",
+    "caste": ""
+  },
+  "career": {
+    "current": "",
+    "postingIn": "",
+    "department": "",
+    "designation": "",
+    "office": "",
+    "phone": "",
+    "fax": "",
+    "filters": {
+      "all": "",
+      "posting": "",
+      "transfer": "",
+      "promotion": ""
+    },
+    "kind": {
+      "posting": "",
+      "transfer": "",
+      "promotion": ""
+    },
+    "present": "",
+    "fromTo": "",
+    "since": "",
+    "promoted": "",
+    "empty": "",
+    "filter": "",
+    "timeline": ""
+  },
+  "leave": {
+    "tabs": {
+      "balance": "",
+      "history": ""
+    },
+    "labels": {
+      "cl": "",
+      "rh": "",
+      "el": "",
+      "hpl": ""
+    },
+    "updatedNote": "",
+    "cols": {
+      "type": ""
+    },
+    "year": "",
+    "allYears": "",
+    "empty": "",
+    "emptyBtn": "",
+    "history": "",
+    "from": "",
+    "to": "",
+    "days": "",
+    "status": ""
+  },
+  "training": {
+    "empty": "",
+    "where": "",
+    "dates": ""
+  },
+  "travel": {
+    "tabs": {
+      "foreign": "",
+      "tour": "",
+      "private": ""
+    },
+    "apply": {
+      "foreign": "",
+      "tour": "",
+      "private": ""
+    },
+    "political": "",
+    "fcra": "",
+    "empty": ""
+  },
+  "property": {
+    "tabs": {
+      "immovable": "",
+      "movable": "",
+      "intimation": ""
+    },
+    "secondary": "",
+    "fund": "",
+    "cost": "",
+    "ipr": "",
+    "selfFamily": "",
+    "yes": "",
+    "no": "",
+    "iprHelp": "",
+    "empty": "",
+    "private": ""
+  },
+  "benefits": {
+    "tabs": {
+      "ltc": "",
+      "medical": "",
+      "hba": "",
+      "gpf": "",
+      "mha-id": "",
+      "saf": "",
+      "education": ""
+    },
+    "menu": {
+      "ltc": "",
+      "medical": "",
+      "hba": "",
+      "gpf": "",
+      "mha-id": "",
+      "saf": "",
+      "education": ""
+    },
+    "strip": {
+      "ltc": "",
+      "gpf": "",
+      "default": ""
+    },
+    "cols": {
+      "summary": "",
+      "amount": "",
+      "date": "",
+      "status": ""
+    },
+    "empty": ""
+  },
+  "documents": {
+    "search": "",
+    "type": "",
+    "year": "",
+    "cols": {
+      "title": "",
+      "type": "",
+      "number": "",
+      "date": "",
+      "linked": "",
+      "view": "",
+      "download": ""
+    },
+    "empty": "",
+    "all": ""
   }
 }

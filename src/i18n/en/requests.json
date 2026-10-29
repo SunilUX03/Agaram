@@ -20,5 +20,15 @@
       "tagline": "",
       "main": "Withdraw"
     }
+  },
+  "next": {
+    "draft": "Saved as a draft",
+    "submitted": "With the desk",
+    "with-desk": "With the desk",
+    "ready-for-approval": "Waiting for approval",
+    "returned": "Waiting for you: fix and send again",
+    "approved": "Order is ready to download",
+    "rejected": "Not approved",
+    "withdrawn": "Withdrawn"
   }
 }

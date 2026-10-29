@@ -5,5 +5,62 @@
       "tagline": "Your service record, requests and colleagues, all in one place.",
       "main": "Start a request"
     }
-  }
+  },
+  "greeting": {
+    "morning": "Good morning, {{name}}",
+    "afternoon": "Good afternoon, {{name}}",
+    "evening": "Good evening, {{name}}"
+  },
+  "today": "{{date}} · {{posting}}",
+  "waiting": {
+    "title": "Waiting on you",
+    "tagline": "Things that need your action.",
+    "viewAll": "View all",
+    "empty": "All caught up.",
+    "leaveStarts": "Leave starts {{date}}",
+    "trainingStarts": "Training starts {{date}}",
+    "taskDue": "Due {{date}}",
+    "returned": "Returned to you",
+    "draftSaved": "Draft saved"
+  },
+  "quick": {
+    "title": "What would you like to do?",
+    "tagline": "Start here for the most common jobs.",
+    "apply-leave": "Apply for leave",
+    "start-request": "Start a request",
+    "share-idea": "Share an idea",
+    "ask-question": "Ask a question",
+    "find-colleague": "Find a colleague",
+    "open-file": "Open my service file"
+  },
+  "glance": {
+    "title": "Your service at a glance",
+    "tagline": "Current posting, grade and leave balance.",
+    "link": "Open my service file",
+    "posting": "Current posting",
+    "gradePay": "Grade and pay level",
+    "balances": "Leave balances",
+    "lastPromotion": "Last promotion",
+    "retirement": "Retirement",
+    "cl": "CL {{n}}",
+    "rh": "RH {{n}}",
+    "el": "EL {{n}}",
+    "hpl": "HPL {{n}}"
+  },
+  "requests": {
+    "title": "Your requests",
+    "tagline": "Where each request stands.",
+    "link": "See all requests",
+    "sent": "Sent {{date}}"
+  },
+  "new": {
+    "title": "What is new",
+    "tagline": "Circulars, ideas and trainings from the last two weeks.",
+    "circulars": "Circulars and announcements",
+    "ideas": "Ideas with the most backers",
+    "trainings": "Upcoming trainings",
+    "seeAll": "See all",
+    "backers": "{{count}} backers"
+  },
+  "openFile": "Open my service file"
 }

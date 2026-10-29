@@ -5,5 +5,62 @@
       "tagline": "",
       "main": ""
     }
-  }
+  },
+  "greeting": {
+    "morning": "",
+    "afternoon": "",
+    "evening": ""
+  },
+  "today": "",
+  "waiting": {
+    "title": "",
+    "tagline": "",
+    "viewAll": "",
+    "empty": "",
+    "leaveStarts": "",
+    "trainingStarts": "",
+    "taskDue": "",
+    "returned": "",
+    "draftSaved": ""
+  },
+  "quick": {
+    "title": "",
+    "tagline": "",
+    "apply-leave": "",
+    "start-request": "",
+    "share-idea": "",
+    "ask-question": "",
+    "find-colleague": "",
+    "open-file": ""
+  },
+  "glance": {
+    "title": "",
+    "tagline": "",
+    "link": "",
+    "posting": "",
+    "gradePay": "",
+    "balances": "",
+    "lastPromotion": "",
+    "retirement": "",
+    "cl": "",
+    "rh": "",
+    "el": "",
+    "hpl": ""
+  },
+  "requests": {
+    "title": "",
+    "tagline": "",
+    "link": "",
+    "sent": ""
+  },
+  "new": {
+    "title": "",
+    "tagline": "",
+    "circulars": "",
+    "ideas": "",
+    "trainings": "",
+    "seeAll": "",
+    "backers": ""
+  },
+  "openFile": ""
 }

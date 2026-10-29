@@ -28,7 +28,19 @@
     "forceLoading": "",
     "forceEmpty": "",
     "forceError": "",
-    "advance": ""
+    "advance": "",
+    "request": "",
+    "moveTo": "",
+    "apply": "",
+    "toWithDesk": "",
+    "toReady": "",
+    "toReturned": "",
+    "toApproved": "",
+    "toRejected": "",
+    "done": "",
+    "failed": "",
+    "resetDone": "",
+    "none": ""
   },
   "nav": {
     "home": "",
@@ -142,7 +154,11 @@
       "badDate": "",
       "endBeforeStart": "",
       "fileTooLarge": "",
-      "fileType": ""
+      "fileType": "",
+      "amount": "",
+      "overlap": "",
+      "balance": "",
+      "docRequired": ""
     },
     "date": {
       "hint": "",
@@ -229,5 +245,31 @@
     "sort": {
       "by": ""
     }
+  },
+  "abbr": {
+    "CL": "",
+    "RH": "",
+    "EL": "",
+    "HPL": "",
+    "LTC": "",
+    "GPF": "",
+    "HBA": "",
+    "IPR": "",
+    "MHA": "",
+    "SAF": ""
+  },
+  "menu": {
+    "open": ""
+  },
+  "common": {
+    "order": "",
+    "updated": "",
+    "year": "",
+    "type": "",
+    "all": "",
+    "from": "",
+    "to": "",
+    "days": "",
+    "status": ""
   }
 }

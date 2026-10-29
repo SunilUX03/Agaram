@@ -45,5 +45,220 @@
       "tagline": "Every order and file linked to your record.",
       "main": ""
     }
+  },
+  "hub": {
+    "idLine": "IAS, Batch {{year}}",
+    "officerId": "Officer ID {{id}}",
+    "report": "Report a correction",
+    "updated": "Updated {{date}}",
+    "profile": {
+      "title": "Profile and details",
+      "count": "Personal, contact and official details"
+    },
+    "career": {
+      "title": "Career",
+      "count": "{{n}} postings, transfers and promotions"
+    },
+    "leave": {
+      "title": "Leave",
+      "count": "CL {{cl}}, EL {{el}} left"
+    },
+    "training": {
+      "title": "Training",
+      "count": "{{n}} courses"
+    },
+    "travel": {
+      "title": "Travel",
+      "count": "{{n}} journeys"
+    },
+    "property": {
+      "title": "Property returns",
+      "count": "{{n}} on record"
+    },
+    "benefits": {
+      "title": "Benefits",
+      "count": "{{n}} claims"
+    },
+    "documents": {
+      "title": "Orders and documents",
+      "count": "{{n}} files"
+    }
+  },
+  "profile": {
+    "update": "Update",
+    "personal": "Personal",
+    "contact": "Contact",
+    "qualifications": "Qualifications",
+    "address": "Address",
+    "officer": "Officer details",
+    "other": "Other details (visible only to you and the department)",
+    "name": "Name",
+    "gender": "Gender",
+    "dob": "Date of birth",
+    "homeState": "Home state",
+    "nativeDistrict": "Native district",
+    "languages": "Languages known",
+    "mobile1": "Mobile number 1",
+    "mobile2": "Mobile number 2",
+    "landline": "Landline",
+    "officialEmail": "Official email",
+    "personalEmail": "Personal email",
+    "level": "Level",
+    "degree": "Degree",
+    "specialisation": "Specialisation",
+    "institute": "Institute",
+    "year": "Year",
+    "line": "Address line",
+    "city": "City",
+    "pincode": "Pincode",
+    "officerId": "Officer ID",
+    "ifhrmsId": "IFHRMS ID",
+    "joining": "Date of joining",
+    "retirement": "Date of retirement",
+    "batch": "Batch",
+    "recruitment": "Recruitment type",
+    "grade": "Grade",
+    "payLevel": "Pay level",
+    "seniority": "Seniority number",
+    "class": "Class",
+    "religion": "Religion",
+    "caste": "Caste"
+  },
+  "career": {
+    "current": "Current posting",
+    "postingIn": "Posting in",
+    "department": "Department",
+    "designation": "Designation",
+    "office": "Office address",
+    "phone": "Phone",
+    "fax": "Fax",
+    "filters": {
+      "all": "All",
+      "posting": "Postings",
+      "transfer": "Transfers",
+      "promotion": "Promotions"
+    },
+    "kind": {
+      "posting": "Posting",
+      "transfer": "Transfer",
+      "promotion": "Promotion"
+    },
+    "present": "present",
+    "fromTo": "From {{from}} to {{to}}",
+    "since": "Since {{from}}",
+    "promoted": "From {{from}} to {{to}}",
+    "empty": "No entries yet.",
+    "filter": "Filter entries",
+    "timeline": "Career timeline"
+  },
+  "leave": {
+    "tabs": {
+      "balance": "Balance",
+      "history": "History"
+    },
+    "labels": {
+      "cl": "Casual leave (CL)",
+      "rh": "Restricted holiday (RH)",
+      "el": "Earned leave (EL)",
+      "hpl": "Half pay leave (HPL)"
+    },
+    "updatedNote": "Balances are updated by the department.",
+    "cols": {
+      "type": "Leave type"
+    },
+    "year": "Year",
+    "allYears": "All years",
+    "empty": "No leave on record yet.",
+    "emptyBtn": "Apply for leave",
+    "history": "Leave history",
+    "from": "From",
+    "to": "To",
+    "days": "Days",
+    "status": "Status"
+  },
+  "training": {
+    "empty": "No training on record yet.",
+    "where": "{{institute}}, {{country}}",
+    "dates": "{{from}} to {{to}}"
+  },
+  "travel": {
+    "tabs": {
+      "foreign": "Foreign visits",
+      "tour": "Official tours",
+      "private": "Private visits"
+    },
+    "apply": {
+      "foreign": "Foreign visit",
+      "tour": "Official tour",
+      "private": "Private visit"
+    },
+    "political": "Political clearance",
+    "fcra": "FCRA clearance",
+    "empty": "No journeys on record yet."
+  },
+  "property": {
+    "tabs": {
+      "immovable": "Immovable",
+      "movable": "Movable",
+      "intimation": "Intimations"
+    },
+    "secondary": "Send an intimation",
+    "fund": "Source of funds",
+    "cost": "Cost",
+    "ipr": "Shown in annual property return (IPR)",
+    "selfFamily": "Self or family",
+    "yes": "Yes",
+    "no": "No",
+    "iprHelp": "IPR is the annual Immovable Property Return.",
+    "empty": "Nothing on record yet.",
+    "private": "Private to you"
+  },
+  "benefits": {
+    "tabs": {
+      "ltc": "LTC",
+      "medical": "Medical claims",
+      "hba": "Housing advance",
+      "gpf": "GPF",
+      "mha-id": "MHA identity card",
+      "saf": "SAF Games Village",
+      "education": "Education"
+    },
+    "menu": {
+      "ltc": "LTC",
+      "medical": "Medical claim",
+      "hba": "House building advance",
+      "gpf": "GPF withdrawal",
+      "mha-id": "MHA identity card",
+      "saf": "SAF Games Village housing",
+      "education": "Education"
+    },
+    "strip": {
+      "ltc": "Current LTC block year: {{block}}. Availed: {{n}} of 2",
+      "gpf": "Total GPF withdrawn: {{amount}}",
+      "default": "{{n}} on record"
+    },
+    "cols": {
+      "summary": "Summary",
+      "amount": "Amount",
+      "date": "Date",
+      "status": "Status"
+    },
+    "empty": "No claims on record yet."
+  },
+  "documents": {
+    "search": "Search orders and documents",
+    "type": "Type",
+    "year": "Year",
+    "cols": {
+      "title": "Title",
+      "type": "Type",
+      "number": "Order number",
+      "date": "Date",
+      "linked": "Linked to",
+      "view": "View",
+      "download": "Download"
+    },
+    "empty": "No documents match.",
+    "all": "All"
   }
 }

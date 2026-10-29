@@ -28,7 +28,19 @@
     "forceLoading": "Force loading",
     "forceEmpty": "Force empty",
     "forceError": "Force error",
-    "advance": "Advance request"
+    "advance": "Advance request",
+    "request": "Request",
+    "moveTo": "Move to",
+    "apply": "Apply",
+    "toWithDesk": "With the desk",
+    "toReady": "Ready for approval",
+    "toReturned": "Returned to you",
+    "toApproved": "Approved",
+    "toRejected": "Not approved",
+    "done": "Request updated.",
+    "failed": "That move is not allowed from the current status.",
+    "resetDone": "Demo data reset.",
+    "none": "No requests"
   },
   "nav": {
     "home": "Home",
@@ -142,7 +154,11 @@
       "badDate": "Enter a valid date in dd/mm/yyyy.",
       "endBeforeStart": "The end date cannot be before the start date.",
       "fileTooLarge": "This file is larger than {{size}}. Choose a smaller file.",
-      "fileType": "Upload a PDF, JPG or PNG file."
+      "fileType": "Upload a PDF, JPG or PNG file.",
+      "amount": "Enter an amount greater than zero.",
+      "overlap": "These dates overlap with {{title}}.",
+      "balance": "This is more than your balance of {{n}} days. Add a reason.",
+      "docRequired": "{{label}}: add a file to continue."
     },
     "date": {
       "hint": "dd/mm/yyyy",
@@ -229,5 +245,31 @@
     "sort": {
       "by": "Sort by {{name}}"
     }
+  },
+  "abbr": {
+    "CL": "Casual leave",
+    "RH": "Restricted holiday",
+    "EL": "Earned leave",
+    "HPL": "Half pay leave",
+    "LTC": "Leave Travel Concession",
+    "GPF": "General Provident Fund",
+    "HBA": "House building advance",
+    "IPR": "Immovable Property Return",
+    "MHA": "Ministry of Home Affairs",
+    "SAF": "Housing allotted by the department."
+  },
+  "menu": {
+    "open": "Open menu"
+  },
+  "common": {
+    "order": "Order",
+    "updated": "Updated {{date}}",
+    "year": "Year",
+    "type": "Type",
+    "all": "All",
+    "from": "From",
+    "to": "To",
+    "days": "Days",
+    "status": "Status"
   }
 }
