@@ -15,6 +15,10 @@ export const PAGES: Record<string, Page> = {
   'file.property': L(() => import('@/features/file/PropertyPage')),
   'file.benefits': L(() => import('@/features/file/BenefitsPage')),
   'file.documents': L(() => import('@/features/file/DocumentsPage')),
+  requests: L(() => import('@/features/requests/RequestsPage')),
+  'requests.new': L(() => import('@/features/requests/NewRequestPage')),
+  'requests.form': L(() => import('@/features/requests/RequestFormPage')),
+  'requests.detail': L(() => import('@/features/requests/RequestPage')),
   login: L(() => import('@/features/auth/LoginPage')),
 };
 

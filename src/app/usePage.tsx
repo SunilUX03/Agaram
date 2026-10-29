@@ -16,6 +16,7 @@ export interface HeaderProps {
   image?: ReactNode;
   breadcrumb?: Crumb[];
   hideMain?: boolean;
+  stickyMain?: boolean;
 }
 
 export function usePageText(id: string) {

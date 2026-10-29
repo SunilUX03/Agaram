@@ -10,13 +10,23 @@ interface Props {
   secondary?: ReactNode;
   image?: ReactNode;
   breadcrumb?: Crumb[];
+  /** Also show the main button in a sticky bar on mobile (hidden in the header there). */
+  stickyMain?: boolean;
 }
 
 /**
  * Standard page header. Owns the page's one H1: on mount it scrolls to top,
  * moves focus to the H1 and sets the document title to "{Headline} | Agaram".
  */
-export function PageHeader({ headline, tagline, main, secondary, image, breadcrumb }: Props) {
+export function PageHeader({
+  headline,
+  tagline,
+  main,
+  secondary,
+  image,
+  breadcrumb,
+  stickyMain,
+}: Props) {
   const { t } = useTranslation();
   const h1 = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -36,7 +46,7 @@ export function PageHeader({ headline, tagline, main, secondary, image, breadcru
           </h1>
           {tagline && <p className="tagline">{tagline}</p>}
           {(main || secondary) && (
-            <div className="page-header-actions">
+            <div className={`page-header-actions${stickyMain ? ' hide-mobile' : ''}`}>
               {main}
               {secondary}
             </div>
@@ -44,6 +54,7 @@ export function PageHeader({ headline, tagline, main, secondary, image, breadcru
         </div>
         {image && <div className="page-header-image">{image}</div>}
       </div>
+      {stickyMain && main && <div className="sticky-bar">{main}</div>}
     </header>
   );
 }

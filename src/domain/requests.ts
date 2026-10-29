@@ -22,7 +22,8 @@ export const canWithdraw = (s: RequestStatus) => TRANSITIONS[s].includes('withdr
 
 export const generateTitle = (type: RequestTypeDef, values: Values) => {
   try {
-    return type.title(values).replace(/,\s*$/, '');
+    const out = type.title(values).replace(/,\s*$/, '').trim();
+    return !out || /undefined|NaN|null/.test(out) ? type.cardName : out;
   } catch {
     return type.cardName;
   }

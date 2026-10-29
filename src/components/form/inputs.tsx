@@ -198,8 +198,14 @@ export function DateRangePicker({
   from,
   to,
   onChange,
+  toError,
   ...f
-}: Base & { from: string; to: string; onChange: (r: { from: string; to: string }) => void }) {
+}: Base & {
+  from: string;
+  to: string;
+  onChange: (r: { from: string; to: string }) => void;
+  toError?: string;
+}) {
   const { t } = useTranslation();
   const [a, b] = [parseDMY(from), parseDMY(to)];
   const endError = a && b && b < a ? t('ui.errors.endBeforeStart') : undefined;
@@ -222,7 +228,7 @@ export function DateRangePicker({
         label={t('ui.date.to')}
         value={to}
         required={f.required}
-        error={endError}
+        error={toError ?? endError}
         onChange={(v) => onChange({ from, to: v })}
       />
     </fieldset>
