@@ -95,6 +95,18 @@ export interface LeaveRecord {
   orderId?: string;
   requestId?: string;
 }
+/** An entry on a service card that has no list of its own (a card added by config only). */
+export interface ServiceRecord {
+  id: string;
+  status: RequestStatus;
+  source: Source;
+  requestId?: string;
+  /** ISO date used as the main date of the row. */
+  date: string;
+  from?: string;
+  to?: string;
+  [field: string]: unknown;
+}
 export interface LtcRecord {
   id: string;
   blockYear: string;

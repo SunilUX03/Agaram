@@ -15,6 +15,8 @@ export interface Db {
   ltcs: T.LtcRecord[];
   medicals: T.MedicalClaim[];
   gpfs: T.GpfWithdrawal[];
+  /** Entries of service cards added by config only, by card key. */
+  serviceRecords: Record<string, T.ServiceRecord[]>;
   pendingChanges: T.PendingChange[];
   documents: T.DocumentItem[];
   requests: T.Request[];
@@ -1532,6 +1534,7 @@ export function buildSeed(now = new Date()): Db {
     ltcs,
     medicals,
     gpfs,
+    serviceRecords: {},
     pendingChanges,
     documents,
     requests,

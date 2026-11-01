@@ -6,6 +6,7 @@ import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ErrorState } from '@/components/EmptyState';
 import { FileViewer } from '@/components/FileViewer';
 import { KeyValueList } from '@/components/KeyValueList';
+import { ResponsiveTable } from '@/components/ResponsiveTable';
 import { Skeleton } from '@/components/Skeleton';
 import { StatusChip } from '@/components/StatusChip';
 import { Tag } from '@/components/Tag';
@@ -176,7 +177,7 @@ function RequestView({ r }: { r: Request }) {
             className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad"
             aria-labelledby="rq-tl"
           >
-            <div className="ux4g-d-flex ux4g-jc-between ux4g-ai-start gap-s ux4g-mb-s">
+            <div className="ux4g-d-flex ux4g-flex-wrap ux4g-jc-between ux4g-ai-start gap-s ux4g-mb-s">
               <h2 id="rq-tl" className="ux4g-heading-s-strong">
                 {t('request.progress')}
               </h2>
@@ -199,25 +200,16 @@ function RequestView({ r }: { r: Request }) {
               {t('request.submitted')}
             </h2>
             {rows ? (
-              <table className="ux4g-table change-table">
-                <caption className="sr-only">{t('request.changes')}</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">{t('request.field')}</th>
-                    <th scope="col">{t('pending.current')}</th>
-                    <th scope="col">{t('pending.asked')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((x) => (
-                    <tr key={x.label}>
-                      <th scope="row">{x.label}</th>
-                      <td>{x.current || '—'}</td>
-                      <td>{x.asked}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <ResponsiveTable
+                caption={t('request.changes')}
+                rows={rows}
+                rowKey={(x) => x.label}
+                columns={[
+                  { key: 'label', header: t('request.field'), mobile: 'title' },
+                  { key: 'current', header: t('pending.current'), render: (x) => x.current || '—' },
+                  { key: 'asked', header: t('pending.asked') },
+                ]}
+              />
             ) : (
               <KeyValueList
                 items={summaryRows(def, r.values as Values).map((s) => ({

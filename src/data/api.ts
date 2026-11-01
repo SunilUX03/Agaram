@@ -162,11 +162,10 @@ const clearPending = (db: Db, requestId: string) => {
   db.pendingChanges = db.pendingChanges.filter((p) => p.requestId !== requestId);
 };
 
-const setPath = (o: Record<string, any>, path: string, val: unknown) => {
-  // eslint-disable-line @typescript-eslint/no-explicit-any
+const setPath = (o: Record<string, unknown>, path: string, val: unknown) => {
   const parts = path.split('.');
   const last = parts.pop()!;
-  const target = parts.reduce((acc, k) => acc[k], o);
+  const target = parts.reduce((acc, k) => acc[k] as Record<string, unknown>, o);
   target[last] = val;
 };
 
@@ -215,7 +214,7 @@ function writeProfile(db: Db, key: string, val: unknown) {
         ifhrmsId: 'ifhrmsId',
         recruitmentType: 'recruitmentType',
       };
-      if (map[key]) setPath(o as unknown as Record<string, any>, map[key], val); // eslint-disable-line @typescript-eslint/no-explicit-any
+      if (map[key]) setPath(o as unknown as Record<string, unknown>, map[key], val);
     }
   }
 }
@@ -287,6 +286,19 @@ function applyApproval(db: Db, r: T.Request) {
       type: v.type,
       purpose: v.purpose,
       amount: Number(String(v.amount ?? '').replace(/,/g, '')) || 0,
+      ...common,
+    });
+  } else if (getRequestType(r.type)?.kind === 'service') {
+    // A service card added by config only: keep what the officer entered, with the dates as ISO.
+    const { _files, ...rest } = v;
+    void _files;
+    const card = getRequestType(r.type)!.cardKey ?? r.type;
+    (db.serviceRecords[card] ??= []).unshift({
+      ...rest,
+      id: nextId('sr'),
+      date: range ? dmyToIso(range.from) : now().slice(0, 10),
+      from: range ? dmyToIso(range.from) : undefined,
+      to: range ? dmyToIso(range.to) : undefined,
       ...common,
     });
   } else if (r.type === 'posting') {
@@ -370,6 +382,23 @@ export const api = {
   ltcs: () => run((db) => clone(db.ltcs), { list: true }),
   medicals: () => run((db) => clone(db.medicals), { list: true }),
   gpfs: () => run((db) => clone(db.gpfs), { list: true }),
+  /** The approved entries of any service card. A card added by config only reads its own list. */
+  cardRows: (card: string) =>
+    run(
+      (db) =>
+        clone(
+          card === 'leave'
+            ? db.leaves
+            : card === 'ltc'
+              ? db.ltcs
+              : card === 'medical'
+                ? db.medicals
+                : card === 'gpf'
+                  ? db.gpfs
+                  : (db.serviceRecords[card] ?? []),
+        ) as unknown as Record<string, unknown>[],
+      { list: true },
+    ),
   documents: () => run((db) => clone(db.documents), { list: true }),
   pendingChanges: () => run((db) => clone(db.pendingChanges)),
   /** Approved and pending leave, for the overlap check. */

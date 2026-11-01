@@ -137,10 +137,13 @@ function ServiceForm({
   };
   const send = async () => {
     const today = new Date();
+    // Wait for the data the checks need, so Send is never faster than the overlap and balance checks.
+    const bookedNow = booked.data ?? (await booked.refetch()).data ?? [];
+    const balanceNow = bal.data ?? (await bal.refetch()).data;
     const all = [
       ...validateDetails(def, values, {
-        booked: booked.data ?? [],
-        balance: bal.data,
+        booked: bookedNow,
+        balance: balanceNow,
         today,
         mode,
       }),

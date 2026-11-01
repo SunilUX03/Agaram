@@ -32,7 +32,7 @@ function CardView({ card }: { card: ServiceCardDef }) {
   const common = useTranslation().t;
   const loc = useLocale();
   const nav = useNavigate();
-  const rows = useQ(card.data);
+  const rows = useQ('cardRows', card.key);
   const balance = useQ('leaveBalance');
   const [year, setYear] = useUrlState('year');
   const tabs: TabDef[] = [

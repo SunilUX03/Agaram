@@ -41,11 +41,15 @@ export function PastChooser({ onClose, includeLtc }: { onClose: () => void; incl
   );
 }
 
-const newRequestOptions = (t: (k: string) => string, openPast: () => void) => [
-  { label: t('menu.leave'), to: '/records/services/leave/new' },
-  { label: t('menu.ltc'), to: '/records/services/ltc/new' },
-  { label: t('menu.medical'), to: '/records/services/medical/new' },
-  { label: t('menu.gpf'), to: '/records/services/gpf/new' },
+/** One item per service card (from `services.cards`), then the past-record chooser and Update my details. */
+const newRequestOptions = (
+  t: (k: string, o?: { defaultValue: string }) => string,
+  openPast: () => void,
+) => [
+  ...SERVICE_CARDS.map((c) => ({
+    label: t(`menu.${c.key}`, { defaultValue: c.main }),
+    to: `/records/services/${c.key}/new`,
+  })),
   { label: t('menu.past'), onClick: openPast },
   { label: t('menu.update'), to: '/records/profile' },
 ];

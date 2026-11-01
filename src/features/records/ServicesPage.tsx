@@ -9,7 +9,7 @@ import { PastChooser } from './shared';
 
 function ServiceTile({ card }: { card: ServiceCardDef }) {
   const { t } = useTranslation('records');
-  const rows = useQ(card.data);
+  const rows = useQ('cardRows', card.key);
   const bal = useQ('leaveBalance');
   const summary =
     rows.data && (card.key !== 'leave' || bal.data)

@@ -25,8 +25,6 @@ export interface ServiceCardDef {
   icon: string;
   /** Key of the form config in the request engine (config/requests.ts). */
   formKey: string;
-  /** The repository list that holds approved entries. */
-  data: 'leaves' | 'ltcs' | 'medicals' | 'gpfs';
   main: string;
   /** Label of the outline "Add a past ..." button, when the card supports past records. */
   pastLabel?: string;
@@ -54,7 +52,6 @@ export const SERVICE_CARDS: ServiceCardDef[] = [
     tagline: 'Your balances, your leave history, and a way to apply.',
     icon: 'calendar',
     formKey: 'leave',
-    data: 'leaves',
     main: 'Apply for leave',
     pastLabel: 'Add a past leave',
     balanceTab: true,
@@ -77,7 +74,6 @@ export const SERVICE_CARDS: ServiceCardDef[] = [
       'A record of your LTC trips by block year. This page records trips. It does not process claims.',
     icon: 'plane',
     formKey: 'ltc',
-    data: 'ltcs',
     main: 'Record an LTC trip',
     note: 'This page records trips. It does not process claims.',
     summary: (r, c) => {
@@ -107,9 +103,8 @@ export const SERVICE_CARDS: ServiceCardDef[] = [
     title: 'Medical Reimbursement',
     headline: 'Medical Reimbursement',
     tagline: 'Your medical claims and where each one stands.',
-    icon: 'help',
+    icon: 'medical',
     formKey: 'medical',
-    data: 'medicals',
     main: 'New medical claim',
     pastLabel: 'Add a past claim',
     summary: (r, c) => {
@@ -138,7 +133,6 @@ export const SERVICE_CARDS: ServiceCardDef[] = [
     tagline: 'Your withdrawals from the GPF.',
     icon: 'rupee',
     formKey: 'gpf',
-    data: 'gpfs',
     main: 'Apply for a withdrawal',
     pastLabel: 'Add a past withdrawal',
     summary: (r) =>

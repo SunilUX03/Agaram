@@ -331,6 +331,7 @@
 .layout-side {
   display: grid;
   gap: var(--ux4g-gap-row-xl);
+  grid-template-columns: minmax(0, 1fr);
 }
 @media (min-width: 1024px) {
   .layout-side {
@@ -1368,4 +1369,15 @@ a.list-row-main {
   .tiles-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+/* Wide tables scroll inside their own box on tablets; long words (emails) wrap inside cards. */
+.ux4g-table-responsive {
+  position: relative; /* keeps visually hidden text inside the scroll box */
+  max-width: 100%;
+  overflow-x: auto;
+}
+dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }

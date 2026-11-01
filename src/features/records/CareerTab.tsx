@@ -243,7 +243,6 @@ export function CareerTab({
           kind={shown.kind}
           entry={form?.entry}
           existing={existing}
-          career={career.data ?? []}
           onClose={closeForm}
         />
       )}
@@ -277,16 +276,16 @@ function CareerForm({
   kind,
   entry,
   existing,
-  career,
   onClose,
 }: {
   kind: 'posting' | 'promotion';
   entry?: CareerEntry;
   existing?: { id: string; values: Values };
-  career: CareerEntry[];
   onClose: () => void;
 }) {
   const { t } = useTranslation('records');
+  const careerQ = useQ('career');
+  const career = useMemo(() => careerQ.data ?? [], [careerQ.data]);
   const common = useTranslation().t;
   const toast = useToast();
   const save = useMut('saveRequest');
@@ -386,10 +385,12 @@ function CareerForm({
       sending.current = false;
     }
   };
-  const send = () => {
+  const send = async () => {
     if (!check()) return;
-    // Only one posting can be current: ask before ending the existing one.
-    if (kind === 'posting' && !values.toDate && currentOther) setAsk(true);
+    // Only one posting can be current: ask before ending the existing one. Wait for the list if it is still loading.
+    const list = careerQ.data ?? (await careerQ.refetch()).data ?? [];
+    const other = list.find((c) => c.kind === 'posting' && !c.toDate && c.id !== values.entryId);
+    if (kind === 'posting' && !values.toDate && other) setAsk(true);
     else void post();
   };
 

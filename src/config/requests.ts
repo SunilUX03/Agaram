@@ -204,7 +204,7 @@ export const REQUEST_TYPES: RequestTypeDef[] = [
     cardKey: 'medical',
     label: 'New medical claim',
     cardName: 'Medical Reimbursement',
-    icon: 'help',
+    icon: 'medical',
     modes: ['apply', 'past'],
     orderBlock: true,
     proofRequiredFor: ['past'],

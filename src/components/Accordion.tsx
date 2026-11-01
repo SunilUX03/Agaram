@@ -20,26 +20,28 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
         const isOpen = open.includes(it.id);
         return (
           <div key={it.id} className={`ux4g-accordion__item${isOpen ? ' active' : ''}`}>
-            <h3 className="acc-h">
+            <h3 className="ux4g-accordion__header">
               <button
                 type="button"
                 id={`${uid}-h-${it.id}`}
-                className="ux4g-accordion__header"
+                className={`ux4g-accordion__button${isOpen ? '' : ' collapsed'}`}
                 aria-expanded={isOpen}
                 aria-controls={`${uid}-p-${it.id}`}
                 onClick={() => toggle(it.id)}
               >
-                <span className="ux4g-accordion__title">{it.title}</span>
+                <span className="ux4g-accordion__button-content">
+                  <span className="ux4g-accordion__title">{it.title}</span>
+                </span>
               </button>
             </h3>
             <div
               id={`${uid}-p-${it.id}`}
               role="region"
               aria-labelledby={`${uid}-h-${it.id}`}
-              className="ux4g-accordion__body"
+              className={`ux4g-accordion__collapse${isOpen ? ' show' : ''}`}
               hidden={!isOpen}
             >
-              {it.content}
+              <div className="ux4g-accordion__body">{it.content}</div>
             </div>
           </div>
         );

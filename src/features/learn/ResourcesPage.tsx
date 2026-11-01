@@ -17,7 +17,7 @@ export function ResourcesPanel() {
   const query = useQ('resources');
   return (
     <>
-      <div className="ux4g-d-flex ux4g-jc-between ux4g-ai-center gap-m ux4g-mb-m">
+      <div className="ux4g-d-flex ux4g-flex-wrap ux4g-jc-between ux4g-ai-center gap-m ux4g-mb-m">
         <SearchField label={t('resources.search')} value={q} onChange={setQ} />
         <button
           type="button"

@@ -64,5 +64,7 @@ export default defineConfig(({ command }) => ({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     css: false,
+    // The mock repository waits 300 to 800 ms per call, so lifecycle tests make many slow calls.
+    testTimeout: 20000,
   },
 }));

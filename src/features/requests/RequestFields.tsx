@@ -1,7 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { FileUpload, type UploadedFile } from '@/components/form/FileUpload';
 import type { RequestTypeDef } from '@/config/requests';
-import { isDocRequired, proofRequired, type Files, type Values } from '@/domain/requests';
+import {
+  isDocRequired,
+  isFieldRequired,
+  matchesWhen,
+  proofRequired,
+  type Files,
+  type Values,
+} from '@/domain/requests';
 import type { Mode } from '@/domain/types';
 import { DynamicField, useOptions } from './DynamicField';
 
@@ -33,7 +40,12 @@ export function RequestFields({
     <>
       <div className="form-grid">
         {def.fields
-          .filter((f) => !skip.includes(f.name))
+          // A field that only matters in one case (for example Country for Ex-India leave) appears when it does.
+          .filter(
+            (f) =>
+              !skip.includes(f.name) &&
+              (!f.requiredWhen || f.required || isFieldRequired(f, values)),
+          )
           .map((f) => (
             <div key={f.name} className={f.full || f.kind === 'dateRange' ? 'full' : undefined}>
               <DynamicField
@@ -47,17 +59,19 @@ export function RequestFields({
             </div>
           ))}
       </div>
-      {def.documents.map((d) => (
-        <FileUpload
-          key={d.name}
-          name={`${def.key}-${d.name}`}
-          label={d.label}
-          required={isDocRequired(d, values)}
-          files={files[d.name] ?? []}
-          onChange={(f) => setFiles(d.name, f)}
-          error={errors[`doc.${d.name}`]}
-        />
-      ))}
+      {def.documents
+        .filter((d) => !d.requiredWhen || d.required || matchesWhen(d.requiredWhen, values))
+        .map((d) => (
+          <FileUpload
+            key={d.name}
+            name={`${def.key}-${d.name}`}
+            label={d.label}
+            required={isDocRequired(d, values)}
+            files={files[d.name] ?? []}
+            onChange={(f) => setFiles(d.name, f)}
+            error={errors[`doc.${d.name}`]}
+          />
+        ))}
       {proof && (
         <FileUpload
           name={`${def.key}-proof`}
