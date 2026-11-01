@@ -38,7 +38,7 @@ describe('every route in section 7', () => {
   });
 
   it('sends a signed-out visitor to /login', async () => {
-    renderApp('/requests', { signedIn: false });
+    renderApp('/records', { signedIn: false });
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('Sign in to Agaram');
   });
 });

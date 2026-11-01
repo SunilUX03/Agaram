@@ -12,10 +12,10 @@ export interface Db {
   career: T.CareerEntry[];
   leaveBalance: T.LeaveBalance;
   leaves: T.LeaveRecord[];
-  trainings: T.TrainingRecord[];
-  travels: T.TravelRecord[];
-  properties: T.PropertyRecord[];
-  benefits: T.BenefitRecord[];
+  ltcs: T.LtcRecord[];
+  medicals: T.MedicalClaim[];
+  gpfs: T.GpfWithdrawal[];
+  pendingChanges: T.PendingChange[];
   documents: T.DocumentItem[];
   requests: T.Request[];
   notifications: T.Notification[];
@@ -27,7 +27,6 @@ export interface Db {
     author: T.PersonRef;
     authorId: string;
   })[];
-  articles: (Omit<T.Article, 'savedByMe' | 'mine'> & { authorId: string })[];
   colleagues: T.Colleague[];
   departments: T.Department[];
   experts: T.Expert[];
@@ -35,10 +34,6 @@ export interface Db {
   resources: T.Resource[];
   awards: T.Award[];
   library: T.LibraryItem[];
-  tasks: T.DeskTask[];
-  notes: T.DeskNote[];
-  saved: T.SavedItem[];
-  settings: T.Settings;
   pollVotes: Record<string, string>;
   seq: number;
 }
@@ -88,21 +83,19 @@ export function buildSeed(now = new Date()): Db {
     salutation: 'Tmt.',
     photoUrl: photoDataUri(1),
     service: 'IAS',
+    allotmentYear: 2018,
     batch: 2018,
+    cadreAndDomicile: 'Tamil Nadu, domicile Tamil Nadu',
     status: 'serving',
     dateOfBirth: '1990-03-14',
     gender: 'Female',
-    homeState: 'Tamil Nadu',
-    nativeDistrict: 'Thanjavur',
     languages: ['Tamil', 'English', 'Hindi'],
     contact: {
       mobile1: '+91 90000 10417',
-      mobile2: '+91 90000 20417',
-      landline: '0462 000 0417',
       officialEmail: 'aadhira.valluvan@example.gov.test',
       personalEmail: 'aadhira.v@example.test',
     },
-    address: { line: '12, Sample Colony, Sample Nagar', city: 'Tirunelveli', pincode: '627 000' },
+    address: { line: '12, Sample Colony, Sample Nagar', city: 'Tirunelveli', pincode: '627000' },
     qualifications: [
       {
         id: 'q1',
@@ -129,47 +122,26 @@ export function buildSeed(now = new Date()): Db {
     dateOfRetirement: '2050-03-31',
     recruitmentType: 'Direct recruit',
     grade: 'Selection Grade',
-    payLevel: 'Level 13',
+    classPayScale: 'Level 13',
     seniorityNumber: 'S-0417',
     currentPosting: {
       postingIn: 'Tirunelveli',
       department: 'Revenue and Disaster Management',
       designation: 'Joint Collector',
-      officeAddress: 'Collectorate Campus, Sample Road, Tirunelveli 627 000',
-      phone: '0462 000 1100',
-      fax: '0462 000 1101',
       postType: 'Permanent',
       locationChange: 'Within state',
       since: dateOnly(-420),
     },
+    officeContact: {
+      address: 'Collectorate Campus, Sample Road, Tirunelveli 627000',
+      phone: '0462 000 1100',
+      fax: '0462 000 1101',
+      mobile: '+91 90000 11100',
+    },
     lastPromotionDate: dateOnly(-900),
     areaOfExposure: 'Land revenue, disaster management, rural development',
-    sensitive: { class: 'General', religion: 'Hindu', caste: 'Sample community' },
-    fieldMeta: {
-      name: 'verified',
-      gender: 'verified',
-      dateOfBirth: 'verified',
-      homeState: 'verified',
-      nativeDistrict: 'verified',
-      languages: 'self-reported',
-      mobile1: 'self-reported',
-      mobile2: 'self-reported',
-      landline: 'self-reported',
-      officialEmail: 'verified',
-      personalEmail: 'self-reported',
-      addressLine: 'self-reported',
-      city: 'self-reported',
-      pincode: 'self-reported',
-      officerId: 'verified',
-      ifhrmsId: 'verified',
-      dateOfJoining: 'verified',
-      dateOfRetirement: 'verified',
-      batch: 'verified',
-      recruitmentType: 'verified',
-      grade: 'verified',
-      payLevel: 'verified',
-      seniorityNumber: 'verified',
-    },
+    religion: 'Hindu',
+    caste: 'Sample community',
   };
 
   const departments = [
@@ -195,29 +167,40 @@ export function buildSeed(now = new Date()): Db {
     'Chengalpattu',
   ];
 
-  // --- career: 12 entries, newest first
+  // --- career: postings and promotions, newest first
+  const posting = (
+    cid: string,
+    from: number,
+    to: number | undefined,
+    designation: string,
+    department: string,
+    postingIn: string,
+    postType: string,
+    orderId?: string,
+  ): T.CareerEntry => ({
+    id: cid,
+    kind: 'posting',
+    fromDate: dateOnly(from),
+    toDate: to === undefined ? undefined : dateOnly(to),
+    designation,
+    department,
+    postingIn,
+    postType,
+    locationChange: 'Within state',
+    orderId,
+    addedByOfficer: false,
+  });
   const career: T.CareerEntry[] = [
-    {
-      id: 'c1',
-      kind: 'posting',
-      fromDate: dateOnly(-420),
-      designation: 'Joint Collector',
-      department: 'Revenue and Disaster Management',
-      postingIn: 'Tirunelveli',
-      postType: 'Permanent',
-      locationChange: 'Within state',
-      orderId: 'd1',
-    },
-    {
-      id: 'c2',
-      kind: 'transfer',
-      fromDate: dateOnly(-420),
-      designation: 'Joint Collector',
-      department: 'Revenue and Disaster Management',
-      postingIn: 'Tirunelveli',
-      locationChange: 'Within state',
-      orderId: 'd2',
-    },
+    posting(
+      'c1',
+      -420,
+      undefined,
+      'Joint Collector',
+      'Revenue and Disaster Management',
+      'Tirunelveli',
+      'Permanent',
+      'd1',
+    ),
     {
       id: 'c3',
       kind: 'promotion',
@@ -227,88 +210,49 @@ export function buildSeed(now = new Date()): Db {
       fromGrade: 'Junior Time Scale',
       toGrade: 'Senior Time Scale',
       orderId: 'd3',
+      addedByOfficer: false,
     },
+    posting(
+      'c4',
+      -1100,
+      -421,
+      'Sub-Collector',
+      'Revenue and Disaster Management',
+      'Madurai',
+      'Temporary',
+      'd4',
+    ),
+    posting(
+      'c6',
+      -1500,
+      -1101,
+      'Assistant Collector (Training)',
+      'Revenue and Disaster Management',
+      'Coimbatore',
+      'Temporary',
+    ),
     {
-      id: 'c4',
-      kind: 'posting',
-      fromDate: dateOnly(-1100),
-      toDate: dateOnly(-421),
-      designation: 'Sub-Collector',
-      department: 'Revenue and Disaster Management',
-      postingIn: 'Madurai',
-      postType: 'Temporary',
-      locationChange: 'Within state',
-      orderId: 'd4',
-    },
-    {
-      id: 'c5',
-      kind: 'transfer',
-      fromDate: dateOnly(-1100),
-      designation: 'Sub-Collector',
-      department: 'Revenue and Disaster Management',
-      postingIn: 'Madurai',
-      locationChange: 'Within state',
-    },
-    {
-      id: 'c6',
-      kind: 'posting',
-      fromDate: dateOnly(-1500),
-      toDate: dateOnly(-1101),
-      designation: 'Assistant Collector (Training)',
-      department: 'Revenue and Disaster Management',
-      postingIn: 'Coimbatore',
-      postType: 'Temporary',
-      locationChange: 'Within state',
-    },
-    {
-      id: 'c7',
-      kind: 'transfer',
-      fromDate: dateOnly(-1500),
-      designation: 'Assistant Collector (Training)',
-      department: 'Revenue and Disaster Management',
-      postingIn: 'Coimbatore',
-      locationChange: 'Within state',
-    },
-    {
-      id: 'c8',
-      kind: 'posting',
-      fromDate: dateOnly(-1900),
-      toDate: dateOnly(-1501),
-      designation: 'Deputy Secretary',
-      department: 'Rural Development and Panchayat Raj',
-      postingIn: 'Chennai',
-      postType: 'Permanent',
+      ...posting(
+        'c8',
+        -1900,
+        -1501,
+        'Deputy Secretary',
+        'Rural Development and Panchayat Raj',
+        'Chennai',
+        'Permanent',
+      ),
       locationChange: 'In situ',
+      addedByOfficer: true,
     },
-    {
-      id: 'c9',
-      kind: 'transfer',
-      fromDate: dateOnly(-1900),
-      designation: 'Deputy Secretary',
-      department: 'Rural Development and Panchayat Raj',
-      postingIn: 'Chennai',
-      locationChange: 'In situ',
-    },
-    {
-      id: 'c10',
-      kind: 'posting',
-      fromDate: dateOnly(-2300),
-      toDate: dateOnly(-1901),
-      designation: 'Project Officer',
-      department: 'Rural Development and Panchayat Raj',
-      postingIn: 'Salem',
-      postType: 'Temporary',
-      locationChange: 'Within state',
-    },
-    {
-      id: 'c11',
-      kind: 'transfer',
-      fromDate: dateOnly(-2300),
-      designation: 'Project Officer',
-      department: 'Rural Development and Panchayat Raj',
-      postingIn: 'Salem',
-      locationChange: 'Within state',
-    },
+    posting(
+      'c10',
+      -2300,
+      -1901,
+      'Project Officer',
+      'Rural Development and Panchayat Raj',
+      'Salem',
+      'Temporary',
+    ),
     {
       id: 'c12',
       kind: 'promotion',
@@ -317,6 +261,7 @@ export function buildSeed(now = new Date()): Db {
       department: 'Rural Development and Panchayat Raj',
       fromGrade: 'Probation',
       toGrade: 'Junior Time Scale',
+      addedByOfficer: false,
     },
   ];
 
@@ -340,6 +285,7 @@ export function buildSeed(now = new Date()): Db {
     to: dateOnly(t),
     days: t - f + 1,
     status,
+    source: 'portal',
     ...extra,
   });
   const leaves: T.LeaveRecord[] = [
@@ -349,202 +295,102 @@ export function buildSeed(now = new Date()): Db {
     L('Restricted holiday', -60, -60, 'approved'),
     L('Earned leave', -95, -89, 'approved', { orderId: 'd7' }),
     L('Medical leave', -140, -136, 'approved'),
-    L('Casual leave', -170, -170, 'approved'),
+    L('Casual leave', -170, -170, 'approved', { source: 'paper' }),
     L('Casual leave', -200, -199, 'approved'),
     L('Ex-India leave', -260, -252, 'approved', { orderId: 'd8' }),
     L('Casual leave', -300, -298, 'rejected'),
     L('Earned leave', -340, -334, 'approved'),
-    L('Casual leave', -380, -379, 'approved'),
-    L('Half-pay leave', -430, -426, 'approved'),
+    L('Half-pay leave', -430, -426, 'approved', { source: 'paper' }),
     L('Casual leave', -470, -470, 'withdrawn'),
-    L('Special casual leave', -520, -519, 'approved'),
   ];
-  const trainings: T.TrainingRecord[] = [
+  const ltcs: T.LtcRecord[] = [
     {
-      id: 't1',
-      type: 'Induction',
-      from: dateOnly(-2500),
-      to: dateOnly(-2440),
-      institute: 'Example Academy of Administration',
+      id: id('ltc'),
+      blockYear: `${year - 3} to ${year}`,
+      from: dateOnly(-400),
+      to: dateOnly(-392),
+      placeFrom: 'Tirunelveli',
+      placeTo: 'Kochi',
+      who: 'Family',
+      leaveAvailed: 'Earned leave',
+      status: 'approved',
+      source: 'portal',
     },
     {
-      id: 't2',
-      type: 'Mid-career phase 1',
+      id: id('ltc'),
+      blockYear: `${year - 3} to ${year}`,
       from: dateOnly(-700),
-      to: dateOnly(-680),
-      institute: 'Sample Institute of Public Policy',
-      orderId: 'd9',
-    },
-    {
-      id: 't3',
-      type: 'LBSNAA',
-      from: dateOnly(-1700),
-      to: dateOnly(-1690),
-      institute: 'National Academy of Administration (sample)',
-      country: undefined,
-    },
-    {
-      id: 't4',
-      type: 'District training',
-      from: dateOnly(-1500),
-      to: dateOnly(-1400),
-      institute: 'Coimbatore District Training Centre',
+      to: dateOnly(-695),
+      placeFrom: 'Tirunelveli',
+      placeTo: 'Delhi',
+      who: 'Self',
+      leaveAvailed: 'Casual leave',
+      status: 'approved',
+      source: 'paper',
     },
   ];
-  const travels: T.TravelRecord[] = [
+  const medicals: T.MedicalClaim[] = [
     {
-      id: 'v1',
-      kind: 'foreign',
-      place: 'Singapore',
-      from: dateOnly(-250),
-      to: dateOnly(-245),
-      purpose: 'Study visit: urban water management',
+      id: id('med'),
+      date: dateOnly(-35),
+      forWhom: 'Self',
+      hospital: 'Sample General Hospital',
+      treatment: 'Orthopaedic care',
+      cost: 42600,
       status: 'approved',
-      orderId: 'd10',
-      politicalClearance: true,
-      fcraClearance: true,
+      concurrence: 'Received',
+      source: 'portal',
     },
     {
-      id: 'v2',
-      kind: 'foreign',
-      place: 'Japan',
-      from: dateOnly(-640),
-      to: dateOnly(-632),
-      purpose: 'Disaster preparedness workshop',
+      id: id('med'),
+      date: dateOnly(-150),
+      forWhom: 'Family',
+      hospital: 'Example Children’s Hospital',
+      treatment: 'Paediatric care',
+      cost: 18900,
       status: 'approved',
-      politicalClearance: true,
-      fcraClearance: true,
-    },
-    {
-      id: 'v3',
-      kind: 'tour',
-      place: 'Chennai',
-      from: dateOnly(-90),
-      to: dateOnly(-89),
-      purpose: 'Review meeting',
-      status: 'approved',
-    },
-    {
-      id: 'v4',
-      kind: 'tour',
-      place: 'Madurai',
-      from: dateOnly(-20),
-      to: dateOnly(-19),
-      purpose: 'Flood preparedness inspection',
-      status: 'approved',
-    },
-    {
-      id: 'v5',
-      kind: 'private',
-      place: 'Sri Lanka',
-      from: dateOnly(-330),
-      to: dateOnly(-325),
-      status: 'approved',
-    },
-    {
-      id: 'v6',
-      kind: 'private',
-      place: 'United Arab Emirates',
-      from: dateOnly(-520),
-      to: dateOnly(-514),
-      status: 'approved',
+      concurrence: 'Pending',
+      source: 'paper',
     },
   ];
-  const properties: T.PropertyRecord[] = [
+  const gpfs: T.GpfWithdrawal[] = [
     {
-      id: 'p1',
-      kind: 'immovable',
-      type: 'Flat',
-      details: 'Two-bedroom flat, Sample Heights, Chennai',
-      funding: 'Loan',
-      cost: 6500000,
-      shownInReturn: true,
-      selfOrFamily: 'Self',
+      id: id('gpf'),
+      date: dateOnly(-210),
+      type: 'Part final',
+      purpose: 'House construction',
+      amount: 250000,
+      status: 'approved',
+      source: 'portal',
     },
     {
-      id: 'p2',
-      kind: 'immovable',
-      type: 'Agricultural land',
-      details: '2.5 acres near Thanjavur (ancestral share)',
-      funding: 'Inheritance',
-      cost: 1800000,
-      shownInReturn: true,
-      selfOrFamily: 'Family',
+      id: id('gpf'),
+      date: dateOnly(-900),
+      type: 'Temporary',
+      purpose: 'Higher education',
+      amount: 120000,
+      status: 'approved',
+      source: 'paper',
     },
-    {
-      id: 'p3',
-      kind: 'movable',
-      type: 'Vehicle',
-      details: 'Hatchback car, 2023 model',
-      funding: 'Savings',
-      cost: 950000,
-      shownInReturn: false,
-      selfOrFamily: 'Self',
-    },
-    {
-      id: 'p4',
-      kind: 'intimation',
-      type: 'Gift',
-      details: 'Gold jewellery received at a family wedding',
-      funding: 'Gift',
-      cost: 250000,
-      shownInReturn: false,
-      selfOrFamily: 'Self',
-    },
-  ];
-  const B = (
-    kind: T.BenefitRecord['kind'],
-    summary: string,
-    amount: number | undefined,
-    d: number,
-    status: T.BenefitRecord['status'] = 'approved',
-  ): T.BenefitRecord => ({ id: id('b'), kind, summary, amount, date: dateOnly(d), status });
-  const benefits: T.BenefitRecord[] = [
-    B('ltc', `LTC, block ${year - 1} to ${year}: Chennai to Port Blair`, 85000, -200),
-    B('ltc', `LTC, block ${year - 3} to ${year - 2}: Chennai to Delhi`, 62000, -900),
-    B('medical', 'Medical claim: dental treatment', 14500, -120),
-    B('medical', 'Medical claim: annual health check', 8200, -400),
-    B('hba', 'House building advance: Sample Heights flat', 2500000, -1200),
-    B('gpf', 'GPF withdrawal: higher education', 150000, -600),
-    B('gpf', 'GPF withdrawal: medical', 250000, -300),
-    B('mha-id', 'MHA identity card: renewal', undefined, -500),
-    B('saf', 'SAF Games Village housing: applied', undefined, -80, 'with-desk'),
-    B('education', 'Education: M.A. Public Policy', 120000, -2000),
   ];
 
   const docs: [string, string, string, string?][] = [
     ['d1', 'Posting order: Joint Collector, Tirunelveli', 'Posting', 'G.O. (Ms) No. 412'],
-    ['d2', 'Transfer order', 'Transfer', 'G.O. (Ms) No. 410'],
     ['d3', 'Promotion order: Senior Time Scale', 'Promotion', 'G.O. (Ms) No. 96'],
     ['d4', 'Posting order: Sub-Collector, Madurai', 'Posting', 'G.O. (Ms) No. 233'],
     ['d5', 'Leave order: casual leave', 'Leave', 'Proc. No. 118'],
     ['d6', 'Leave order: casual leave', 'Leave', 'Proc. No. 77'],
     ['d7', 'Leave order: earned leave', 'Leave', 'Proc. No. 54'],
     ['d8', 'Leave order: Ex-India leave', 'Leave', 'G.O. (Ms) No. 301'],
-    ['d9', 'Training nomination: mid-career phase 1', 'Training', 'Letter No. 88'],
-    ['d10', 'Foreign visit permission: Singapore', 'Travel', 'G.O. (Ms) No. 187'],
-    ['d11', 'HBA sanction order', 'Benefits', 'G.O. (Ms) No. 45'],
-    ['d12', 'GPF withdrawal sanction', 'Benefits', 'Proc. No. 12'],
-    ['d13', 'LTC sanction order', 'Benefits', 'Proc. No. 130'],
-    ['d14', 'Property return acknowledgement', 'Property', 'Ack. No. 9921'],
-    ['d15', 'Medical reimbursement order', 'Benefits', 'Proc. No. 66'],
   ];
   const linkMap: Record<string, [string, string, string]> = {
-    d1: ['career', 'c1', '/file/career'],
-    d2: ['career', 'c2', '/file/career'],
-    d3: ['career', 'c3', '/file/career'],
-    d4: ['career', 'c4', '/file/career'],
-    d5: ['leave', 'l', '/file/leave'],
-    d6: ['leave', 'l', '/file/leave'],
-    d7: ['leave', 'l', '/file/leave'],
-    d8: ['leave', 'l', '/file/leave'],
-    d9: ['training', 't2', '/file/training'],
-    d10: ['travel', 'v1', '/file/travel?tab=foreign'],
-    d11: ['benefits', 'b', '/file/benefits?tab=housing'],
-    d12: ['benefits', 'b', '/file/benefits?tab=gpf'],
-    d13: ['benefits', 'b', '/file/benefits'],
-    d14: ['property', 'p', '/file/property'],
-    d15: ['benefits', 'b', '/file/benefits?tab=medical'],
+    d1: ['career', 'c1', '/records/profile?tab=career'],
+    d3: ['career', 'c3', '/records/profile?tab=career'],
+    d4: ['career', 'c4', '/records/profile?tab=career'],
+    d5: ['leave', 'l', '/records/services/leave'],
+    d6: ['leave', 'l', '/records/services/leave'],
+    d7: ['leave', 'l', '/records/services/leave'],
+    d8: ['leave', 'l', '/records/services/leave'],
   };
   const documents: T.DocumentItem[] = docs.map(([i, title, kind, num], k) => ({
     id: i,
@@ -556,7 +402,7 @@ export function buildSeed(now = new Date()): Db {
     fileUrl: SAMPLE_PDF,
   }));
 
-  // --- requests (9: every status at least once)
+  // --- requests: every status at least once
   const step = (title: string, d: number, role?: string, note?: string): T.TimelineEntry => ({
     id: id('s'),
     title,
@@ -569,7 +415,6 @@ export function buildSeed(now = new Date()): Db {
     type: string,
     title: string,
     status: T.Request['status'],
-    holder: T.Request['holder'],
     values: T.Request['values'],
     d: number,
     tl: T.TimelineEntry[],
@@ -580,11 +425,10 @@ export function buildSeed(now = new Date()): Db {
     type,
     title,
     status,
-    holder,
+    source: 'portal',
     values,
     attachments: [],
     timeline: tl,
-    notes: [],
     createdAt: at(d),
     submittedAt: status === 'draft' ? undefined : at(d),
     updatedAt: at(d + 1),
@@ -596,189 +440,125 @@ export function buildSeed(now = new Date()): Db {
       'leave',
       `Leave, ${rangeTitle({ from: dmy(25), to: dmy(27) })}`,
       'draft',
-      'officer',
       { type: 'Casual leave', dates: { from: dmy(25), to: dmy(27) } },
       -1,
       [],
-      { lastStep: 1, updatedAt: at(-1, 17), submittedAt: undefined },
+      { mode: 'apply', updatedAt: at(-1, 17), submittedAt: undefined },
     ),
     R(
       2,
       'medical',
       'Medical claim, ₹18,400',
       'submitted',
-      'desk',
       {
         description: 'Outpatient treatment and tests',
         hospital: 'Sample General Hospital',
         treatment: 'Orthopaedic care',
         cost: '18400',
+        who: 'Self',
         applicationDate: dmy(-1),
         dischargeEndorsed: 'Yes',
       },
       -1,
       [step('Sent', -1, 'You')],
-      { attachments: [{ name: 'bills.pdf', size: 420000 }] },
+      { mode: 'apply', attachments: [{ name: 'bills.pdf', size: 420000 }] },
     ),
     R(
       3,
-      'education',
-      'Education, PG Diploma in Disaster Management',
-      'with-desk',
-      'desk',
+      'profile-edit',
+      'Update my details: Contact and address',
+      'submitted',
       {
-        level: 'Diploma',
-        degree: 'PG Diploma in Disaster Management',
-        institute: 'Example Institute of Disaster Studies',
-        completion: dmy(-20),
+        group: 'Contact and address',
+        changes: { personalEmail: 'aadhira.valluvan@example.test' },
+      },
+      -2,
+      [step('Sent', -2, 'You')],
+    ),
+    R(
+      4,
+      'ltc',
+      `LTC trip, block ${year - 3} to ${year}`,
+      'returned',
+      {
+        blockYear: `${year - 3} to ${year}`,
+        dates: { from: dmy(28), to: dmy(34) },
+        placeFrom: 'Tirunelveli',
+        placeTo: 'Kochi',
+        who: 'Family',
+        leaveAvailed: 'Earned leave',
       },
       -6,
       [
         step('Sent', -6, 'You'),
-        step('With desk', -4, 'Desk Assistant', 'Checking the certificate.'),
+        step('Returned', -5, 'Super admin', 'The travel dates do not match your earned leave.'),
       ],
       {
-        notes: [
-          {
-            id: id('n'),
-            from: 'desk',
-            text: 'We are checking the certificate. No action needed from you yet.',
-            createdAt: at(-4),
-          },
-        ],
-      },
-    ),
-    R(
-      4,
-      'tour',
-      `Official tour to Madurai, ${rangeTitle({ from: dmy(20), to: dmy(21) })}`,
-      'ready-for-approval',
-      'desk-officer',
-      {
-        state: 'Tamil Nadu',
-        district: 'Madurai',
-        dates: { from: dmy(20), to: dmy(21) },
-        purpose: 'Review of flood relief works',
-        host: 'District Collector, Madurai',
-      },
-      -9,
-      [
-        step('Sent', -9, 'You'),
-        step('With desk', -8, 'Desk Assistant'),
-        step('Ready for approval', -3, 'Desk Assistant'),
-      ],
-    ),
-    R(
-      5,
-      'ltc',
-      `LTC, block ${year}`,
-      'returned',
-      'officer',
-      {
-        blockYear: String(year),
-        dates: { from: dmy(60), to: dmy(66) },
-        placeFrom: 'Chennai',
-        placeTo: 'Kochi',
-        selfOrFamily: 'Family',
-        leaveAvailed: 'Earned leave',
-      },
-      -12,
-      [
-        step('Sent', -12, 'You'),
-        step('With desk', -11, 'Desk Assistant'),
-        step('Returned', -5, 'Desk Officer', 'Dates do not match your earned leave request.'),
-      ],
-      {
+        mode: 'record',
         returnReason:
           'The travel dates do not match your earned leave. Correct the dates and send again.',
       },
     ),
     R(
-      6,
+      5,
       'leave',
-      `Leave, ${rangeTitle({ from: dmy(-30), to: dmy(-28) })}`,
+      `Leave, ${rangeTitle({ from: dmy(-95), to: dmy(-89) })}`,
       'approved',
-      'none',
-      { type: 'Casual leave', dates: { from: dmy(-30), to: dmy(-28) } },
-      -40,
-      [
-        step('Sent', -40, 'You'),
-        step('With desk', -39, 'Desk Assistant'),
-        step('Approved', -34, 'Desk Officer'),
-        step('Order issued', -33, 'Desk Officer'),
-      ],
-      { orderId: 'd6' },
+      { type: 'Earned leave', dates: { from: dmy(-95), to: dmy(-89) } },
+      -100,
+      [step('Sent', -100, 'You'), step('Approved', -97, 'Super admin')],
+      { mode: 'apply' },
     ),
     R(
-      7,
+      6,
       'gpf',
       'GPF withdrawal, ₹2,50,000',
       'approved',
-      'none',
-      { type: 'Part final', purpose: 'Medical', amount: '250000' },
-      -310,
+      { type: 'Part final', purpose: 'House construction', amount: '250000', date: dmy(-210) },
+      -215,
+      [step('Sent', -215, 'You'), step('Approved', -212, 'Super admin')],
+      { mode: 'apply' },
+    ),
+    R(
+      7,
+      'medical',
+      'Medical claim, ₹6,200',
+      'rejected',
+      {
+        description: 'Dental treatment',
+        hospital: 'Example Dental Clinic',
+        treatment: 'Dental care',
+        cost: '6200',
+        who: 'Self',
+        applicationDate: dmy(-120),
+        dischargeEndorsed: 'No',
+      },
+      -125,
       [
-        step('Sent', -310, 'You'),
-        step('With desk', -309, 'Desk Assistant'),
-        step('Approved', -300, 'Desk Officer'),
-        step('Order issued', -299, 'Desk Officer'),
+        step('Sent', -125, 'You'),
+        step('Not approved', -121, 'Super admin', 'Dental care is not covered.'),
       ],
-      { orderId: 'd12' },
+      { mode: 'apply', rejectReason: 'Dental care is not covered under this scheme.' },
     ),
     R(
       8,
-      'private-visit',
-      'Private visit to Singapore',
-      'rejected',
-      'none',
-      {
-        country: 'Singapore',
-        dates: { from: dmy(-150), to: dmy(-145) },
-        selfOrFamily: 'Family',
-        cost: '220000',
-      },
-      -170,
-      [
-        step('Sent', -170, 'You'),
-        step('With desk', -169, 'Desk Assistant'),
-        step('Not approved', -160, 'Desk Officer'),
-      ],
-      { rejectReason: 'Sanction was sought after the travel dates had begun.' },
-    ),
-    R(
-      9,
-      'training-request',
-      'Training request: Data for district administration',
+      'leave',
+      `Leave, ${rangeTitle({ from: dmy(-470), to: dmy(-470) })}`,
       'withdrawn',
-      'none',
-      { title: 'Data for district administration', for: 'Myself' },
-      -50,
-      [
-        step('Sent', -50, 'You'),
-        step('With desk', -49, 'Desk Assistant'),
-        step('Withdrawn', -45, 'You'),
-      ],
+      { type: 'Casual leave', dates: { from: dmy(-470), to: dmy(-470) } },
+      -472,
+      [step('Sent', -472, 'You'), step('Withdrawn', -471, 'You')],
+      { mode: 'apply' },
     ),
   ];
-  // an approved future leave so the overlap check has something to hit
-  requests.push(
-    R(
-      10,
-      'leave',
-      `Leave, ${rangeTitle({ from: dmy(40), to: dmy(46) })}`,
-      'approved',
-      'none',
-      { type: 'Earned leave', dates: { from: dmy(40), to: dmy(46) } },
-      -20,
-      [
-        step('Sent', -20, 'You'),
-        step('With desk', -19, 'Desk Assistant'),
-        step('Approved', -14, 'Desk Officer'),
-        step('Order issued', -13, 'Desk Officer'),
-      ],
-      { orderId: 'd7' },
-    ),
-  );
+  const pendingChanges: T.PendingChange[] = [
+    {
+      requestId: 'req-3',
+      targetKind: 'profile',
+      targetKey: 'personalEmail',
+      proposedValue: 'aadhira.valluvan@example.test',
+    },
+  ];
 
   const N = (
     type: T.Notification['type'],
@@ -789,6 +569,7 @@ export function buildSeed(now = new Date()): Db {
   ): T.Notification => ({
     id: id('n'),
     type,
+    category: type === 'request' ? 'requests' : 'community',
     text,
     targetRoute: route,
     createdAt: at(d, 9 + (n % 8)),
@@ -797,68 +578,65 @@ export function buildSeed(now = new Date()): Db {
   const notifications: T.Notification[] = [
     N(
       'request',
-      'Your LTC, block ' +
-        year +
-        ' was returned. Reason: The travel dates do not match your earned leave. Correct the dates and send again.',
-      '/requests/req-5',
+      `Your LTC trip, block ${year - 3} to ${year} was returned. Reason: The travel dates do not match your earned leave. Correct the dates and send again.`,
+      '/records/requests/req-4',
       -5,
       false,
     ),
     N(
       'request',
-      'Your Education, PG Diploma in Disaster Management is now with the desk.',
-      '/requests/req-3',
-      -4,
+      'Your Update my details: Contact and address was sent for approval.',
+      '/records/requests/req-3',
+      -2,
+      false,
+    ),
+    N(
+      'request',
+      'Your Medical claim, ₹18,400 was sent for approval.',
+      '/records/requests/req-2',
+      -1,
       false,
     ),
     N(
       'reply',
       'An officer replied to your discussion “Flood relief rosters”.',
-      '/community/discussions/post-1',
+      '/community/discourse/post-1',
       -2,
       false,
     ),
     N(
       'circular',
       'New circular: Revised procedure for GPF part-final withdrawal.',
-      '/library/circulars',
+      '/records/downloads?tab=circulars',
       -1,
       false,
     ),
     N(
-      'request',
-      'Your Official tour to Madurai is ready for approval.',
-      '/requests/req-4',
+      'training',
+      'New training: Data-driven district administration.',
+      '/community/capacity-building',
       -3,
       true,
     ),
     N(
       'idea-status',
-      'Your idea “Single window for flood-relief claims” is now under review.',
-      '/community/ideas/idea-1',
-      -6,
-      true,
-    ),
-    N(
-      'training',
-      'New training announced: Data-driven district administration.',
-      '/learn/trainings',
+      'Your proposal “Single window for flood-relief claims” is now under review.',
+      '/community/proposals/idea-2',
       -8,
       true,
     ),
-    N('request', `Your ${requests[5].title} was approved.`, '/requests/req-6', -33, true),
     N(
-      'reply',
-      'An officer replied to your comment on “Village-level water audits”.',
-      '/community/ideas/idea-3',
-      -9,
+      'request',
+      'Your GPF withdrawal, ₹2,50,000 was approved.',
+      '/records/requests/req-6',
+      -212,
       true,
     ),
     N(
-      'circular',
-      'New announcement: Annual property return due dates.',
-      '/library/announcements',
-      -12,
+      'request',
+      'Your Medical claim, ₹6,200 was not approved. Reason: Dental care is not covered under this scheme.',
+      '/records/requests/req-7',
+      -121,
       true,
     ),
   ];
@@ -959,7 +737,6 @@ export function buildSeed(now = new Date()): Db {
       i === 7
         ? 'Thiruvalluvar Subramanian Venkatachalapathi Ramanujam Iyengar'
         : `${first[i % first.length]} ${last[(i * 3) % last.length]}`;
-    const share = i % 2 === 0;
     const dep =
       i === 11
         ? 'Rural Development and Panchayat Raj, Department of Panchayat Raj Institutions and Rural Local Bodies Coordination'
@@ -979,14 +756,7 @@ export function buildSeed(now = new Date()): Db {
       areaOfExposure: areas[i % areas.length],
       statusNote: i % 17 === 3 ? 'On leave' : i % 23 === 5 ? 'On training' : undefined,
       photoUrl: i % 3 === 2 ? undefined : photoDataUri(i + 2),
-      sharedContact: share
-        ? {
-            phone: `+91 90000 ${String(30000 + i * 17).slice(0, 5)}`,
-            email: i % 4 === 0 ? `${slug}@example.test` : undefined,
-          }
-        : undefined,
       officialEmail: `${slug}@example.gov.test`,
-      savedByMe: false,
     };
   });
 
@@ -1456,6 +1226,31 @@ export function buildSeed(now = new Date()): Db {
     }),
   );
 
+  [
+    'Special entry: acknowledgement of service record',
+    'Special entry: change of name in the service book',
+    'Special entry: recording of training completed',
+    'Special entry: correction of date of birth',
+    'Special entry: addition of educational qualification',
+  ].forEach((t, i) =>
+    libAdd('special', t, {
+      number: `Entry No. ${14 + i * 5}/${year}`,
+      description: 'The procedure and the form to use.',
+    }),
+  );
+  [
+    'DRO order: allotment of work, first quarter',
+    'DRO order: leave sanction authority',
+    'DRO order: delegation of powers',
+    'DRO order: transfer of charge',
+    'DRO order: cadre review committee',
+  ].forEach((t, i) =>
+    libAdd('dro', t, {
+      number: `DRO No. ${6 + i * 4}/${year}`,
+      description: 'The order as issued by the department.',
+    }),
+  );
+
   // --- community
   const person = (c: number): T.PersonRef => {
     const x = colleagues[c];
@@ -1728,129 +1523,22 @@ export function buildSeed(now = new Date()): Db {
       -4,
     ),
   );
-  const art = (
-    i: number,
-    title: string,
-    kind: T.Article['kind'],
-    status: T.Article['status'],
-    c: number,
-    tags: string[],
-    extra: Partial<Db['articles'][number]> = {},
-  ): Db['articles'][number] => ({
-    id: `art-${i}`,
-    title,
-    authorRole: ['District Collector', 'Sub-Collector', 'Joint Collector', 'Commissioner'][i % 4],
-    author: c < 0 ? me : person(c),
-    authorId: c < 0 ? ME : `col-${c + 1}`,
-    district: districts[i % districts.length],
-    summary:
-      'A short summary of the problem faced and the approach that worked, written for officers who may face the same.',
-    tags,
-    status,
-    kind,
-    attachments: [],
-    createdAt: at(-i * 5),
-    sections: [
-      { heading: 'The problem', body: 'Describe what was not working and who it affected.' },
-      { heading: 'What we tried', body: 'The steps taken, in order, with who did what.' },
-      { heading: 'What changed', body: 'Results after three months, with simple numbers.' },
-    ],
-    ...extra,
-  });
-  const articles: Db['articles'] = [
-    art(1, 'Clearing a backlog of 3,000 mutation files in 90 days', 'article', 'published', 11, [
-      'land revenue',
-      'backlog',
-    ]),
-    art(2, 'A simple dashboard for monitoring school attendance', 'article', 'published', 12, [
-      'education',
-      'data',
-    ]),
-    art(
-      3,
-      'Running a cyclone shelter drill that people actually attend',
-      'article',
-      'published',
-      13,
-      ['disaster', 'community'],
-    ),
-    art(4, 'Restoring a village tank with local donations', 'article', 'published', 14, [
-      'water',
-      'community',
-    ]),
-    art(5, 'How we cut hospital stock-outs by half', 'article', 'published', -1, [
-      'health',
-      'supply',
-    ]),
-    art(6, 'Making the grievance day work in a large taluk', 'article', 'published', 15, [
-      'grievance',
-      'administration',
-    ]),
-    art(7, 'Handover note: Joint Collector, Madurai', 'handover-note', 'published', 16, [
-      'handover',
-      'revenue',
-    ]),
-    art(8, 'Handover note: draft for my next posting', 'handover-note', 'draft', -1, ['handover']),
-  ];
-
-  const tasks: T.DeskTask[] = [
-    {
-      id: 'tk1',
-      text: 'Review the flood preparedness plan',
-      done: false,
-      due: dateOnly(3),
-      createdAt: at(-4),
-    },
-    {
-      id: 'tk2',
-      text: 'Send comments on the draft circular',
-      done: false,
-      due: dateOnly(6),
-      createdAt: at(-3),
-    },
-    {
-      id: 'tk3',
-      text: 'Plan the block office visits for next month',
-      done: false,
-      createdAt: at(-2),
-    },
-    { id: 'tk4', text: 'Update the handover note', done: true, createdAt: at(-9) },
-  ];
-  const notes: T.DeskNote[] = [
-    { id: 'nt1', text: 'Ask the finance team about the grant release date.', createdAt: at(-5) },
-    {
-      id: 'nt2',
-      text: 'Ideas for the monthly review: show one number per block.',
-      createdAt: at(-3),
-    },
-    { id: 'nt3', text: 'Call the water foundation about the tank audit.', createdAt: at(-1) },
-  ];
-  const saved: T.SavedItem[] = [
-    { id: 'sv1', kind: 'person', refId: 'col-3' },
-    { id: 'sv2', kind: 'article', refId: 'art-1' },
-    { id: 'sv3', kind: 'idea', refId: 'idea-2' },
-    { id: 'sv4', kind: 'library', refId: lib.find((l) => l.kind === 'circular')!.id },
-    { id: 'sv5', kind: 'library', refId: lib.find((l) => l.kind === 'form')!.id },
-  ];
-  colleagues[2].savedByMe = true;
-
   void rand;
   return {
     officer,
     career,
     leaveBalance,
     leaves,
-    trainings,
-    travels,
-    properties,
-    benefits,
+    ltcs,
+    medicals,
+    gpfs,
+    pendingChanges,
     documents,
     requests,
     notifications,
     ideas,
     comments,
     posts,
-    articles,
     colleagues,
     departments: depts,
     experts,
@@ -1858,14 +1546,6 @@ export function buildSeed(now = new Date()): Db {
     resources,
     awards,
     library: lib,
-    tasks,
-    notes,
-    saved,
-    settings: {
-      sharePhone: false,
-      shareEmail: false,
-      notify: { requests: true, replies: true, circulars: true, trainings: false },
-    },
     pollVotes: {},
     seq: 1000,
   };

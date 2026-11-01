@@ -21,7 +21,7 @@ export function App() {
         {REDIRECTS.map((r) => (
           <Route key={r.from} path={r.from} element={<Navigate to={r.to} replace />} />
         ))}
-        {ROUTES.filter((r) => features.pages[PAGE_FLAGS[r.id]] !== false).map((r) => {
+        {ROUTES.filter((r) => features.community.pages[PAGE_FLAGS[r.id]] !== false).map((r) => {
           const Page = PAGES[r.id];
           const el = Page ? <Page /> : <RoutePlaceholder route={r} />;
           return (

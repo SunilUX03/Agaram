@@ -79,7 +79,7 @@ export default function IdeaPage() {
         })}
         main={<BackButton idea={i} />}
         breadcrumb={[
-          { label: t('routes.community_ideas.headline'), to: '/community/ideas' },
+          { label: t('routes.community_proposals.headline'), to: '/community/proposals' },
           { label: i.title },
         ]}
       />
@@ -197,8 +197,8 @@ export default function IdeaPage() {
           />
         </Dialog>
       )}
-      <Link to="/community/ideas" className="sr-only">
-        {t('routes.community_ideas.headline')}
+      <Link to="/community/proposals" className="sr-only">
+        {t('routes.community_proposals.headline')}
       </Link>
     </>
   );

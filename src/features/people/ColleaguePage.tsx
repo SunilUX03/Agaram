@@ -6,15 +6,13 @@ import { Icon } from '@/components/Icon';
 import { KeyValueList } from '@/components/KeyValueList';
 import { PageHeader } from '@/components/PageHeader';
 import { Skeleton } from '@/components/Skeleton';
-import { ToggleButton } from '@/components/ToggleButton';
 import { NotFound } from '@/app/NotFound';
-import { useMut, useQ } from '@/data/hooks';
+import { useQ } from '@/data/hooks';
 
 export default function ColleaguePage() {
   const { id = '' } = useParams();
   const { t } = useTranslation('people');
   const q = useQ('colleague', id);
-  const save = useMut('toggleSaved');
   if (q.isPending) return <Skeleton variant="card" count={2} />;
   if (q.isError)
     return q.error.message === 'not-found' ? (
@@ -23,7 +21,6 @@ export default function ColleaguePage() {
       <ErrorState onRetry={() => void q.refetch()} />
     );
   const c = q.data;
-  const shared = c.sharedContact;
   return (
     <>
       <PageHeader
@@ -32,18 +29,9 @@ export default function ColleaguePage() {
           designation: c.designation,
           posting: `${c.district}, ${c.department}`,
         })}
-        main={
-          <ToggleButton
-            label={t('profile.save')}
-            onLabel={t('profile.saved')}
-            icon="bookmark"
-            pressed={c.savedByMe}
-            onChange={(on) => save.mutateAsync(['person', c.id, on])}
-          />
-        }
         image={<Avatar name={c.name} photoUrl={c.photoUrl} size={96} />}
         breadcrumb={[
-          { label: t('routes.people_colleagues.headline'), to: '/people/colleagues' },
+          { label: t('routes.community_colleagues.headline'), to: '/community/colleagues' },
           { label: c.name },
         ]}
       />
@@ -64,34 +52,14 @@ export default function ColleaguePage() {
           aria-labelledby="contact-h"
         >
           <h2 id="contact-h" className="ux4g-heading-xs-strong">
-            {t('profile.contact')}
+            {t('profile.officialEmail')}
           </h2>
-          {shared?.phone || shared?.email ? (
-            <ul className="plain-list">
-              {shared.phone && (
-                <li>
-                  <a
-                    className="ux4g-text-link-m ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s"
-                    href={`tel:${shared.phone.replace(/\s/g, '')}`}
-                  >
-                    <Icon name="user" size={16} /> {shared.phone}
-                  </a>
-                </li>
-              )}
-              {shared.email && (
-                <li>
-                  <a
-                    className="ux4g-text-link-m ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s"
-                    href={`mailto:${shared.email}`}
-                  >
-                    <Icon name="requests" size={16} /> {shared.email}
-                  </a>
-                </li>
-              )}
-            </ul>
-          ) : (
-            <p className="ux4g-text-neutral-secondary">{t('profile.none')}</p>
-          )}
+          <a
+            className="ux4g-text-link-m ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s"
+            href={`mailto:${c.officialEmail}`}
+          >
+            <Icon name="requests" size={16} /> {c.officialEmail}
+          </a>
         </section>
       </div>
     </>

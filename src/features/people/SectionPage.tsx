@@ -29,16 +29,19 @@ export default function SectionPage() {
         main={
           post.officerId ? (
             <Link
-              to={`/people/colleagues/${post.officerId}`}
+              to={`/community/colleagues/${post.officerId}`}
               className="ux4g-btn-primary ux4g-btn-m"
             >
-              {t('routes.people_section.main')}
+              {t('routes.community_subject.main')}
             </Link>
           ) : undefined
         }
         breadcrumb={[
-          { label: t('routes.people_whodoeswhat.headline'), to: '/people/who-does-what' },
-          { label: dep.name, to: `/people/who-does-what?dept=${dep.id}` },
+          {
+            label: t('routes.community_colleagues.headline'),
+            to: '/community/colleagues?tab=subject',
+          },
+          { label: dep.name, to: `/community/colleagues?tab=subject&dept=${dep.id}` },
           { label: post.title },
         ]}
       />

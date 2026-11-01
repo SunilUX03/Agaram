@@ -2,7 +2,7 @@
   "routes": {
     "notifications": {
       "headline": "Notifications",
-      "tagline": "Updates on your requests and posts.",
+      "tagline": "Updates on your requests and on the community.",
       "main": "Mark all as read"
     }
   },
@@ -10,5 +10,12 @@
   "yesterday": "Yesterday",
   "empty": "All caught up. No notifications right now.",
   "list": "Notifications",
-  "unread": "{{count}} unread"
+  "unread": "{{count}} unread",
+  "filters": {
+    "label": "Filter alerts",
+    "all": "All",
+    "requests": "Requests",
+    "community": "Community"
+  },
+  "emptyFilter": "Nothing here yet."
 }

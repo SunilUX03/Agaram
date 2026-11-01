@@ -1,151 +1,15 @@
 {
-  "routes": {
-    "requests": {
-      "headline": "",
-      "tagline": "",
-      "main": ""
-    },
-    "requests_new": {
-      "headline": "",
-      "tagline": "",
-      "main": ""
-    },
-    "requests_form": {
-      "headline": "",
-      "tagline": "",
-      "main": ""
-    },
-    "requests_detail": {
-      "headline": "",
-      "tagline": "",
-      "main": ""
-    }
-  },
-  "next": {
-    "draft": "",
-    "submitted": "",
-    "with-desk": "",
-    "ready-for-approval": "",
-    "returned": "",
-    "approved": "",
-    "rejected": "",
-    "withdrawn": ""
-  },
-  "list": {
-    "tabs": {
-      "all": "",
-      "needs-action": "",
-      "in-review": "",
-      "approved": "",
-      "closed": ""
-    },
-    "type": "",
-    "allTypes": "",
-    "search": "",
-    "sent": "",
-    "updated": "",
-    "empty": "",
-    "emptyBtn": "",
-    "noMatch": "",
-    "draftSaved": ""
-  },
-  "new": {
-    "search": "",
-    "keepReady": "",
-    "haveForm": "",
-    "groups": {
-      "leave-and-travel": "",
-      "money-and-benefits": "",
-      "property": "",
-      "record-and-learning": ""
-    },
-    "dlgTitle": "",
-    "dlgType": "",
-    "dlgFile": "",
-    "dlgRemarks": "",
-    "dlgSend": "",
-    "dlgCancel": "",
-    "dlgNeedFile": "",
-    "noResults": ""
-  },
   "form": {
-    "steps": {
-      "about": "",
-      "details": "",
-      "documents": "",
-      "review": ""
-    },
-    "name": "",
-    "officerId": "",
-    "designation": "",
-    "department": "",
-    "aboutHelp": "",
-    "docsNone": "",
-    "docsExpected": "",
-    "docRequired": "",
-    "docOptional": "",
-    "reviewHelp": "",
-    "edit": "",
-    "attachments": "",
-    "none": "",
-    "pastNotice": "",
-    "balanceWarn": "",
-    "saved": "",
-    "sent": "",
-    "detailsSaved": "",
-    "addAnother": "",
-    "remove": "",
+    "select": "",
+    "somethingElse": "",
     "leave": "",
     "leaveBody": "",
     "stay": "",
     "leaveBtn": "",
-    "select": "",
-    "somethingElse": "",
-    "past_blocked": "",
-    "autoApprove": "",
-    "newDocs": "",
-    "name2": "",
-    "designation2": ""
-  },
-  "detail": {
-    "sentOn": "",
-    "currently": "",
-    "ref": "",
-    "returned": "",
-    "rejected": "",
-    "timeline": "",
-    "stages": {
-      "sent": "",
-      "with-desk": "",
-      "decision": "",
-      "order": ""
-    },
-    "pending": "",
-    "summary": "",
-    "attachments": "",
-    "noAttachments": "",
-    "view": "",
-    "download": "",
-    "notes": "",
-    "addNote": "",
-    "noteLabel": "",
-    "notesEmpty": "",
-    "you": "",
-    "desk": "",
-    "withdrawTitle": "",
-    "withdrawBody": "",
-    "withdraw": "",
-    "keep": "",
-    "withdrawn": "",
-    "continue": "",
-    "editSend": "",
-    "downloadOrder": "",
-    "startNew": "",
-    "notFound": "",
-    "roles": {
-      "You": "",
-      "Desk Assistant": "",
-      "Desk Officer": ""
-    }
+    "saveFailed": "",
+    "draftSaved": "",
+    "proof": "",
+    "remove": "",
+    "addAnother": ""
   }
 }

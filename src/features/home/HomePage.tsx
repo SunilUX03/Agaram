@@ -1,249 +1,114 @@
-import { Link } from 'react-router-dom';
+import { useState, type ComponentType, type ReactNode } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Card } from '@/components/Card';
+import { Avatar } from '@/components/Avatar';
 import { EmptyState } from '@/components/EmptyState';
 import { Icon } from '@/components/Icon';
 import { Illustration } from '@/components/Illustration';
 import { KeyValueList } from '@/components/KeyValueList';
-import { ListRow } from '@/components/ListRow';
 import { PageHeader } from '@/components/PageHeader';
-import { QuickActionTile } from '@/components/QuickActionTile';
 import { QueryView } from '@/components/QueryView';
-import { Skeleton } from '@/components/Skeleton';
-import { StatusChip } from '@/components/StatusChip';
-import { Avatar } from '@/components/Avatar';
+import { QuickActionTile } from '@/components/QuickActionTile';
 import { Tag } from '@/components/Tag';
 import { usePageText } from '@/app/usePage';
 import { features } from '@/config/features';
-import { formatDate } from '@/domain/dates';
-import { nextStepKey } from '@/domain/requests';
 import { useQ } from '@/data/hooks';
+import { formatDate } from '@/domain/dates';
+import { NewRequestMenu, RequestRow, SectionHead } from '../records/shared';
+import { NewRequestFab } from '../records/shared';
 
 const QUICK: Record<string, { to: string; icon: string }> = {
-  'apply-leave': { to: '/requests/new/leave', icon: 'calendar' },
-  'start-request': { to: '/requests/new', icon: 'requests' },
-  'share-idea': { to: '/community/ideas/new', icon: 'heart' },
-  'ask-question': { to: '/community/discussions/new?type=discussion&ask=1', icon: 'help' },
-  'find-colleague': { to: '/people/colleagues?focus=search', icon: 'search' },
-  'open-file': { to: '/file', icon: 'file' },
+  'apply-leave': { to: '/records/services/leave/new', icon: 'calendar' },
+  'record-ltc': { to: '/records/services/ltc/new', icon: 'plane' },
+  'new-medical': { to: '/records/services/medical/new', icon: 'medical' },
+  'submit-proposal': { to: '/community/proposals/new', icon: 'heart' },
+  'start-discussion': { to: '/community/discourse/new', icon: 'requests' },
+  'find-colleague': { to: '/community/colleagues', icon: 'search' },
 };
 
 const greetingKey = () => {
   const h = new Date().getHours();
   return h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
 };
-const DAY = 86400000;
 
-export default function HomePage() {
-  const { t, i18n } = useTranslation('home');
-  const p = usePageText('home');
-  const officer = useQ('officer');
-  const first = officer.data?.name.split(' ')[0] ?? '';
-  const headline = t(`greeting.${greetingKey()}`, { name: first });
-  const loc = i18n.language === 'ta' ? 'ta-IN' : 'en-IN';
+const loc = (lang: string) => (lang === 'ta' ? 'ta-IN' : 'en-IN');
 
+function HomeSearch() {
+  const { t } = useTranslation('home');
+  const nav = useNavigate();
+  const [q, setQ] = useState('');
   return (
-    <>
-      <section className="hero">
-        <div>
-          <PageHeaderlessHero headline={headline} tagline={p.tagline} />
-          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
-            {officer.data
-              ? t('today', {
-                  date: formatDate(new Date(), loc),
-                  posting: `${officer.data.currentPosting.designation}, ${officer.data.currentPosting.postingIn}`,
-                })
-              : ' '}
-          </p>
-          <div className="ux4g-d-flex ux4g-flex-wrap gap-s ux4g-mt-m">
-            <Link to="/requests/new" className="ux4g-btn-primary ux4g-btn-m">
-              {p.main}
-            </Link>
-            <Link to="/file" className="ux4g-btn-outline-primary ux4g-btn-m">
-              {t('openFile')}
-            </Link>
-          </div>
-        </div>
-        {features.home.heroImage === 'illustration' && (
-          <div className="art">
-            <Illustration name="people" size={320} />
-          </div>
-        )}
-      </section>
-
-      <WaitingOnYou />
-      <QuickActions />
-      <Glance />
-      <MyRequests />
-      <WhatIsNew />
-      <Link
-        to="/requests/new"
-        className="ux4g-btn-primary ux4g-btn-m ux4g-radius-full fab"
-        aria-label={p.main}
+    <section className="section ux4g-mb-xl" aria-label={t('search.title')}>
+      <form
+        role="search"
+        className="ux4g-d-flex ux4g-flex-wrap gap-s"
+        onSubmit={(e) => {
+          e.preventDefault();
+          nav(`/search?q=${encodeURIComponent(q.trim())}`);
+        }}
       >
-        <Icon name="plus" /> {p.main}
-      </Link>
-    </>
-  );
-}
-
-/** The hero owns the page's one H1 and focus handling, via PageHeader's effects. */
-function PageHeaderlessHero({ headline, tagline }: { headline: string; tagline: string }) {
-  return <PageHeader headline={headline} tagline={tagline} />;
-}
-
-function Section({
-  title,
-  tagline,
-  link,
-  to,
-  children,
-}: {
-  title: string;
-  tagline: string;
-  link?: string;
-  to?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="section" aria-label={title}>
-      <div className="section-head">
-        <div>
-          <h2 className="ux4g-heading-m-strong">{title}</h2>
-          <p>{tagline}</p>
+        <div className="ux4g-search-container ux4g-search-l grow">
+          <label className="sr-only" htmlFor="home-search">
+            {t('search.label')}
+          </label>
+          <input
+            id="home-search"
+            className="ux4g-search-input"
+            type="search"
+            placeholder={t('search.label')}
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
         </div>
-        {link && to && (
-          <Link to={to} className="ux4g-text-link-m">
-            {link}
-          </Link>
-        )}
-      </div>
-      {children}
+        <button type="submit" className="ux4g-btn-primary ux4g-btn-m">
+          {t('search.button')}
+        </button>
+      </form>
     </section>
   );
 }
 
-function WaitingOnYou() {
-  const { t, i18n } = useTranslation('home');
-  const loc = i18n.language === 'ta' ? 'ta-IN' : 'en-IN';
+/** Returned requests and drafts, up to five. Always shows. */
+function Waiting() {
+  const { t } = useTranslation('home');
   const requests = useQ('requests');
-  const tasks = useQ('tasks');
-  const leaves = useQ('leaves');
-  const trainings = useQ('trainingEvents');
-  const q = [requests, tasks, leaves, trainings];
-  const pending = q.some((x) => x.isPending);
-  const failed = q.find((x) => x.isError);
-
-  const rows: {
-    key: string;
-    to: string;
-    title: string;
-    meta: string;
-    chip?: React.ReactNode;
-    icon: string;
-  }[] = [];
-  if (requests.data) {
-    [
-      ...requests.data.filter((r) => r.status === 'returned'),
-      ...requests.data.filter((r) => r.status === 'draft'),
-    ].forEach((r) =>
-      rows.push({
-        key: r.id,
-        to: r.status === 'draft' ? `/requests/new/${r.type}?draft=${r.id}` : `/requests/${r.id}`,
-        title: r.title,
-        meta: t(nextStepKey(r.status), { ns: 'requests' }),
-        chip: <StatusChip status={r.status} />,
-        icon: 'requests',
-      }),
-    );
-  }
-  const soon = (iso: string, days: number) => {
-    const d = new Date(iso).getTime() - Date.now();
-    return d >= -DAY && d <= days * DAY;
-  };
-  tasks.data
-    ?.filter((x) => !x.done && x.due && soon(x.due, 7))
-    .forEach((x) =>
-      rows.push({
-        key: x.id,
-        to: '/desk',
-        title: x.text,
-        meta: t('waiting.taskDue', { date: formatDate(x.due!, loc) }),
-        icon: 'desk',
-      }),
-    );
-  trainings.data
-    ?.filter((x) => !x.past && x.date && soon(x.date, 14))
-    .forEach((x) =>
-      rows.push({
-        key: x.id,
-        to: '/learn/trainings',
-        title: x.title,
-        meta: t('waiting.trainingStarts', { date: formatDate(x.date!, loc) }),
-        icon: 'book',
-      }),
-    );
-  leaves.data
-    ?.filter(
-      (x) =>
-        x.status === 'approved' &&
-        soon(x.from, 14) &&
-        new Date(x.from) >= new Date(Date.now() - DAY),
-    )
-    .forEach((x) =>
-      rows.push({
-        key: x.id,
-        to: '/file/leave?tab=history',
-        title: x.type,
-        meta: t('waiting.leaveStarts', { date: formatDate(x.from, loc) }),
-        icon: 'calendar',
-      }),
-    );
-
   return (
-    <Section
-      title={t('waiting.title')}
-      tagline={t('waiting.tagline')}
-      link={t('waiting.viewAll')}
-      to="/requests?tab=needs-action"
-    >
-      {pending ? (
-        <Skeleton variant="row" count={3} />
-      ) : failed ? (
-        <button
-          type="button"
-          className="ux4g-btn-outline-primary ux4g-btn-m"
-          onClick={() => q.forEach((x) => void x.refetch())}
-        >
-          {t('error.retry', { ns: 'common' })}
-        </button>
-      ) : rows.length === 0 ? (
-        <div className="empty empty-inline">
-          <Illustration name="tick" size={160} />
-          <p>{t('waiting.empty')}</p>
-        </div>
-      ) : (
-        <div className="ux4g-d-flex ux4g-flex-column">
-          {rows.slice(0, 5).map((r) => (
-            <ListRow
-              key={r.key}
-              to={r.to}
-              title={r.title}
-              meta={r.meta}
-              chip={r.chip}
-              icon={<Icon name={r.icon} />}
-            />
-          ))}
-        </div>
-      )}
-    </Section>
+    <section className="section ux4g-mb-xl" aria-labelledby="hm-waiting">
+      <SectionHead
+        id="hm-waiting"
+        title={t('waiting.title')}
+        tagline={t('waiting.tagline')}
+        link={t('waiting.viewAll')}
+        to="/records?tab=action"
+      />
+      <QueryView query={requests} skeleton="row" skeletonCount={3}>
+        {(all) => {
+          const rows = all
+            .filter((r) => r.status === 'returned' || r.status === 'draft')
+            .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+            .slice(0, 5);
+          return rows.length ? (
+            <ul className="plain-list">
+              {rows.map((r) => (
+                <li key={r.id}>
+                  <RequestRow r={r} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <EmptyState message={t('waiting.empty')} icon="check" />
+          );
+        }}
+      </QueryView>
+    </section>
   );
 }
 
-function QuickActions() {
+function Quick() {
   const { t } = useTranslation('home');
   return (
-    <Section title={t('quick.title')} tagline={t('quick.tagline')}>
+    <section className="section ux4g-mb-xl" aria-labelledby="hm-quick">
+      <SectionHead id="hm-quick" title={t('quick.title')} tagline={t('quick.tagline')} />
       <div className="tiles">
         {features.home.quickActions
           .filter((k) => QUICK[k])
@@ -256,25 +121,27 @@ function QuickActions() {
             />
           ))}
       </div>
-    </Section>
+    </section>
   );
 }
 
 function Glance() {
   const { t, i18n } = useTranslation('home');
-  const loc = i18n.language === 'ta' ? 'ta-IN' : 'en-IN';
   const officer = useQ('officer');
   const bal = useQ('leaveBalance');
+  const l = loc(i18n.language);
   return (
-    <Section
-      title={t('glance.title')}
-      tagline={t('glance.tagline')}
-      link={t('glance.link')}
-      to="/file"
-    >
+    <section className="section ux4g-mb-xl" aria-labelledby="hm-glance">
+      <SectionHead
+        id="hm-glance"
+        title={t('glance.title')}
+        tagline={t('glance.tagline')}
+        link={t('glance.link')}
+        to="/records/profile"
+      />
       <QueryView query={officer} skeleton="card" skeletonCount={1}>
         {(o) => (
-          <Card>
+          <div className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
             <div className="glance">
               <Avatar name={o.name} photoUrl={o.photoUrl} size={96} />
               <div className="glance-kv">
@@ -284,7 +151,7 @@ function Glance() {
                       label: t('glance.posting'),
                       value: `${o.currentPosting.designation}, ${o.currentPosting.department}`,
                     },
-                    { label: t('glance.gradePay'), value: `${o.grade}, ${o.payLevel}` },
+                    { label: t('glance.classPay'), value: o.classPayScale },
                     {
                       label: t('glance.balances'),
                       value: bal.data
@@ -297,148 +164,215 @@ function Glance() {
                     },
                     {
                       label: t('glance.lastPromotion'),
-                      value: o.lastPromotionDate ? formatDate(o.lastPromotionDate, loc) : '—',
+                      value: o.lastPromotionDate ? formatDate(o.lastPromotionDate, l) : '—',
                     },
-                    { label: t('glance.retirement'), value: formatDate(o.dateOfRetirement, loc) },
+                    { label: t('glance.retirement'), value: formatDate(o.dateOfRetirement, l) },
                   ]}
                 />
               </div>
             </div>
-          </Card>
+          </div>
         )}
       </QueryView>
-    </Section>
+    </section>
   );
 }
 
 function MyRequests() {
-  const { t, i18n } = useTranslation('home');
-  const loc = i18n.language === 'ta' ? 'ta-IN' : 'en-IN';
+  const { t } = useTranslation('home');
   const q = useQ('requests');
   if (q.isSuccess && q.data.length === 0) return null;
   return (
-    <Section
-      title={t('requests.title')}
-      tagline={t('requests.tagline')}
-      link={t('requests.link')}
-      to="/requests"
-    >
+    <section className="section ux4g-mb-xl" aria-labelledby="hm-requests">
+      <SectionHead
+        id="hm-requests"
+        title={t('requests.title')}
+        tagline={t('requests.tagline')}
+        link={t('requests.link')}
+        to="/records"
+      />
       <QueryView query={q} skeleton="row" skeletonCount={3}>
-        {(rs) => (
-          <div className="ux4g-d-flex ux4g-flex-column">
-            {rs.slice(0, 3).map((r) => (
-              <ListRow
-                key={r.id}
-                to={
-                  r.status === 'draft'
-                    ? `/requests/new/${r.type}?draft=${r.id}`
-                    : `/requests/${r.id}`
-                }
-                title={r.title}
-                meta={
-                  r.submittedAt
-                    ? t('requests.sent', { date: formatDate(r.submittedAt, loc) })
-                    : t('waiting.draftSaved')
-                }
-                chip={<StatusChip status={r.status} />}
-              />
+        {(all) => (
+          <ul className="plain-list">
+            {all.slice(0, 3).map((r) => (
+              <li key={r.id}>
+                <RequestRow r={r} />
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </QueryView>
-    </Section>
+    </section>
   );
 }
 
-function WhatIsNew() {
+function NewInDownloads() {
   const { t, i18n } = useTranslation('home');
-  const loc = i18n.language === 'ta' ? 'ta-IN' : 'en-IN';
   const lib = useQ('library', ['circular', 'go', 'announcement']);
-  const ideas = useQ('ideas');
-  const trainings = useQ('trainingEvents');
-  const all = [lib, ideas, trainings];
-  if (
-    all.every((x) => x.isSuccess) &&
-    !lib.data?.length &&
-    !ideas.data?.length &&
-    !trainings.data?.length
-  )
-    return null;
-  const cols = [
-    {
-      id: 'circulars',
-      title: t('new.circulars'),
-      to: '/library/circulars',
-      rows: (lib.data ?? [])
-        .slice()
-        .sort((a, b) => b.date.localeCompare(a.date))
-        .slice(0, 3)
-        .map((l) => ({
-          k: l.id,
-          title: l.title,
-          meta: formatDate(l.date, loc),
-          to: l.kind === 'announcement' ? '/library/announcements' : '/library/circulars',
-        })),
-    },
-    {
-      id: 'ideas',
-      title: t('new.ideas'),
-      to: '/community/ideas',
-      rows: (ideas.data ?? [])
-        .slice()
-        .sort((a, b) => b.backerCount - a.backerCount)
-        .slice(0, 2)
-        .map((i) => ({
-          k: i.id,
-          title: i.title,
-          meta: t('new.backers', { count: i.backerCount }),
-          to: `/community/ideas/${i.id}`,
-        })),
-    },
-    {
-      id: 'trainings',
-      title: t('new.trainings'),
-      to: '/learn/trainings',
-      rows: (trainings.data ?? [])
-        .filter((x) => !x.past && x.date)
-        .slice(0, 2)
-        .map((x) => ({
-          k: x.id,
-          title: x.title,
-          meta: formatDate(x.date!, loc),
-          to: '/learn/trainings',
-        })),
-    },
-  ];
+  const l = loc(i18n.language);
+  if (lib.isSuccess && lib.data.length === 0) return null;
   return (
-    <Section title={t('new.title')} tagline={t('new.tagline')}>
-      {all.some((x) => x.isPending) ? (
-        <Skeleton variant="card" count={3} />
-      ) : (
-        <div className="cols cols-3 swipe">
-          {cols.map((c) => (
-            <Card key={c.id}>
-              <div className="section-head">
-                <h3 className="ux4g-heading-xs-strong">{c.title}</h3>
-                <Link to={c.to} className="ux4g-text-link-m ux4g-body-s-default">
-                  {t('new.seeAll')}
-                </Link>
-              </div>
-              <div className="ux4g-d-flex ux4g-flex-column">
-                {c.rows.map((r) => (
-                  <Link key={r.k} to={r.to} className="mini-row">
-                    <span className="clamp-2">{r.title}</span>
-                    <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
-                      {r.meta}
+    <section className="section ux4g-mb-xl" aria-labelledby="hm-dl">
+      <SectionHead
+        id="hm-dl"
+        title={t('downloads.title')}
+        link={t('downloads.link')}
+        to="/records/downloads"
+      />
+      <QueryView query={lib} skeleton="row" skeletonCount={3}>
+        {(all) => (
+          <ul className="plain-list">
+            {all
+              .slice()
+              .sort((a, b) => b.date.localeCompare(a.date))
+              .slice(0, 3)
+              .map((x) => (
+                <li key={x.id}>
+                  <Link
+                    className="ux4g-list-item list-row"
+                    to={`/records/downloads?tab=${x.kind === 'announcement' ? 'updates' : x.kind === 'go' ? 'gos' : 'circulars'}`}
+                  >
+                    <span className="ux4g-list-item-row">
+                      <span className="list-row-icon">
+                        <Icon name="file" />
+                      </span>
+                      <span className="ux4g-list-item-start list-row-main">
+                        <span className="ux4g-body-m-strong">{x.title}</span>
+                        <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                          {[x.number, formatDate(x.date, l)].filter(Boolean).join(' · ')}
+                        </span>
+                      </span>
                     </span>
                   </Link>
-                ))}
-              </div>
-            </Card>
-          ))}
-        </div>
-      )}
-    </Section>
+                </li>
+              ))}
+          </ul>
+        )}
+      </QueryView>
+    </section>
   );
 }
-export { EmptyState };
+
+function FromCommunity() {
+  const { t, i18n } = useTranslation('home');
+  const ideas = useQ('ideas');
+  const posts = useQ('posts');
+  const trainings = useQ('trainingEvents');
+  const l = loc(i18n.language);
+  const next = trainings.data?.find((e) => e.kind === 'official' && !e.past);
+  return (
+    <section className="section ux4g-mb-xl" aria-labelledby="hm-comm">
+      <SectionHead
+        id="hm-comm"
+        title={t('community.title')}
+        link={t('community.link')}
+        to="/community"
+      />
+      <div className="tiles-3">
+        <div className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
+          <h3 className="ux4g-heading-xs-strong ux4g-mb-xs">{t('community.proposals')}</h3>
+          <ul className="plain-list">
+            {(ideas.data ?? [])
+              .slice()
+              .sort((a, b) => b.backerCount - a.backerCount)
+              .slice(0, 2)
+              .map((i) => (
+                <li key={i.id} className="task-row ux4g-d-flex ux4g-flex-column">
+                  <Link className="ux4g-body-m-strong" to={`/community/proposals/${i.id}`}>
+                    {i.title}
+                  </Link>
+                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                    {t('community.backers', { count: i.backerCount })}
+                  </span>
+                </li>
+              ))}
+          </ul>
+        </div>
+        <div className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
+          <h3 className="ux4g-heading-xs-strong ux4g-mb-xs">{t('community.discourse')}</h3>
+          <ul className="plain-list">
+            {(posts.data ?? []).slice(0, 2).map((p) => (
+              <li key={p.id} className="task-row ux4g-d-flex ux4g-flex-column">
+                <Link className="ux4g-body-m-strong" to={`/community/discourse/${p.id}`}>
+                  {p.title}
+                </Link>
+                <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                  {t('community.replies', { count: p.replyCount })}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad">
+          <h3 className="ux4g-heading-xs-strong ux4g-mb-xs">{t('community.training')}</h3>
+          {next ? (
+            <Link className="ux4g-body-m-strong" to="/community/capacity-building">
+              {next.title}
+              <span className="ux4g-body-s-default ux4g-text-neutral-secondary ux4g-d-block">
+                {next.date ? formatDate(next.date, l) : ''}
+              </span>
+            </Link>
+          ) : (
+            <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+              {t('community.noTraining')}
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Home is provisional (v2, section 5). The sections come from `features.home.sections`, so a change of order, a hidden
+ *  section or a replacement needs only a config edit. */
+export const HOME_SECTIONS: Record<string, ComponentType> = {
+  search: HomeSearch,
+  waiting: Waiting,
+  quick: Quick,
+  glance: Glance,
+  requests: MyRequests,
+  downloads: NewInDownloads,
+  community: FromCommunity,
+};
+
+export default function HomePage() {
+  const { t, i18n } = useTranslation('home');
+  const p = usePageText('home');
+  const officer = useQ('officer');
+  const first = officer.data?.name.split(' ')[0] ?? '';
+  const headline = t(`greeting.${greetingKey()}`, { name: first });
+  const l = loc(i18n.language);
+  return (
+    <>
+      <section className="hero">
+        <div>
+          <PageHeader headline={headline} tagline={p.tagline} />
+          <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+            {officer.data
+              ? t('today', {
+                  date: formatDate(new Date(), l),
+                  posting: `${officer.data.currentPosting.designation}, ${officer.data.currentPosting.postingIn}`,
+                })
+              : ' '}
+          </p>
+          <div className="ux4g-d-flex ux4g-flex-wrap gap-s ux4g-mt-m">
+            <NewRequestMenu />
+          </div>
+        </div>
+        {features.home.heroImage === 'illustration' && (
+          <div className="art">
+            <Illustration name="people" size={320} />
+          </div>
+        )}
+      </section>
+      {features.home.sections
+        .filter((s) => s.enabled && HOME_SECTIONS[s.key])
+        .map((s) => {
+          const C = HOME_SECTIONS[s.key];
+          return <C key={s.key} />;
+        })}
+      <NewRequestFab />
+    </>
+  );
+}
+export type { ReactNode };

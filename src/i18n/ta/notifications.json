@@ -10,5 +10,12 @@
   "yesterday": "",
   "empty": "",
   "list": "",
-  "unread": ""
+  "unread": "",
+  "filters": {
+    "label": "",
+    "all": "",
+    "requests": "",
+    "community": ""
+  },
+  "emptyFilter": ""
 }

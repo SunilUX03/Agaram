@@ -19,10 +19,10 @@ export function SectionTabs() {
           <li key={l.to} className="tab-li">
             <NavLink
               to={l.to}
-              end
+              end={!!l.end}
               className={({ isActive }) => `ux4g-tab-item${isActive ? ' is-active active' : ''}`}
             >
-              {t(l.label)}
+              {t(l.tab ?? l.label)}
             </NavLink>
           </li>
         ))}

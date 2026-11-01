@@ -15,7 +15,7 @@ export default function DiscussionsPage() {
   const q = useQ('posts');
   return (
     <>
-      <RouteHeader id="community.discussions" main={{ to: '/community/discussions/new' }} />
+      <RouteHeader id="community.discourse" main={{ to: '/community/discourse/new' }} />
       <UrlTabs tabs={tabs} />
       <div id="tabpanel" role="tabpanel" aria-labelledby={`tab-${tab}`}>
         <QueryView
@@ -25,7 +25,7 @@ export default function DiscussionsPage() {
           empty={{
             message: t('discussions.empty'),
             actionLabel: t('discussions.emptyBtn'),
-            to: '/community/discussions/new',
+            to: '/community/discourse/new',
           }}
         >
           {(all) => {

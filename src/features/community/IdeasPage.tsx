@@ -50,7 +50,7 @@ export default function IdeasPage() {
   const clear = (k: string) => clearUrl([k]);
   return (
     <>
-      <RouteHeader id="community.ideas" main={{ to: '/community/ideas/new' }} />
+      <RouteHeader id="community.proposals" main={{ to: '/community/proposals/new' }} />
       <UrlTabs tabs={tabs} />
       <FilterBar
         active={active}
@@ -111,7 +111,7 @@ export default function IdeasPage() {
               return (
                 <div className="empty">
                   <p>{t('ideas.empty')}</p>
-                  <a className="ux4g-btn-primary ux4g-btn-m" href="/community/ideas/new">
+                  <a className="ux4g-btn-primary ux4g-btn-m" href="/community/proposals/new">
                     {t('ideas.emptyBtn')}
                   </a>
                 </div>

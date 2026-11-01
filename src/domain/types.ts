@@ -9,65 +9,62 @@ export interface PersonRef {
   district?: string;
 }
 
+export interface Education {
+  id: string;
+  level: string;
+  degree: string;
+  specialisation: string;
+  institute: string;
+  state: string;
+  country: string;
+  year: number;
+}
 export interface Officer {
   id: string;
+  /** Identity No (locked). */
   officerId: string;
   ifhrmsId: string;
   name: string;
   salutation: string;
   photoUrl?: string;
   service: 'IAS';
+  allotmentYear: number;
   batch: number;
+  cadreAndDomicile: string;
   status: 'serving' | 'retired';
   dateOfBirth: string;
   gender: string;
-  homeState: string;
-  nativeDistrict: string;
   languages: string[];
-  contact: {
-    mobile1: string;
-    mobile2?: string;
-    landline?: string;
-    officialEmail: string;
-    personalEmail?: string;
-  };
+  contact: { mobile1: string; officialEmail: string; personalEmail?: string };
+  /** Residential address (editable). */
   address: { line: string; city: string; pincode: string };
-  qualifications: {
-    id: string;
-    level: string;
-    degree: string;
-    specialisation: string;
-    institute: string;
-    state: string;
-    country: string;
-    year: number;
-  }[];
+  qualifications: Education[];
   dateOfJoining: string;
   dateOfRetirement: string;
   recruitmentType: string;
   grade: string;
-  payLevel: string;
+  /** ONE field: the level of the pay scale, for example "Level 14". */
+  classPayScale: string;
   seniorityNumber: string;
   currentPosting: {
     postingIn: string;
     department: string;
     designation: string;
-    officeAddress: string;
-    phone?: string;
-    fax?: string;
-    postType: 'Temporary' | 'Permanent' | 'Ex-cadre';
+    postType: 'Temporary' | 'Permanent';
     locationChange: 'In situ' | 'Within state' | 'Outside state';
     since: string;
   };
+  officeContact: { address: string; phone: string; fax: string; mobile: string };
   lastPromotionDate?: string;
   areaOfExposure?: string;
-  sensitive: { class: string; religion: string; caste?: string };
-  fieldMeta: Record<string, Provenance>;
+  /** Visible only to the signed-in officer. */
+  religion: string;
+  caste?: string;
 }
 
 export interface CareerEntry {
   id: string;
-  kind: 'posting' | 'transfer' | 'promotion';
+  kind: 'posting' | 'promotion';
   fromDate: string;
   toDate?: string;
   designation: string;
@@ -75,10 +72,16 @@ export interface CareerEntry {
   postingIn?: string;
   postType?: string;
   locationChange?: string;
+  officeAddress?: string;
   fromGrade?: string;
   toGrade?: string;
+  orderNumber?: string;
+  orderDate?: string;
   orderId?: string;
+  addedByOfficer: boolean;
 }
+export type Source = 'portal' | 'paper';
+export type Mode = 'apply' | 'past' | 'record';
 export type LeaveKey = 'cl' | 'rh' | 'el' | 'hpl';
 export type LeaveBalance = Record<LeaveKey, { allowed: number; used: number }>;
 export interface LeaveRecord {
@@ -88,47 +91,45 @@ export interface LeaveRecord {
   to: string;
   days: number;
   status: RequestStatus;
+  source: Source;
   orderId?: string;
   requestId?: string;
 }
-export interface TrainingRecord {
+export interface LtcRecord {
   id: string;
-  type: string;
+  blockYear: string;
   from: string;
   to: string;
-  institute: string;
-  country?: string;
-  orderId?: string;
-}
-export interface TravelRecord {
-  id: string;
-  kind: 'foreign' | 'tour' | 'private';
-  place: string;
-  from: string;
-  to: string;
-  purpose?: string;
+  placeFrom: string;
+  placeTo: string;
+  who: 'Self' | 'Family';
+  leaveAvailed: string;
   status: RequestStatus;
-  orderId?: string;
-  politicalClearance?: boolean;
-  fcraClearance?: boolean;
+  source: Source;
+  requestId?: string;
 }
-export interface PropertyRecord {
+export interface MedicalClaim {
   id: string;
-  kind: 'immovable' | 'movable' | 'intimation';
-  type: string;
-  details: string;
-  funding: string;
-  cost: number;
-  shownInReturn: boolean;
-  selfOrFamily: string;
-}
-export interface BenefitRecord {
-  id: string;
-  kind: 'ltc' | 'medical' | 'hba' | 'gpf' | 'mha-id' | 'saf' | 'education';
-  summary: string;
-  amount?: number;
   date: string;
+  forWhom: 'Self' | 'Family';
+  hospital: string;
+  treatment: string;
+  cost: number;
   status: RequestStatus;
+  /** Set by the department. Read-only for the officer. */
+  concurrence: 'Pending' | 'Received' | 'Not received';
+  source: Source;
+  requestId?: string;
+}
+export interface GpfWithdrawal {
+  id: string;
+  date: string;
+  type: string;
+  purpose: string;
+  amount: number;
+  status: RequestStatus;
+  source: Source;
+  requestId?: string;
 }
 export interface DocumentItem {
   id: string;
@@ -151,30 +152,30 @@ export interface TimelineEntry {
   role?: string;
   note?: string;
 }
-export interface Note {
-  id: string;
-  from: 'officer' | 'desk';
-  text: string;
-  createdAt: string;
-}
 export interface Request {
   id: string;
   ref: string;
   type: string;
   title: string;
   status: RequestStatus;
-  holder: 'officer' | 'desk' | 'desk-officer' | 'none';
+  mode?: Mode;
+  source: Source;
   values: Record<string, unknown>;
   attachments: Attachment[];
   timeline: TimelineEntry[];
-  notes: Note[];
   returnReason?: string;
   rejectReason?: string;
-  orderId?: string;
   createdAt: string;
   submittedAt?: string;
   updatedAt: string;
-  lastStep?: number;
+}
+/** A change waiting for approval, shown as "Change pending" on the page it belongs to. */
+export interface PendingChange {
+  requestId: string;
+  targetKind: 'profile' | 'career';
+  /** A profile field key, or a career entry id. */
+  targetKey: string;
+  proposedValue: string;
 }
 
 export type IdeaType =
@@ -238,24 +239,6 @@ export interface Post {
     myVote?: string;
   };
 }
-export interface Article {
-  id: string;
-  title: string;
-  authorRole: string;
-  author: PersonRef;
-  district?: string;
-  summary: string;
-  tags: string[];
-  sections: { heading: string; body: string }[];
-  attachments: Attachment[];
-  leadImageUrl?: string;
-  status: 'draft' | 'published';
-  kind: 'article' | 'handover-note';
-  savedByMe: boolean;
-  mine: boolean;
-  createdAt: string;
-}
-
 export interface Colleague {
   id: string;
   name: string;
@@ -267,10 +250,7 @@ export interface Colleague {
   areaOfExposure?: string;
   statusNote?: 'On leave' | 'On training';
   photoUrl?: string;
-  /** Present only when the officer chose to share. */
-  sharedContact?: { phone?: string; email?: string };
   officialEmail: string;
-  savedByMe: boolean;
 }
 export interface OrgPost {
   id: string;
@@ -327,7 +307,7 @@ export interface Award {
 }
 export interface LibraryItem {
   id: string;
-  kind: 'rule' | 'circular' | 'go' | 'form' | 'faq' | 'announcement';
+  kind: 'rule' | 'circular' | 'go' | 'form' | 'faq' | 'announcement' | 'special' | 'dro';
   number?: string;
   date: string;
   title: string;
@@ -338,35 +318,14 @@ export interface LibraryItem {
   fileUrl?: string;
   answer?: string;
   pinned?: boolean;
-  savedByMe?: boolean;
 }
 export interface Notification {
   id: string;
   type: 'request' | 'reply' | 'idea-status' | 'circular' | 'training';
+  /** Bell filter: request alerts and community alerts. */
+  category: 'requests' | 'community';
   text: string;
   targetRoute: string;
   createdAt: string;
   read: boolean;
-}
-export interface DeskTask {
-  id: string;
-  text: string;
-  done: boolean;
-  due?: string;
-  createdAt: string;
-}
-export interface DeskNote {
-  id: string;
-  text: string;
-  createdAt: string;
-}
-export interface SavedItem {
-  id: string;
-  kind: 'person' | 'article' | 'idea' | 'library';
-  refId: string;
-}
-export interface Settings {
-  sharePhone: boolean;
-  shareEmail: boolean;
-  notify: Record<'requests' | 'replies' | 'circulars' | 'trainings', boolean>;
 }

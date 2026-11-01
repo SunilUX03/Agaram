@@ -64,17 +64,17 @@ export default function NewPostPage() {
     setDirty(false);
     toast(t('discussions.new.posted'));
     bypass.current = true;
-    nav(`/community/discussions/${p.id}`);
+    nav(`/community/discourse/${p.id}`);
   };
   return (
     <>
       <UnsavedGuard bypass={bypass} dirty={dirty && !create.isPending} />
       <RouteHeader
-        id="community.discussions.new"
+        id="community.discourse.new"
         main={{ onClick: post, disabled: create.isPending }}
         breadcrumb={[
-          { label: t('routes.community_discussions.headline'), to: '/community/discussions' },
-          { label: t('routes.community_discussions_new.headline') },
+          { label: t('routes.community_discourse.headline'), to: '/community/discourse' },
+          { label: t('routes.community_discourse_new.headline') },
         ]}
       />
       <div className="form-narrow">

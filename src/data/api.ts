@@ -1,18 +1,19 @@
 // The repository. Pages reach it only through hooks (see hooks.ts). Every method returns a promise
 // with 300 to 800 ms of delay. To use a real API, write another object with the same shape.
-import { REQUEST_TYPES, getRequestType } from '@/config/requests';
+import { getRequestType, rangeTitle } from '@/config/requests';
 import { DEPARTMENTS } from '@/config/options';
-import { formatDMY } from '@/domain/dates';
+import { features } from '@/config/features';
+import { formatDMY, parseDMY } from '@/domain/dates';
 import {
   balanceKey,
   canMove,
   canWithdraw,
   dayCount,
   generateTitle,
+  sourceOf,
   type Booked,
   type Values,
 } from '@/domain/requests';
-import type { RequestStatus } from '@/domain/status';
 import type * as T from '@/domain/types';
 import { ME, SAMPLE_PDF, type Db } from './seed';
 import { demo, getDb, nextId, resetDb, save } from './store';
@@ -39,12 +40,14 @@ const dmyToIso = (s: string) => {
   const [d, m, y] = s.split('/').map(Number);
   return new Date(Date.UTC(y, m - 1, d)).toISOString().slice(0, 10);
 };
+const isoToDmy = (iso: string) => formatDMY(new Date(iso));
+const dayBefore = (iso: string) =>
+  new Date(new Date(iso).getTime() - 86400000).toISOString().slice(0, 10);
 
-// ---- privacy: what other officers may see (brief, section 9) ----
-const publicColleague = (c: T.Colleague, db: Db): T.Colleague => ({
-  ...c,
-  savedByMe: db.saved.some((s) => s.kind === 'person' && s.refId === c.id),
-});
+// ---- privacy: what other officers may see ----
+// Colleague records carry service, batch, district, department, area of exposure and the official email only.
+// Religion and caste exist only on the signed-in officer's own record and never leave the officer() call.
+const publicColleague = (c: T.Colleague): T.Colleague => ({ ...c });
 
 const mapPost = (p: Db['posts'][number], db: Db): T.Post => {
   const mine = p.authorId === ME;
@@ -78,20 +81,12 @@ const mapIdea = (i: Db['ideas'][number], db: Db): T.Idea => ({
   mine: i.authorId === ME,
   commentCount: db.comments.filter((c) => c.parentId === i.id).length,
 });
-const mapArticle = (a: Db['articles'][number], db: Db): T.Article => ({
-  ...a,
-  mine: a.authorId === ME,
-  savedByMe: db.saved.some((s) => s.kind === 'article' && s.refId === a.id),
-});
-const mapLib = (l: T.LibraryItem, db: Db): T.LibraryItem => ({
-  ...l,
-  savedByMe: db.saved.some((s) => s.kind === 'library' && s.refId === l.id),
-});
 
 function notify(db: Db, type: T.Notification['type'], text: string, route: string) {
   db.notifications.unshift({
     id: nextId('n'),
     type,
+    category: type === 'request' ? 'requests' : 'community',
     text,
     targetRoute: route,
     createdAt: now(),
@@ -106,28 +101,150 @@ function addTimeline(r: T.Request, title: string, role?: string, note?: string) 
 
 export interface NewRequest {
   type: string;
+  mode?: T.Mode;
   values: Values;
   attachments: T.Attachment[];
   draft?: boolean;
-  lastStep?: number;
   existingId?: string;
 }
 
-/** Applies an approved request to the officer's records. */
+// ---- locked fields are enforced here, not only in the interface (v2, section 7) ----
+const lockedKeys = () => features.profile.fieldAccess.locked;
+const editableKeys = () => features.profile.fieldAccess.editable;
+export const isLockedField = (key: string) => lockedKeys().includes(key);
+
+/** Short text for "You asked for: ...". */
+function describeChange(key: string, v: unknown): string {
+  if (key === 'residentialAddress') {
+    const a = v as T.Officer['address'];
+    return `${a.line}, ${a.city} ${a.pincode}`;
+  }
+  if (key === 'education') return `${(v as unknown[]).length} education entries`;
+  if (key === 'officeContact') {
+    const o = v as T.Officer['officeContact'];
+    return [o.address, o.phone, o.fax, o.mobile].filter(Boolean).join(', ');
+  }
+  if (key === 'photo') return 'A new photo';
+  return String(v);
+}
+
+/** The pending change a request creates on the record, one per field or entry. */
+function pendingFor(r: T.Request): T.PendingChange[] {
+  const v = r.values as Values;
+  if (r.type === 'profile-edit')
+    return Object.entries((v.changes ?? {}) as Record<string, unknown>).map(([k, val]) => ({
+      requestId: r.id,
+      targetKind: 'profile' as const,
+      targetKey: k,
+      proposedValue: describeChange(k, val),
+    }));
+  if ((r.type === 'posting' || r.type === 'promotion') && v.entryId)
+    return [
+      {
+        requestId: r.id,
+        targetKind: 'career',
+        targetKey: String(v.entryId),
+        proposedValue: r.title,
+      },
+    ];
+  if (r.type === 'correction' && v.targetKey)
+    return [
+      {
+        requestId: r.id,
+        targetKind: v.targetKind === 'career' ? 'career' : 'profile',
+        targetKey: String(v.targetKey),
+        proposedValue: String(v.shouldSay ?? ''),
+      },
+    ];
+  return [];
+}
+const clearPending = (db: Db, requestId: string) => {
+  db.pendingChanges = db.pendingChanges.filter((p) => p.requestId !== requestId);
+};
+
+const setPath = (o: Record<string, any>, path: string, val: unknown) => {
+  // eslint-disable-line @typescript-eslint/no-explicit-any
+  const parts = path.split('.');
+  const last = parts.pop()!;
+  const target = parts.reduce((acc, k) => acc[k], o);
+  target[last] = val;
+};
+
+/** Writes an approved profile change. */
+function writeProfile(db: Db, key: string, val: unknown) {
+  const o = db.officer;
+  switch (key) {
+    case 'languagesKnown':
+      o.languages = String(val)
+        .split(',')
+        .map((x) => x.trim())
+        .filter(Boolean);
+      break;
+    case 'personalEmail':
+      o.contact.personalEmail = String(val);
+      break;
+    case 'residentialAddress':
+      o.address = clone(val as T.Officer['address']);
+      break;
+    case 'education':
+      o.qualifications = (val as Omit<T.Education, 'id'>[]).map((q, i) => ({
+        ...q,
+        id: (q as T.Education).id ?? `q${i + 1}-${nextId('q')}`,
+      }));
+      break;
+    case 'officeContact':
+      o.officeContact = clone(val as T.Officer['officeContact']);
+      break;
+    case 'photo':
+      o.photoUrl = String(val);
+      break;
+    default: {
+      // Only a correction may write a locked field.
+      const map: Record<string, string> = {
+        name: 'name',
+        identityNo: 'officerId',
+        classPayScale: 'classPayScale',
+        grade: 'grade',
+        mobile1: 'contact.mobile1',
+        officialEmail: 'contact.officialEmail',
+        religion: 'religion',
+        caste: 'caste',
+        gender: 'gender',
+        batch: 'batch',
+        seniorityNumber: 'seniorityNumber',
+        ifhrmsId: 'ifhrmsId',
+        recruitmentType: 'recruitmentType',
+      };
+      if (map[key]) setPath(o as unknown as Record<string, any>, map[key], val); // eslint-disable-line @typescript-eslint/no-explicit-any
+    }
+  }
+}
+
+const recomputeCurrent = (db: Db) => {
+  const cur = db.career
+    .filter((c) => c.kind === 'posting' && !c.toDate)
+    .sort((a, b) => b.fromDate.localeCompare(a.fromDate))[0];
+  if (cur)
+    Object.assign(db.officer.currentPosting, {
+      postingIn: cur.postingIn ?? db.officer.currentPosting.postingIn,
+      department: cur.department,
+      designation: cur.designation,
+      postType: (cur.postType as 'Temporary' | 'Permanent') ?? db.officer.currentPosting.postType,
+      locationChange:
+        (cur.locationChange as T.Officer['currentPosting']['locationChange']) ??
+        db.officer.currentPosting.locationChange,
+      since: cur.fromDate,
+    });
+  const promos = db.career.filter((c) => c.kind === 'promotion').map((c) => c.fromDate);
+  if (promos.length) db.officer.lastPromotionDate = promos.sort().at(-1);
+};
+
+/** Applies an approved request to the officer's record (v2, section 6). */
 function applyApproval(db: Db, r: T.Request) {
-  const order: T.DocumentItem = {
-    id: nextId('d'),
-    title: `Order: ${r.title}`,
-    kind: 'Order',
-    orderNumber: `G.O. (Ms) No. ${100 + db.documents.length}`,
-    date: now().slice(0, 10),
-    linkedTo: { kind: 'request', id: r.id, label: 'Request', to: `/requests/${r.id}` },
-    fileUrl: SAMPLE_PDF,
-  };
-  db.documents.unshift(order);
-  r.orderId = order.id;
   const v = r.values as Values;
   const range = v.dates as { from: string; to: string } | undefined;
+  const source = r.source;
+  const common = { status: 'approved' as const, source, requestId: r.id };
   if (r.type === 'leave' && range) {
     const days = dayCount(range);
     db.leaves.unshift({
@@ -136,58 +253,108 @@ function applyApproval(db: Db, r: T.Request) {
       from: dmyToIso(range.from),
       to: dmyToIso(range.to),
       days,
-      status: 'approved',
-      orderId: order.id,
-      requestId: r.id,
+      ...common,
     });
     const k = balanceKey(v.type);
     if (k) db.leaveBalance[k].used += days;
-  } else if (r.type === 'training-request') {
-    /* a request is not a completed course: nothing is added */
-  } else if (
-    (r.type === 'foreign-visit' || r.type === 'tour' || r.type === 'private-visit') &&
-    range
-  ) {
-    db.travels.unshift({
-      id: nextId('v'),
-      kind: r.type === 'foreign-visit' ? 'foreign' : r.type === 'tour' ? 'tour' : 'private',
-      place: v.country ?? v.district,
+  } else if (r.type === 'ltc' && range) {
+    db.ltcs.unshift({
+      id: nextId('ltc'),
+      blockYear: v.blockYear,
       from: dmyToIso(range.from),
       to: dmyToIso(range.to),
-      purpose: v.purpose,
-      status: 'approved',
-      orderId: order.id,
-      politicalClearance: r.type === 'foreign-visit',
-      fcraClearance: r.type === 'foreign-visit',
+      placeFrom: v.placeFrom,
+      placeTo: v.placeTo,
+      who: v.who,
+      leaveAvailed: v.leaveAvailed,
+      ...common,
     });
-  } else if (['ltc', 'medical', 'hba', 'gpf', 'mha-id', 'saf', 'education'].includes(r.type)) {
-    db.benefits.unshift({
-      id: nextId('b'),
-      kind: r.type as T.BenefitRecord['kind'],
-      summary: r.title,
-      amount:
-        Number(String(v.cost ?? v.amount ?? v.amountRequested ?? '').replace(/,/g, '')) ||
-        undefined,
-      date: now().slice(0, 10),
-      status: 'approved',
-    });
-  } else if (['immovable', 'movable', 'intimation'].includes(r.type)) {
-    db.properties.unshift({
-      id: nextId('p'),
-      kind: r.type as T.PropertyRecord['kind'],
-      type: v.type,
-      details: v.details,
-      funding: v.source,
+  } else if (r.type === 'medical') {
+    db.medicals.unshift({
+      id: nextId('med'),
+      date: dmyToIso(v.applicationDate),
+      forWhom: v.who,
+      hospital: v.hospital,
+      treatment: v.treatment,
       cost: Number(String(v.cost ?? '').replace(/,/g, '')) || 0,
-      shownInReturn: v.shownInIpr === 'Yes',
-      selfOrFamily: v.selfOrFamily,
+      concurrence: 'Pending',
+      ...common,
     });
+  } else if (r.type === 'gpf') {
+    db.gpfs.unshift({
+      id: nextId('gpf'),
+      date: dmyToIso(v.date),
+      type: v.type,
+      purpose: v.purpose,
+      amount: Number(String(v.amount ?? '').replace(/,/g, '')) || 0,
+      ...common,
+    });
+  } else if (r.type === 'posting') {
+    const from = dmyToIso(v.fromDate);
+    const to = v.toDate ? dmyToIso(v.toDate) : undefined;
+    const entry: T.CareerEntry = {
+      id: v.entryId ?? nextId('c'),
+      kind: 'posting',
+      fromDate: from,
+      toDate: to,
+      designation: v.designation,
+      department: v.department,
+      postingIn: v.postingIn,
+      postType: v.postType,
+      locationChange: v.locationChange,
+      officeAddress: v.officeAddress,
+      orderNumber: v.orderNumber,
+      orderDate: v.orderDate ? dmyToIso(v.orderDate) : undefined,
+      addedByOfficer: true,
+    };
+    const i = db.career.findIndex((c) => c.id === entry.id);
+    if (i >= 0)
+      db.career[i] = { ...db.career[i], ...entry, addedByOfficer: db.career[i].addedByOfficer };
+    else db.career.unshift(entry);
+    if (!to) {
+      // Only one posting can be current: end the previous one the day before.
+      db.career
+        .filter((c) => c.kind === 'posting' && !c.toDate && c.id !== entry.id)
+        .forEach((c) => (c.toDate = dayBefore(from)));
+      if (v.officeAddress) db.officer.officeContact.address = v.officeAddress;
+    }
+    db.career.sort((a, b) => b.fromDate.localeCompare(a.fromDate));
+    recomputeCurrent(db);
+  } else if (r.type === 'promotion') {
+    const entry: T.CareerEntry = {
+      id: v.entryId ?? nextId('c'),
+      kind: 'promotion',
+      fromDate: dmyToIso(v.promotionDate),
+      designation: db.officer.currentPosting.designation,
+      department: db.officer.currentPosting.department,
+      fromGrade: v.fromGrade,
+      toGrade: v.toGrade,
+      orderNumber: v.orderNumber,
+      orderDate: v.orderDate ? dmyToIso(v.orderDate) : undefined,
+      addedByOfficer: true,
+    };
+    const i = db.career.findIndex((c) => c.id === entry.id);
+    if (i >= 0)
+      db.career[i] = { ...db.career[i], ...entry, addedByOfficer: db.career[i].addedByOfficer };
+    else db.career.unshift(entry);
+    db.career.sort((a, b) => b.fromDate.localeCompare(a.fromDate));
+    db.officer.grade = v.toGrade;
+    recomputeCurrent(db);
+  } else if (r.type === 'profile-edit') {
+    for (const [k, val] of Object.entries((v.changes ?? {}) as Record<string, unknown>))
+      writeProfile(db, k, val);
+  } else if (r.type === 'correction') {
+    if (v.targetKey && v.shouldSay) {
+      if (v.targetKind === 'career') {
+        const c = db.career.find((x) => x.id === v.targetKey);
+        if (c) c.designation = String(v.shouldSay);
+      } else writeProfile(db, String(v.targetKey), v.shouldSay);
+    }
   }
 }
 
 const NOTE: Record<string, (t: string, reason?: string) => string> = {
-  'with-desk': (t) => `Your ${t} is now with the desk.`,
-  'ready-for-approval': (t) => `Your ${t} is ready for approval.`,
+  submitted: (t) => `Your ${t} was sent for approval.`,
   returned: (t, r) => `Your ${t} was returned. Reason: ${r}`,
   approved: (t) => `Your ${t} was approved.`,
   rejected: (t, r) => `Your ${t} was not approved. Reason: ${r}`,
@@ -195,28 +362,37 @@ const NOTE: Record<string, (t: string, reason?: string) => string> = {
 };
 
 export const api = {
-  // ---- officer and file ----
+  // ---- officer and records ----
   officer: () => run((db) => clone(db.officer)),
   career: () => run((db) => clone(db.career), { list: true }),
   leaveBalance: () => run((db) => clone(db.leaveBalance)),
   leaves: () => run((db) => clone(db.leaves), { list: true }),
-  trainings: () => run((db) => clone(db.trainings), { list: true }),
-  travels: () => run((db) => clone(db.travels), { list: true }),
-  properties: () => run((db) => clone(db.properties), { list: true }),
-  benefits: () => run((db) => clone(db.benefits), { list: true }),
+  ltcs: () => run((db) => clone(db.ltcs), { list: true }),
+  medicals: () => run((db) => clone(db.medicals), { list: true }),
+  gpfs: () => run((db) => clone(db.gpfs), { list: true }),
   documents: () => run((db) => clone(db.documents), { list: true }),
+  pendingChanges: () => run((db) => clone(db.pendingChanges)),
+  /** Approved and pending leave, for the overlap check. */
   booked: () =>
     run((db): Booked[] => [
       ...db.requests
         .filter(
           (r) =>
-            ['submitted', 'with-desk', 'ready-for-approval', 'approved'].includes(r.status) &&
+            r.type === 'leave' &&
+            ['submitted', 'approved'].includes(r.status) &&
             (r.values.dates as { from?: string })?.from,
         )
         .map((r) => ({
           title: r.title,
           from: (r.values.dates as { from: string }).from,
           to: (r.values.dates as { to: string }).to,
+        })),
+      ...db.leaves
+        .filter((l) => l.status === 'approved' && !l.requestId)
+        .map((l) => ({
+          title: `Leave, ${isoToDmy(l.from)}`,
+          from: isoToDmy(l.from),
+          to: isoToDmy(l.to),
         })),
     ]),
 
@@ -234,9 +410,22 @@ export const api = {
   saveRequest: (input: NewRequest) =>
     run(
       (db) => {
-        const type = getRequestType(input.type)!;
+        const type = getRequestType(input.type);
+        if (!type) throw new Error('unknown-type');
         const title = generateTitle(type, input.values);
         let r = input.existingId ? db.requests.find((x) => x.id === input.existingId) : undefined;
+        // Locked fields cannot be written by a profile edit. Report a correction instead.
+        if (input.type === 'profile-edit' && !input.draft) {
+          const keys = Object.keys((input.values.changes ?? {}) as object);
+          const bad = keys.find((k) => isLockedField(k) || !editableKeys().includes(k));
+          if (bad) throw new Error(`locked-field:${bad}`);
+          const busy = keys.find((k) =>
+            db.pendingChanges.some(
+              (p) => p.targetKind === 'profile' && p.targetKey === k && p.requestId !== r?.id,
+            ),
+          );
+          if (busy) throw new Error(`pending:${busy}`);
+        }
         if (!r) {
           const num = 1000 + db.requests.length + 1;
           r = {
@@ -245,11 +434,10 @@ export const api = {
             type: input.type,
             title,
             status: 'draft',
-            holder: 'officer',
+            source: 'portal',
             values: {},
             attachments: [],
             timeline: [],
-            notes: [],
             createdAt: now(),
             updatedAt: now(),
           };
@@ -258,24 +446,20 @@ export const api = {
         r.values = clone(input.values);
         r.attachments = input.attachments;
         r.title = title;
-        r.lastStep = input.lastStep;
+        r.mode = input.mode ?? r.mode;
+        r.source = sourceOf(type, input.values, r.mode);
         if (input.draft) {
           r.updatedAt = now();
           return clone(r);
         }
         const wasReturned = r.status === 'returned';
         r.status = 'submitted';
-        r.holder = 'desk';
         r.submittedAt = now();
         r.returnReason = undefined;
         addTimeline(r, wasReturned ? 'Sent again' : 'Sent', 'You');
-        if (type.autoApprove && ['Contact'].includes(String(input.values.section))) {
-          applyDetailsChange(db, input.values);
-          r.status = 'approved';
-          r.holder = 'none';
-          addTimeline(r, 'Approved', 'Desk Officer');
-          notify(db, 'request', `Your ${r.title} was approved.`, `/requests/${r.id}`);
-        }
+        clearPending(db, r.id);
+        db.pendingChanges.push(...pendingFor(r));
+        notify(db, 'request', NOTE.submitted(r.title), `/records/requests/${r.id}`);
         return clone(r);
       },
       { write: true },
@@ -286,71 +470,75 @@ export const api = {
         const r = db.requests.find((x) => x.id === id)!;
         if (!canWithdraw(r.status)) throw new Error('locked');
         r.status = 'withdrawn';
-        r.holder = 'none';
         addTimeline(r, 'Withdrawn', 'You');
-        notify(db, 'request', NOTE.withdrawn(r.title), `/requests/${r.id}`);
+        clearPending(db, r.id);
+        notify(db, 'request', NOTE.withdrawn(r.title), `/records/requests/${r.id}`);
         return clone(r);
       },
       { write: true },
     ),
-  addNote: (id: string, text: string) =>
+  deleteDraft: (id: string) =>
     run(
       (db) => {
-        const r = db.requests.find((x) => x.id === id)!;
-        r.notes.push({ id: nextId('n'), from: 'officer', text, createdAt: now() });
-        r.updatedAt = now();
-        return clone(r);
+        const r = db.requests.find((x) => x.id === id);
+        if (r?.status !== 'draft') throw new Error('locked');
+        db.requests = db.requests.filter((x) => x.id !== id);
+        return true;
       },
       { write: true },
     ),
-  /** Demo control: move the request one step along its route. */
-  advanceRequest: (id: string, to?: RequestStatus, reason?: string) =>
+  /** Demo control: the super admin's decision on a submitted request. */
+  decideRequest: (id: string, to: 'approved' | 'returned' | 'rejected', reason?: string) =>
     run(
       (db) => {
         const r = db.requests.find((x) => x.id === id);
         if (!r) throw new Error('not-found');
-        const order: RequestStatus[] = ['submitted', 'with-desk', 'ready-for-approval', 'approved'];
-        const target = to ?? order[order.indexOf(r.status) + 1];
-        if (!target || !canMove(r.status, target)) throw new Error('bad-transition');
-        const why = reason ?? 'Please check the dates and papers, then send again.';
-        r.status = target;
-        r.holder =
-          target === 'with-desk'
-            ? 'desk'
-            : target === 'ready-for-approval'
-              ? 'desk-officer'
-              : target === 'returned'
-                ? 'officer'
-                : 'none';
-        if (target === 'returned') r.returnReason = why;
-        if (target === 'rejected') r.rejectReason = why;
-        const label: Partial<Record<RequestStatus, [string, string]>> = {
-          'with-desk': ['With desk', 'Desk Assistant'],
-          'ready-for-approval': ['Ready for approval', 'Desk Assistant'],
-          approved: ['Approved', 'Desk Officer'],
-          rejected: ['Not approved', 'Desk Officer'],
-          returned: ['Returned', 'Desk Officer'],
-        };
+        if (!canMove(r.status, to)) throw new Error('bad-transition');
+        const why = reason?.trim() || 'Please check the details and papers, then send again.';
+        r.status = to;
+        if (to === 'returned') r.returnReason = why;
+        if (to === 'rejected') r.rejectReason = why;
         addTimeline(
           r,
-          label[target]![0],
-          label[target]![1],
-          target === 'returned' ? why : undefined,
+          to === 'approved' ? 'Approved' : to === 'returned' ? 'Returned' : 'Not approved',
+          'Super admin',
+          to === 'approved' ? undefined : why,
         );
-        if (target === 'approved') {
-          applyApproval(db, r);
-          addTimeline(r, 'Order issued', 'Desk Officer');
-        }
-        notify(db, 'request', NOTE[target](r.title, why), `/requests/${r.id}`);
+        clearPending(db, r.id);
+        if (to === 'approved') applyApproval(db, r);
+        notify(db, 'request', NOTE[to](r.title, why), `/records/requests/${r.id}`);
         return clone(r);
       },
       { write: true },
     ),
-  updateOfficer: (patch: Partial<T.Officer['contact']>) =>
+  /** Demo control: creates a returned leave request so the fix-and-send-again flow can be shown. */
+  createSampleReturned: () =>
     run(
       (db) => {
-        Object.assign(db.officer.contact, patch);
-        return clone(db.officer);
+        const f = new Date();
+        const d = (n: number) =>
+          formatDMY(new Date(Date.UTC(f.getFullYear(), f.getMonth(), f.getDate() + n)));
+        const r: T.Request = {
+          id: nextId('req'),
+          ref: `AGR-${f.getFullYear()}-${1000 + db.requests.length + 1}`,
+          type: 'leave',
+          title: `Leave, ${rangeTitle({ from: d(60), to: d(61) })}`,
+          status: 'returned',
+          mode: 'apply',
+          source: 'portal',
+          values: { type: 'Casual leave', dates: { from: d(60), to: d(61) } },
+          attachments: [],
+          timeline: [],
+          returnReason: 'The dates fall on a holiday. Correct the dates and send again.',
+          createdAt: now(),
+          submittedAt: now(),
+          updatedAt: now(),
+        };
+        addTimeline(r, 'Sent', 'You');
+        addTimeline(r, 'Returned', 'Super admin', r.returnReason);
+        db.requests.unshift(r);
+        notify(db, 'request', NOTE.returned(r.title, r.returnReason), `/records/requests/${r.id}`);
+        return clone(r);
       },
       { write: true },
     ),
@@ -550,56 +738,13 @@ export const api = {
       { write: true },
     ),
   report: (id: string, reason: string) => run(() => !!id && !!reason, { write: true }),
-  articles: () =>
-    run(
-      (db) =>
-        db.articles.map((a) => mapArticle(a, db)).filter((a) => a.status === 'published' || a.mine),
-      { list: true },
-    ),
-  article: (id: string) =>
-    run((db) => {
-      const a = db.articles.find((x) => x.id === id);
-      if (!a) throw new Error('not-found');
-      return mapArticle(a, db);
-    }),
-  createArticle: (v: {
-    kind: T.Article['kind'];
-    title: string;
-    authorRole: string;
-    summary: string;
-    sections: T.Article['sections'];
-    attachments: T.Attachment[];
-    tags: string[];
-    status: 'draft' | 'published';
-  }) =>
-    run(
-      (db) => {
-        const o = db.officer;
-        const a = {
-          id: nextId('art'),
-          ...v,
-          author: {
-            id: ME,
-            name: o.name,
-            designation: o.currentPosting.designation,
-          } as T.PersonRef,
-          authorId: ME,
-          district: o.currentPosting.postingIn,
-          createdAt: now(),
-        };
-        db.articles.unshift(a);
-        return mapArticle(a, db);
-      },
-      { write: true },
-    ),
-
   // ---- people ----
-  colleagues: () => run((db) => db.colleagues.map((c) => publicColleague(c, db)), { list: true }),
+  colleagues: () => run((db) => db.colleagues.map((c) => publicColleague(c)), { list: true }),
   colleague: (id: string) =>
     run((db) => {
       const c = db.colleagues.find((x) => x.id === id);
       if (!c) throw new Error('not-found');
-      return publicColleague(c, db);
+      return publicColleague(c);
     }),
   departments: () => run((db) => clone(db.departments), { list: true }),
   experts: () => run((db) => clone(db.experts), { list: true }),
@@ -644,66 +789,9 @@ export const api = {
       { write: true },
     ),
   awards: () => run((db) => clone(db.awards), { list: true }),
+  // ---- downloads ----
   library: (kind?: T.LibraryItem['kind'][]) =>
-    run(
-      (db) => db.library.filter((l) => !kind || kind.includes(l.kind)).map((l) => mapLib(l, db)),
-      { list: true },
-    ),
-
-  // ---- desk ----
-  tasks: () => run((db) => clone(db.tasks), { list: true }),
-  addTask: (text: string, due?: string) =>
-    run(
-      (db) => {
-        db.tasks.unshift({ id: nextId('tk'), text, done: false, due, createdAt: now() });
-        return true;
-      },
-      { write: true },
-    ),
-  toggleTask: (id: string) =>
-    run(
-      (db) => {
-        const t = db.tasks.find((x) => x.id === id);
-        if (t) t.done = !t.done;
-        return true;
-      },
-      { write: true },
-    ),
-  deleteTask: (id: string) =>
-    run(
-      (db) => {
-        db.tasks = db.tasks.filter((x) => x.id !== id);
-        return true;
-      },
-      { write: true },
-    ),
-  notes: () => run((db) => clone(db.notes), { list: true }),
-  addNote2: (text: string) =>
-    run(
-      (db) => {
-        db.notes.unshift({ id: nextId('nt'), text, createdAt: now() });
-        return true;
-      },
-      { write: true },
-    ),
-  deleteNote: (id: string) =>
-    run(
-      (db) => {
-        db.notes = db.notes.filter((x) => x.id !== id);
-        return true;
-      },
-      { write: true },
-    ),
-  saved: () => run((db) => clone(db.saved), { list: true }),
-  toggleSaved: (kind: T.SavedItem['kind'], refId: string, on: boolean) =>
-    run(
-      (db) => {
-        db.saved = db.saved.filter((s) => !(s.kind === kind && s.refId === refId));
-        if (on) db.saved.push({ id: nextId('sv'), kind, refId });
-        return true;
-      },
-      { write: true },
-    ),
+    run((db) => clone(db.library).filter((l) => !kind || kind.includes(l.kind)), { list: true }),
 
   // ---- search (never returns sensitive fields) ----
   search: (q: string) =>
@@ -713,27 +801,38 @@ export const api = {
       return {
         officers: db.colleagues
           .filter((c) => has(c.name, c.designation, c.district, c.department, c.areaOfExposure))
-          .map((c) => publicColleague(c, db)),
-        ideas: db.ideas.filter((i) => has(i.title, i.description)).map((i) => mapIdea(i, db)),
+          .map(publicColleague),
+        proposals: db.ideas.filter((i) => has(i.title, i.description)).map((i) => mapIdea(i, db)),
         discussions: db.posts.filter((p) => has(p.title, p.body)).map((p) => mapPost(p, db)),
-        articles: db.articles
-          .filter((a) => a.status === 'published' && has(a.title, a.summary, ...a.tags))
-          .map((a) => mapArticle(a, db)),
-        library: db.library
-          .filter((l) => has(l.title, l.number, l.description, l.answer))
-          .map((l) => mapLib(l, db)),
+        library: clone(db.library).filter((l) => has(l.title, l.number, l.description, l.answer)),
         requests: db.requests.filter((r) => has(r.title, r.ref)).map((r) => clone(r)),
       };
     }),
 
-  // ---- settings ----
-  settings: () => run((db) => clone(db.settings)),
-  saveSettings: (v: T.Settings, contact: Partial<T.Officer['contact']>) =>
+  /** Direct post, not an approval request: visible to other officers at once. */
+  createTrainingRequest: (v: {
+    title: string;
+    description?: string;
+    from?: string;
+    to?: string;
+    forWho: 'Myself' | 'My team';
+  }) =>
     run(
       (db) => {
-        db.settings = clone(v);
-        Object.assign(db.officer.contact, contact);
-        return true;
+        const t: T.TrainingEvent = {
+          id: nextId('tr'),
+          kind: 'requested',
+          title: v.title,
+          description: v.description ?? '',
+          date: undefined,
+          time: undefined,
+          links: [],
+          interestCount: 1,
+          interestedByMe: true,
+          past: false,
+        };
+        db.trainingEvents.unshift(t);
+        return clone(t);
       },
       { write: true },
     ),
@@ -743,18 +842,4 @@ export const api = {
       return true;
     }),
 };
-
-function applyDetailsChange(db: Db, v: Values) {
-  const map: Record<string, keyof T.Officer['contact']> = {
-    'Mobile number 1': 'mobile1',
-    'Mobile number 2': 'mobile2',
-    Landline: 'landline',
-    'Personal email': 'personalEmail',
-  };
-  const key = map[String(v.field)];
-  if (key) {
-    db.officer.contact[key] = String(v.newValue);
-    db.officer.fieldMeta[key] = 'self-reported';
-  }
-}
-export { REQUEST_TYPES, DEPARTMENTS, formatDMY };
+export { DEPARTMENTS, formatDMY, parseDMY, SAMPLE_PDF };

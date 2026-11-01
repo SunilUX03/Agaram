@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Tag } from './Tag';
 
 export interface KeyValue {
-  label: string;
+  label: ReactNode;
+  /** Stable key when the label is not plain text. */
+  id?: string;
   value: ReactNode;
   meta?: 'verified' | 'self-reported';
 }
@@ -14,7 +16,7 @@ export function KeyValueList({ items }: { items: KeyValue[] }) {
   return (
     <dl className="ux4g-grid ux4g-grid-cols-1 ux4g-lg-grid-cols-2 gap-m kv">
       {items.map((it) => (
-        <div key={it.label} className="kv-item ux4g-border-neutral-subtle">
+        <div key={it.id ?? String(it.label)} className="kv-item ux4g-border-neutral-subtle">
           <dt className="ux4g-body-s-default ux4g-text-neutral-secondary">{it.label}</dt>
           <dd className="ux4g-body-m-default ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
             {it.value}

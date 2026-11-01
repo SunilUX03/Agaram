@@ -2,8 +2,8 @@
   "routes": {
     "home": {
       "headline": "Good morning",
-      "tagline": "Your service record, requests and colleagues, all in one place.",
-      "main": "Start a request"
+      "tagline": "Your service record and your community, in one place.",
+      "main": "New request"
     }
   },
   "greeting": {
@@ -12,33 +12,33 @@
     "evening": "Good evening, {{name}}"
   },
   "today": "{{date}} · {{posting}}",
+  "search": {
+    "title": "Search",
+    "label": "Search officers, proposals, circulars and your requests",
+    "button": "Search"
+  },
   "waiting": {
     "title": "Waiting on you",
     "tagline": "Things that need your action.",
     "viewAll": "View all",
-    "empty": "All caught up.",
-    "leaveStarts": "Leave starts {{date}}",
-    "trainingStarts": "Training starts {{date}}",
-    "taskDue": "Due {{date}}",
-    "returned": "Returned to you",
-    "draftSaved": "Draft saved"
+    "empty": "All caught up."
   },
   "quick": {
     "title": "What would you like to do?",
     "tagline": "Start here for the most common jobs.",
     "apply-leave": "Apply for leave",
-    "start-request": "Start a request",
-    "share-idea": "Share an idea",
-    "ask-question": "Ask a question",
-    "find-colleague": "Find a colleague",
-    "open-file": "Open my service file"
+    "record-ltc": "Record an LTC trip",
+    "new-medical": "New medical claim",
+    "submit-proposal": "Submit a proposal",
+    "start-discussion": "Start a discussion",
+    "find-colleague": "Find a colleague"
   },
   "glance": {
     "title": "Your service at a glance",
-    "tagline": "Current posting, grade and leave balance.",
-    "link": "Open my service file",
+    "tagline": "Current posting, class and leave balance.",
+    "link": "Open my Profile",
     "posting": "Current posting",
-    "gradePay": "Grade and pay level",
+    "classPay": "Class (Pay Scale)",
     "balances": "Leave balances",
     "lastPromotion": "Last promotion",
     "retirement": "Retirement",
@@ -50,17 +50,20 @@
   "requests": {
     "title": "Your requests",
     "tagline": "Where each request stands.",
-    "link": "See all requests",
-    "sent": "Sent {{date}}"
+    "link": "See all requests"
   },
-  "new": {
-    "title": "What is new",
-    "tagline": "Circulars, ideas and trainings from the last two weeks.",
-    "circulars": "Circulars and announcements",
-    "ideas": "Ideas with the most backers",
-    "trainings": "Upcoming trainings",
-    "seeAll": "See all",
-    "backers": "{{count}} backers"
+  "downloads": {
+    "title": "New in Downloads",
+    "link": "See all"
   },
-  "openFile": "Open my service file"
+  "community": {
+    "title": "From the Community",
+    "link": "Go to Community",
+    "proposals": "Top proposals",
+    "discourse": "Latest in Discourse",
+    "training": "Next training",
+    "backers": "{{count}} backers",
+    "replies": "{{count}} replies",
+    "noTraining": "No training is scheduled."
+  }
 }

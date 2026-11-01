@@ -7,19 +7,27 @@ import { SearchField } from '@/components/SearchField';
 import { useToast } from '@/components/Toast';
 import { TextArea, TextField } from '@/components/form/inputs';
 import { useUrlState } from '@/components/useUrlState';
-import { RouteHeader } from '@/app/usePage';
 import { useMut, useQ } from '@/data/hooks';
 
-export default function ResourcesPage() {
+/** The Resources tab of Capacity Building: shared learning resources and the Share a resource button. */
+export function ResourcesPanel() {
   const { t } = useTranslation('learn');
   const [q, setQ] = useUrlState('q');
   const [dlg, setDlg] = useState(false);
   const query = useQ('resources');
   return (
     <>
-      <RouteHeader id="learn.resources" main={{ onClick: () => setDlg(true) }} />
-      <SearchField label={t('resources.search')} value={q} onChange={setQ} />
-      <div className="ux4g-mt-xl">
+      <div className="ux4g-d-flex ux4g-jc-between ux4g-ai-center gap-m ux4g-mb-m">
+        <SearchField label={t('resources.search')} value={q} onChange={setQ} />
+        <button
+          type="button"
+          className="ux4g-btn-outline-primary ux4g-btn-m"
+          onClick={() => setDlg(true)}
+        >
+          {t('resources.shareBtn')}
+        </button>
+      </div>
+      <div className="ux4g-mt-m">
         <QueryView query={query} skeleton="card" skeletonCount={4}>
           {(all) => {
             const n = q.trim().toLowerCase();

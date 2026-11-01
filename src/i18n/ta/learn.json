@@ -1,16 +1,11 @@
 {
   "routes": {
-    "learn_trainings": {
+    "community_capacity": {
       "headline": "",
       "tagline": "",
       "main": ""
     },
-    "learn_resources": {
-      "headline": "",
-      "tagline": "",
-      "main": ""
-    },
-    "learn_awards": {
+    "community_awards": {
       "headline": "",
       "tagline": "",
       "main": ""
@@ -20,7 +15,8 @@
     "tabs": {
       "upcoming": "",
       "requested": "",
-      "past": ""
+      "past": "",
+      "resources": ""
     },
     "addCal": "",
     "openRes": "",
@@ -30,7 +26,16 @@
     "dateTime": "",
     "empty": "",
     "pastEmpty": "",
-    "links": ""
+    "links": "",
+    "requestSent": "",
+    "requestTitle": "",
+    "requestSend": "",
+    "fTitle": "",
+    "fDesc": "",
+    "fDates": "",
+    "fFor": "",
+    "forMe": "",
+    "forTeam": ""
   },
   "resources": {
     "search": "",
@@ -45,7 +50,8 @@
     "share": "",
     "cancel": "",
     "thanks": "",
-    "badUrl": ""
+    "badUrl": "",
+    "shareBtn": ""
   },
   "awards": {
     "tabs": {

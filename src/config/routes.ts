@@ -1,16 +1,5 @@
 export type Namespace =
-  | 'auth'
-  | 'home'
-  | 'file'
-  | 'requests'
-  | 'community'
-  | 'people'
-  | 'learn'
-  | 'library'
-  | 'desk'
-  | 'notifications'
-  | 'search'
-  | 'account';
+  'auth' | 'home' | 'records' | 'community' | 'people' | 'learn' | 'notifications' | 'search';
 
 export interface RouteDef {
   /** Unique id. Dots become underscores in message keys. */
@@ -20,56 +9,38 @@ export interface RouteDef {
   ns: Namespace;
 }
 
-/** Every page in the brief, section 7. */
+/** Every page in v2, section 2. Anything not listed here does not exist. */
 export const ROUTES: RouteDef[] = [
   { id: 'login', path: '/login', ns: 'auth' },
   { id: 'home', path: '/home', ns: 'home' },
-  { id: 'file', path: '/file', ns: 'file' },
-  { id: 'file.profile', path: '/file/profile', ns: 'file' },
-  { id: 'file.career', path: '/file/career', ns: 'file' },
-  { id: 'file.leave', path: '/file/leave', ns: 'file' },
-  { id: 'file.training', path: '/file/training', ns: 'file' },
-  { id: 'file.travel', path: '/file/travel', ns: 'file' },
-  { id: 'file.property', path: '/file/property', ns: 'file' },
-  { id: 'file.benefits', path: '/file/benefits', ns: 'file' },
-  { id: 'file.documents', path: '/file/documents', ns: 'file' },
-  { id: 'requests', path: '/requests', ns: 'requests' },
-  { id: 'requests.new', path: '/requests/new', ns: 'requests' },
-  { id: 'requests.form', path: '/requests/new/:type', ns: 'requests' },
-  { id: 'requests.detail', path: '/requests/:id', ns: 'requests' },
+  { id: 'records', path: '/records', ns: 'records' },
+  { id: 'records.profile', path: '/records/profile', ns: 'records' },
+  { id: 'records.services', path: '/records/services', ns: 'records' },
+  { id: 'records.service', path: '/records/services/:card', ns: 'records' },
+  { id: 'records.service.new', path: '/records/services/:card/new', ns: 'records' },
+  { id: 'records.service.past', path: '/records/services/:card/add-past', ns: 'records' },
+  { id: 'records.downloads', path: '/records/downloads', ns: 'records' },
+  { id: 'records.request', path: '/records/requests/:id', ns: 'records' },
   { id: 'community', path: '/community', ns: 'community' },
-  { id: 'community.ideas', path: '/community/ideas', ns: 'community' },
-  { id: 'community.idea', path: '/community/ideas/:id', ns: 'community' },
-  { id: 'community.ideas.new', path: '/community/ideas/new', ns: 'community' },
-  { id: 'community.discussions', path: '/community/discussions', ns: 'community' },
-  { id: 'community.discussion', path: '/community/discussions/:id', ns: 'community' },
-  { id: 'community.discussions.new', path: '/community/discussions/new', ns: 'community' },
-  { id: 'community.knowledge', path: '/community/knowledge', ns: 'community' },
-  { id: 'community.article', path: '/community/knowledge/:id', ns: 'community' },
-  { id: 'community.knowledge.new', path: '/community/knowledge/new', ns: 'community' },
-  { id: 'people.colleagues', path: '/people/colleagues', ns: 'people' },
-  { id: 'people.colleague', path: '/people/colleagues/:id', ns: 'people' },
-  { id: 'people.whodoeswhat', path: '/people/who-does-what', ns: 'people' },
-  { id: 'people.section', path: '/people/who-does-what/:departmentId/:postId', ns: 'people' },
-  { id: 'people.experts', path: '/people/experts', ns: 'people' },
-  { id: 'learn.trainings', path: '/learn/trainings', ns: 'learn' },
-  { id: 'learn.resources', path: '/learn/resources', ns: 'learn' },
-  { id: 'learn.awards', path: '/learn/awards', ns: 'learn' },
-  { id: 'library.rules', path: '/library/rules', ns: 'library' },
-  { id: 'library.circulars', path: '/library/circulars', ns: 'library' },
-  { id: 'library.forms', path: '/library/forms', ns: 'library' },
-  { id: 'library.faqs', path: '/library/faqs', ns: 'library' },
-  { id: 'library.announcements', path: '/library/announcements', ns: 'library' },
-  { id: 'desk', path: '/desk', ns: 'desk' },
+  { id: 'community.proposals', path: '/community/proposals', ns: 'community' },
+  { id: 'community.proposals.new', path: '/community/proposals/new', ns: 'community' },
+  { id: 'community.proposal', path: '/community/proposals/:id', ns: 'community' },
+  { id: 'community.discourse', path: '/community/discourse', ns: 'community' },
+  { id: 'community.discourse.new', path: '/community/discourse/new', ns: 'community' },
+  { id: 'community.post', path: '/community/discourse/:id', ns: 'community' },
+  { id: 'community.colleagues', path: '/community/colleagues', ns: 'people' },
+  { id: 'community.colleague', path: '/community/colleagues/:id', ns: 'people' },
+  {
+    id: 'community.subject',
+    path: '/community/colleagues/subject/:departmentId/:postId',
+    ns: 'people',
+  },
+  { id: 'community.capacity', path: '/community/capacity-building', ns: 'learn' },
+  { id: 'community.beyond', path: '/community/beyond-the-file', ns: 'people' },
+  { id: 'community.awards', path: '/community/awards', ns: 'learn' },
   { id: 'notifications', path: '/notifications', ns: 'notifications' },
   { id: 'search', path: '/search', ns: 'search' },
-  { id: 'account', path: '/account', ns: 'account' },
 ];
 
-/** Index routes that only redirect (brief, section 4). */
-export const REDIRECTS: { from: string; to: string }[] = [
-  { from: '/', to: '/home' },
-  { from: '/people', to: '/people/colleagues' },
-  { from: '/learn', to: '/learn/trainings' },
-  { from: '/library', to: '/library/circulars' },
-];
+/** Index routes that only redirect. */
+export const REDIRECTS: { from: string; to: string }[] = [{ from: '/', to: '/home' }];

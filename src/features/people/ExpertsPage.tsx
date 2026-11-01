@@ -23,7 +23,7 @@ export default function ExpertsPage() {
   const query = useQ('experts');
   return (
     <>
-      <RouteHeader id="people.experts" main={{ onClick: () => setDlg(true) }} />
+      <RouteHeader id="community.beyond" main={{ onClick: () => setDlg(true) }} />
       <SearchField label={t('experts.search')} value={q} onChange={setQ} />
       <div className="ux4g-mt-m">
         <UrlTabs tabs={tabs} />

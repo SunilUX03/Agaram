@@ -169,7 +169,7 @@
   bottom: 0;
   z-index: 100;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   background: var(--ux4g-bg-neutral-elevated);
   border-top: 1px solid var(--ux4g-border-color-neutral-default);
   padding-bottom: env(safe-area-inset-bottom);
@@ -1288,4 +1288,84 @@ a.list-row-main {
 .ux4g-dropdown > label {
   display: block;
   margin-bottom: var(--ux4g-margin-2xs);
+}
+
+.menu-pop-up {
+  top: auto;
+  bottom: calc(100% + 0.25rem);
+  left: auto;
+  right: 0;
+}
+.fab-wrap {
+  position: fixed;
+  right: var(--ux4g-padding-m);
+  bottom: calc(4.5rem + var(--ux4g-padding-xs));
+  z-index: 80;
+}
+@media (min-width: 1024px) {
+  .fab-wrap {
+    display: none;
+  }
+}
+
+/* My Services: two across on desktop, one across on phones. */
+.services-grid {
+  display: grid;
+  gap: var(--ux4g-gap-row-m);
+}
+@media (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.service-tile {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.service-tile .card-foot {
+  margin-top: auto;
+}
+
+/* Career: a vertical timeline. UX4G's journey timeline marks steps of one process, not a history. */
+.career-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ux4g-gap-row-m);
+  padding-left: var(--ux4g-padding-xl);
+  border-left: var(--ux4g-border-width-md) solid var(--ux4g-border-color-neutral-default);
+  margin-left: var(--ux4g-margin-xs);
+}
+.career-item {
+  position: relative;
+}
+.career-dot {
+  position: absolute;
+  left: calc(-1 * var(--ux4g-padding-xl) - 0.4375rem);
+  top: var(--ux4g-padding-m);
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: var(--ux4g-radius-full);
+  background: var(--ux4g-bg-primary-strong);
+  border: 2px solid var(--ux4g-bg-neutral-elevated);
+}
+.photo-preview {
+  width: 5rem;
+  height: 5rem;
+  border-radius: var(--ux4g-radius-full);
+  object-fit: cover;
+}
+.change-table {
+  width: 100%;
+}
+
+.tiles-3 {
+  display: grid;
+  gap: var(--ux4g-gap-row-m);
+}
+@media (min-width: 768px) {
+  .tiles-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }

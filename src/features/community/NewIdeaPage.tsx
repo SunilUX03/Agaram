@@ -87,13 +87,13 @@ export default function NewIdeaPage() {
     setDirty(false);
     toast(t('ideas.new.posted'));
     bypass.current = true;
-    nav(`/community/ideas/${i.id}`);
+    nav(`/community/proposals/${i.id}`);
   };
   return (
     <>
       <UnsavedGuard bypass={bypass} dirty={dirty && !create.isPending} />
       <RouteHeader
-        id="community.ideas.new"
+        id="community.proposals.new"
         main={
           step === 'preview' ? (
             <button
@@ -102,13 +102,13 @@ export default function NewIdeaPage() {
               disabled={create.isPending}
               onClick={post}
             >
-              {t('routes.community_ideas_new.main')}
+              {t('routes.community_proposals_new.main')}
             </button>
           ) : undefined
         }
         breadcrumb={[
-          { label: t('routes.community_ideas.headline'), to: '/community/ideas' },
-          { label: t('routes.community_ideas_new.headline') },
+          { label: t('routes.community_proposals.headline'), to: '/community/proposals' },
+          { label: t('routes.community_proposals_new.headline') },
         ]}
       />
       {step === 'edit' ? (

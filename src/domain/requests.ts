@@ -1,17 +1,15 @@
 import { REQUEST_TYPES, type DocDef, type FieldDef, type RequestTypeDef } from '@/config/requests';
 import { parseDMY, rangesOverlap } from './dates';
 import type { RequestStatus } from './status';
-import type { LeaveBalance, Request } from './types';
+import type { LeaveBalance, Mode, Request } from './types';
 
 export type Values = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
-export type Files = Record<string, { name: string; size: number }[]>;
+export type Files = Record<string, { name: string; size: number; type: string }[]>;
 
-/** Allowed status moves (brief, section 8). */
+/** Allowed status moves (v2, section 6). The super admin's moves are simulated by the demo controls. */
 export const TRANSITIONS: Record<RequestStatus, RequestStatus[]> = {
   draft: ['submitted'],
-  submitted: ['with-desk', 'withdrawn'],
-  'with-desk': ['ready-for-approval', 'withdrawn'],
-  'ready-for-approval': ['approved', 'rejected', 'returned', 'withdrawn'],
+  submitted: ['approved', 'returned', 'rejected', 'withdrawn'],
   returned: ['submitted'],
   approved: [],
   rejected: [],
@@ -41,7 +39,7 @@ export function matchesWhen(
 export const isFieldRequired = (f: FieldDef, values: Values) =>
   !!f.required || matchesWhen(f.requiredWhen, values);
 export const isDocRequired = (d: DocDef, values: Values) =>
-  !!d.required || matchesWhen(d.requiredWhen, values);
+  !!d.required || matchesWhen(d.requiredWhen, values) || !!d.needed?.(values);
 
 /** Number of calendar days in an inclusive dd/mm/yyyy range, or 0 if invalid. */
 export function dayCount(r?: { from?: string; to?: string }): number {
@@ -84,6 +82,7 @@ export interface ValidationContext {
   booked: Booked[];
   balance?: LeaveBalance;
   today: Date;
+  mode?: Mode;
   /** Request id being edited, so it does not overlap with itself. */
   files: Files;
 }
@@ -136,7 +135,7 @@ export function validateDetails(
           params: { title: hit.title },
         });
     }
-    if (type.rules?.includes('balanceWarning') && ctx.balance) {
+    if (type.rules?.includes('balanceWarning') && ctx.balance && ctx.mode !== 'past') {
       const key = balanceKey(values.type);
       const days = dayCount(range);
       if (
@@ -159,28 +158,67 @@ export function validateDocuments(
   type: RequestTypeDef,
   values: Values,
   files: Files,
+  mode?: Mode,
+  today: Date = new Date(),
 ): FieldError[] {
-  return type.documents
+  const errors = type.documents
     .filter((d) => isDocRequired(d, values) && !(files[d.name]?.length > 0))
     .map((d) => ({
       field: `doc.${d.name}`,
       key: 'ui.errors.docRequired',
       params: { label: d.label },
     }));
+  if (proofRequired(type, values, mode, today) && !(files.proof?.length > 0))
+    errors.push({
+      field: 'doc.proof',
+      key: 'ui.errors.docRequired',
+      params: { label: 'Scan of the paper record or order' },
+    });
+  return errors;
 }
 
-/** True when a past date is used in a type that does not allow it. */
-export function pastDateNotice(
+const isPastDate = (text: string | undefined, today: Date) => {
+  const d = text ? parseDMY(text) : null;
+  const t = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+  return !!d && d < t;
+};
+/** A proof file ("Scan of the paper record or order") is required for past entries. */
+export function proofRequired(
   type: RequestTypeDef,
   values: Values,
-  today: Date,
-): 'blocked' | 'notice' | null {
+  mode: Mode | undefined,
+  today: Date = new Date(),
+): boolean {
+  if (mode && type.proofRequiredFor?.includes(mode)) return true;
+  // An LTC trip that has already ended is a paper record.
+  return type.key === 'ltc' && isPastDate((values.dates as { to?: string } | undefined)?.to, today);
+}
+/** Which source a request carries: paper for past entries and past LTC trips. */
+export function sourceOf(
+  type: RequestTypeDef,
+  values: Values,
+  mode: Mode | undefined,
+): 'portal' | 'paper' {
+  return mode === 'past' || proofRequired(type, values, mode) ? 'paper' : 'portal';
+}
+/** Warnings that do not block sending (past leave that takes the balance below zero). */
+export function pastWarnings(
+  type: RequestTypeDef,
+  values: Values,
+  balance: LeaveBalance | undefined,
+  mode: Mode | undefined,
+): string[] {
+  if (mode !== 'past' || !type.rules?.includes('balanceWarning') || !balance) return [];
+  const key = balanceKey(values.type);
+  const days = dayCount(values.dates as { from?: string; to?: string });
+  return key && days > remaining(balance, key) ? ['ui.errors.pastBalance'] : [];
+}
+
+/** True when an Apply form is given a date that has already passed. */
+export function pastDateNotice(values: Values, mode: Mode | undefined, today: Date): boolean {
+  if (mode !== 'apply') return false;
   const r = (values.dates ?? {}) as { from?: string };
-  const a = r.from ? parseDMY(r.from) : null;
-  if (!a) return null;
-  const t = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
-  if (a >= t) return null;
-  return type.allowPast ? 'notice' : 'blocked';
+  return isPastDate(r.from, today);
 }
 
 /** Summary lines for the Review step and the request page. */
@@ -195,13 +233,6 @@ export function summaryRows(
     if (f.kind === 'dateRange') {
       const r = v as { from?: string; to?: string };
       if (r.from || r.to) out.push({ label: f.label, value: `${r.from ?? ''} to ${r.to ?? ''}` });
-    } else if (f.kind === 'repeat') {
-      const rows = (v as Values[]).filter((r) => Object.values(r).some(Boolean));
-      if (rows.length)
-        out.push({
-          label: f.label,
-          value: rows.map((r) => Object.values(r).filter(Boolean).join(', ')).join('; '),
-        });
     } else if (f.kind === 'amount') {
       out.push({
         label: f.label,

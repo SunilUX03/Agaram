@@ -1,0 +1,381 @@
+{
+  "routes": {
+    "records": {
+      "headline": "Records & Requests",
+      "tagline": "Your service record, your requests, and what is waiting for approval.",
+      "main": "New request"
+    },
+    "records_profile": {
+      "headline": "Your Profile",
+      "tagline": "Who you are, your details and your career.",
+      "main": "Update my details"
+    },
+    "records_services": {
+      "headline": "My Services",
+      "tagline": "Apply for leave, record your LTC trips, and make medical and GPF claims.",
+      "main": "Apply for leave"
+    },
+    "records_service": {
+      "headline": "Service",
+      "tagline": "",
+      "main": ""
+    },
+    "records_service_new": {
+      "headline": "New entry",
+      "tagline": "",
+      "main": ""
+    },
+    "records_service_past": {
+      "headline": "Add a past record",
+      "tagline": "",
+      "main": ""
+    },
+    "records_downloads": {
+      "headline": "Downloads",
+      "tagline": "Rules, circulars, forms and other documents.",
+      "main": ""
+    },
+    "records_request": {
+      "headline": "Request",
+      "tagline": "",
+      "main": ""
+    }
+  },
+  "crumb": {
+    "records": "Records & Requests",
+    "profile": "Profile"
+  },
+  "menu": {
+    "new": "New request",
+    "leave": "Apply for leave",
+    "ltc": "Record an LTC trip",
+    "medical": "New medical claim",
+    "gpf": "Apply for a GPF withdrawal",
+    "past": "Add a past record",
+    "update": "Update my details"
+  },
+  "past": {
+    "title": "Add a past record",
+    "intro": "For something that already happened and was kept on paper. The super admin will check it before it appears in your record.",
+    "leave": "Leave",
+    "ltc": "Leave Travel Concession (LTC)",
+    "medical": "Medical reimbursement",
+    "gpf": "General Provident Fund (GPF)"
+  },
+  "source": {
+    "paper": "Added from paper record"
+  },
+  "nextStep": {
+    "draft": "Saved as a draft",
+    "submitted": "Waiting for approval",
+    "returned": "Returned to you: fix and send again",
+    "approved": "Approved",
+    "rejected": "Not approved",
+    "withdrawn": "Withdrawn"
+  },
+  "request": {
+    "sent": "Sent {{date}}",
+    "tagline": "Sent on {{date}}. Currently: {{status}}.",
+    "continue": "Continue",
+    "editSend": "Edit and send again",
+    "withdraw": "Withdraw",
+    "viewRecord": "View in my record",
+    "startAgain": "Start again",
+    "returned": "The super admin returned this request. Reason: {{reason}}",
+    "rejected": "This request was not approved. Reason: {{reason}}",
+    "progress": "Progress",
+    "ref": "Reference number:",
+    "steps": {
+      "sent": "Sent",
+      "review": "Under review by the super admin",
+      "decision": "Decision",
+      "approved": "Approved",
+      "returned": "Returned",
+      "rejected": "Not approved",
+      "withdrawn": "Withdrawn",
+      "draft": "Decision"
+    },
+    "submitted": "What you submitted",
+    "changes": "Changes you asked for",
+    "field": "Detail",
+    "attachments": "Attachments",
+    "noFiles": "No files attached.",
+    "view": "View",
+    "download": "Download",
+    "withdrawTitle": "Withdraw this request?",
+    "withdrawBody": "The super admin will not look at it. You can start again later.",
+    "keep": "Keep it",
+    "withdrawn": "Your request has been withdrawn."
+  },
+  "home": {
+    "waiting": "Waiting on you",
+    "caughtUp": "All caught up.",
+    "mine": "My requests",
+    "type": "Request type",
+    "allTypes": "All types",
+    "noRequests": "No requests yet. Use New request when you need to ask for something.",
+    "changes": "Changes waiting for approval",
+    "changesTag": "Your profile and Career edits that the super admin has not decided yet.",
+    "goto": "Go to",
+    "tabs": {
+      "all": "All",
+      "action": "Needs my action",
+      "waiting": "Waiting for approval",
+      "approved": "Approved",
+      "closed": "Closed"
+    },
+    "go": {
+      "profile": {
+        "title": "Profile",
+        "body": "Who you are, and your career"
+      },
+      "services": {
+        "title": "My Services",
+        "body": "Leave, LTC, medical and GPF"
+      },
+      "downloads": {
+        "title": "Downloads",
+        "body": "Rules, circulars and forms"
+      }
+    }
+  },
+  "pending": {
+    "chip": "Change pending",
+    "asked": "You asked for",
+    "asked2": "You asked for: {{value}}",
+    "current": "Current",
+    "busy": "A change to this is waiting for approval.",
+    "withdraw": "Withdraw",
+    "withdrawTitle": "Withdraw this change?",
+    "withdrawBody": "The old value stays as it is.",
+    "keep": "Keep it",
+    "withdrawn": "Your change has been withdrawn.",
+    "returned": "The super admin returned {{group}}. Reason: {{reason}}",
+    "editAgain": "Edit and send again"
+  },
+  "lock": {
+    "tip": "This detail can only be changed by the department."
+  },
+  "groups": {
+    "service": "Service identity",
+    "personal": "Personal",
+    "contact": "Contact and address",
+    "education": "Education",
+    "posting": "Current posting",
+    "languages": "Languages",
+    "photo": "Photo",
+    "office": "Office contact"
+  },
+  "fields": {
+    "identityNo": "Identity No",
+    "allotmentYear": "Allotment Year",
+    "batch": "Batch",
+    "cadreAndDomicile": "Cadre & Domicile",
+    "recruitmentType": "Recruitment Type",
+    "dateOfJoining": "Date of Joining",
+    "dateOfRetirement": "Date of Retirement",
+    "classPayScale": "Class (Pay Scale)",
+    "grade": "Grade",
+    "seniorityNumber": "Seniority Number",
+    "lastPromotionDate": "Last Promotion Date",
+    "ifhrmsId": "IFHRMS ID",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth",
+    "languagesKnown": "Languages Known",
+    "religion": "Religion",
+    "caste": "Caste",
+    "mobile1": "Mobile No 1",
+    "personalEmail": "Personal Email",
+    "officialEmail": "Official Mail ID",
+    "residentialAddress": "Residential address",
+    "postingIn": "Posting In",
+    "department": "Department",
+    "designation": "Designation",
+    "postType": "Posting Type",
+    "locationChange": "Location Change",
+    "officeContact": "Office address, phone, fax and mobile"
+  },
+  "profile": {
+    "tabs": "Profile sections",
+    "tabProfile": "Profile",
+    "tabCareer": "Career",
+    "update": "Update my details",
+    "edit": "Edit",
+    "changePhoto": "Change photo",
+    "reportCorrection": "Report a correction",
+    "changeInCareer": "Change this in Career.",
+    "openCareer": "Open Career"
+  },
+  "panel": {
+    "intro": "Locked details are shown for reference. The super admin checks your change before it appears in your record.",
+    "cancel": "Cancel",
+    "send": "Send for approval",
+    "sent": "Your change has been sent for approval.",
+    "failed": "We could not send that. Check the details and try again.",
+    "title": {
+      "contact": "Contact and address",
+      "education": "Education",
+      "languages": "Languages",
+      "photo": "Photo",
+      "office": "Office contact"
+    },
+    "errEmail": "Enter a valid email address.",
+    "errPincode": "Enter a pincode of six digits.",
+    "errPhone": "Enter a valid phone number.",
+    "errYear": "The year cannot be in the future.",
+    "emailHelp": "Used for portal messages. The official email cannot be changed here.",
+    "addrLine": "Address line",
+    "addrCity": "City",
+    "addrPin": "Pincode",
+    "langHelp": "Separate languages with commas.",
+    "officeAddress": "Office address",
+    "officePhone": "Office phone",
+    "officeFax": "Fax",
+    "officeMobile": "Office mobile",
+    "photo": "Photo (JPG or PNG)",
+    "photoAlt": "Your photo",
+    "certificate": "Certificate",
+    "eduRow": "Education {{n}}",
+    "eduLevel": "Level",
+    "eduDegree": "Degree",
+    "eduSpec": "Specialisation",
+    "eduInstitute": "Institute",
+    "eduState": "State",
+    "eduCountry": "Country",
+    "eduYear": "Year",
+    "eduAdd": "Add an education entry",
+    "eduRemove": "Remove education {{n}}"
+  },
+  "correction": {
+    "title": "Report a correction",
+    "intro": "Tell the department what is wrong and what it should say. The super admin will check it.",
+    "sent": "Your correction has been sent for approval.",
+    "failed": "We could not send that. Try again."
+  },
+  "career": {
+    "addPosting": "Add posting",
+    "addPromotion": "Add promotion",
+    "current": "Current posting",
+    "currentChip": "Current",
+    "filter": "Show",
+    "filters": {
+      "all": "All",
+      "posting": "Postings",
+      "promotion": "Promotions"
+    },
+    "empty": "No career entries yet. Add your first posting.",
+    "present": "Present",
+    "promotionTo": "Promotion to {{grade}}",
+    "order": "Order",
+    "edit": "Edit",
+    "reportError": "Report an error",
+    "addedByYou": "Added by you",
+    "formAdd": {
+      "posting": "Add posting",
+      "promotion": "Add promotion"
+    },
+    "formEdit": {
+      "posting": "Edit posting",
+      "promotion": "Edit promotion"
+    },
+    "overlap": "This overlaps with {{title}}. You can still send it.",
+    "endTitle": "End your current posting?",
+    "endBody": "End your current posting on {{date}}?",
+    "endYes": "End it and send"
+  },
+  "services": {
+    "history": "View history",
+    "addPast": "Add a past record"
+  },
+  "cards": {
+    "leave": {
+      "headline": "Leave",
+      "tagline": "Your balances, your leave history, and a way to apply.",
+      "main": "Apply for leave"
+    },
+    "ltc": {
+      "headline": "Leave Travel Concession (LTC)",
+      "tagline": "A record of your LTC trips by block year. This page records trips. It does not process claims.",
+      "main": "Record an LTC trip",
+      "note": "This page records trips. It does not process claims."
+    },
+    "medical": {
+      "headline": "Medical Reimbursement",
+      "tagline": "Your medical claims and where each one stands.",
+      "main": "New medical claim"
+    },
+    "gpf": {
+      "headline": "General Provident Fund (GPF)",
+      "tagline": "Your withdrawals from the GPF.",
+      "main": "Apply for a withdrawal"
+    }
+  },
+  "leave": {
+    "tabBalance": "Balance",
+    "tabHistory": "History",
+    "balanceNote": "Balances are kept by the department. They change when a leave is approved.",
+    "labels": {
+      "cl": "Casual leave (CL)",
+      "rh": "Restricted holiday (RH)",
+      "el": "Earned leave (EL)",
+      "hpl": "Half pay leave (HPL)"
+    }
+  },
+  "medical": {
+    "readonly": "set by the department after review"
+  },
+  "history": {
+    "empty": "Nothing recorded here yet.",
+    "year": "Year",
+    "allYears": "All years",
+    "caption": "{{name}} history"
+  },
+  "form": {
+    "about": "About you",
+    "aboutHelp": "These details come from your record and cannot be changed here.",
+    "name": "Name",
+    "officerId": "Officer ID",
+    "designation": "Designation",
+    "department": "Department",
+    "details": "Details",
+    "send": "Send for approval",
+    "sent": "Your request has been sent for approval.",
+    "pastTitle": "Add a past record: {{title}}",
+    "pastTagline": "Something that already happened, kept on paper.",
+    "pastBanner": "You are adding something that already happened, such as leave taken on paper. The super admin will check it before it appears in your record.",
+    "usesDays": "This uses {{n}} days. {{m}} will be left.",
+    "usesDaysOnly": "This uses {{n}} days.",
+    "orderTitle": "Order details, if you have them",
+    "orderType": "Order type",
+    "orderNumber": "Order number",
+    "orderDate": "Date of order",
+    "orderFile": "Order file",
+    "orderRemarks": "Remarks",
+    "tagline": {
+      "leave": "Your details are filled in. Add the rest.",
+      "ltc": "This page records trips. It does not process claims.",
+      "medical": "Your details are filled in. Add the rest.",
+      "gpf": "Your details are filled in. Add the rest."
+    }
+  },
+  "downloads": {
+    "tabsLabel": "Download lists",
+    "tabs": {
+      "rules": "Act & Rules",
+      "circulars": "Circulars",
+      "faqs": "FAQs",
+      "gos": "Other Types of GOs",
+      "forms": "Utility Forms",
+      "special": "Special Entries",
+      "dro": "DRO",
+      "updates": "Important Updates"
+    },
+    "search": "Search this list",
+    "number": "Number",
+    "date": "Date",
+    "description": "Description",
+    "actions": "File",
+    "view": "View",
+    "empty": "Nothing matches your search."
+  }
+}

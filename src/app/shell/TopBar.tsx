@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Avatar } from '@/components/Avatar';
 import { Icon } from '@/components/Icon';
 import { useOutsideClick } from '@/components/hooks';
-import { features } from '@/config/features';
-import { NAV_ITEMS } from '@/config/nav';
+import { TOP_NAV } from '@/config/nav';
 import { useUnreadCount } from '@/features/notifications/useUnread';
 import { DesktopMenu } from './DesktopMenu';
-import { LangSwitch } from './LangSwitch';
+import { useSignOut } from '../auth';
+import { ChangePasswordDialog } from './ChangePasswordDialog';
 
 /** The brand mark: a simple emblem circle. */
 export const Emblem = () => (
@@ -44,8 +44,9 @@ export function BellLink() {
 function AvatarMenu() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [pw, setPw] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const nav = useNavigate();
+  const signOut = useSignOut();
   useOutsideClick(ref, () => setOpen(false), open);
   return (
     <div className="menu-button" ref={ref} onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}>
@@ -64,45 +65,32 @@ function AvatarMenu() {
           className="menu-pop menu-pop-right ux4g-card ux4g-card-outline ux4g-shadow-l2"
           role="menu"
         >
-          <Link
-            role="menuitem"
-            to="/desk"
-            className="menu-pop-item ux4g-body-m-default narrow-only"
-            onClick={() => setOpen(false)}
-          >
-            {t('nav.myDesk')}
-          </Link>
-          <Link
-            role="menuitem"
-            to="/account"
-            className="menu-pop-item ux4g-body-m-default"
-            onClick={() => setOpen(false)}
-          >
-            {t('nav.account')}
-          </Link>
-          <div className="menu-pop-item narrow-only">
-            <LangSwitch />
-          </div>
           <button
             role="menuitem"
             type="button"
             className="menu-pop-item ux4g-body-m-default"
-            onClick={() => (setOpen(false), nav('/login'))}
+            onClick={() => (setOpen(false), setPw(true))}
           >
-            {t('nav.signOut')}
+            {t('nav.changePassword')}
+          </button>
+          <button
+            role="menuitem"
+            type="button"
+            className="menu-pop-item ux4g-body-m-default"
+            onClick={() => (setOpen(false), signOut())}
+          >
+            {t('nav.logout')}
           </button>
         </div>
       )}
+      {pw && <ChangePasswordDialog onClose={() => setPw(false)} />}
     </div>
   );
 }
 
-/** Desktop: UX4G navbar with the full menu. Mobile and tablet: emblem on the left, Search and Bell on the right. */
+/** Desktop: UX4G navbar with the two sections. Mobile and tablet: emblem on the left, the bell on the right. */
 export function TopBar({ desktop }: { desktop: boolean }) {
   const { t } = useTranslation();
-  const items = features.nav.items
-    .map((id) => NAV_ITEMS.find((n) => n.id === id))
-    .filter((n): n is NonNullable<typeof n> => !!n);
   return (
     <header role="banner" className="topbar">
       <nav className="ux4g-navbar" aria-label={t('nav.primary')}>
@@ -111,41 +99,10 @@ export function TopBar({ desktop }: { desktop: boolean }) {
             <Emblem />
             <span className="ux4g-heading-xs-strong">{t('app.name')}</span>
           </Link>
-          {desktop && <DesktopMenu items={items} />}
+          {desktop && <DesktopMenu items={TOP_NAV} />}
           <div className="ux4g-navbar-right">
-            {desktop && (
-              <Link
-                to="/requests/new"
-                className="ux4g-btn-primary ux4g-btn-m btn-start"
-                aria-label={t('nav.startRequest')}
-              >
-                <Icon name="plus" size={18} />
-                <span className="btn-label">{t('nav.startRequest')}</span>
-              </Link>
-            )}
-            <Link
-              to="/search"
-              className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m"
-              aria-label={t('nav.search')}
-            >
-              <Icon name="search" size={24} />
-            </Link>
             <BellLink />
-            {desktop && (
-              <>
-                <Link
-                  to="/desk"
-                  className="ux4g-icon-btn ux4g-icon-btn-text-primary ux4g-icon-btn-m wide-only"
-                  aria-label={t('nav.myDesk')}
-                >
-                  <Icon name="desk" size={24} />
-                </Link>
-                <span className="wide-only">
-                  <LangSwitch />
-                </span>
-                <AvatarMenu />
-              </>
-            )}
+            {desktop && <AvatarMenu />}
           </div>
         </div>
       </nav>

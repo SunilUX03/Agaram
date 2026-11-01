@@ -7,7 +7,7 @@ import { isCurrent, type NavItem } from '@/config/nav';
 import { prefetchPath } from '@/app/pages';
 
 function Dropdown({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
-  const groups = item.groups ?? [{ label: '', items: item.links ?? [] }];
+  const groups = [{ label: '', items: item.links }];
   const { t } = useTranslation();
   return (
     <div
@@ -46,7 +46,7 @@ function Item({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
   const timer = useRef<number>();
-  const hasMenu = !!(item.links?.length || item.groups);
+  const hasMenu = item.links.length > 0;
   const current = isCurrent(pathname, item.match);
   useOutsideClick(ref, () => setOpen(false), open);
 

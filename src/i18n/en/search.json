@@ -2,18 +2,17 @@
   "routes": {
     "search": {
       "headline": "Search",
-      "tagline": "Find officers, ideas, articles, circulars and your own requests.",
+      "tagline": "Find officers, proposals, circulars and your own requests.",
       "main": ""
     }
   },
-  "label": "Search officers, ideas, articles, circulars and your requests",
+  "label": "Search officers, proposals, circulars and your requests",
   "hint": "Type at least 2 characters.",
   "groups": {
     "officers": "Officers",
-    "ideas": "Ideas",
-    "discussions": "Discussions",
-    "articles": "Articles",
-    "library": "Library",
+    "proposals": "Proposals",
+    "discussions": "Discourse",
+    "library": "Downloads",
     "requests": "My requests"
   },
   "showAll": "Show all",

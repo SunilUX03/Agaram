@@ -12,33 +12,33 @@
     "evening": ""
   },
   "today": "",
+  "search": {
+    "title": "",
+    "label": "",
+    "button": ""
+  },
   "waiting": {
     "title": "",
     "tagline": "",
     "viewAll": "",
-    "empty": "",
-    "leaveStarts": "",
-    "trainingStarts": "",
-    "taskDue": "",
-    "returned": "",
-    "draftSaved": ""
+    "empty": ""
   },
   "quick": {
     "title": "",
     "tagline": "",
     "apply-leave": "",
-    "start-request": "",
-    "share-idea": "",
-    "ask-question": "",
-    "find-colleague": "",
-    "open-file": ""
+    "record-ltc": "",
+    "new-medical": "",
+    "submit-proposal": "",
+    "start-discussion": "",
+    "find-colleague": ""
   },
   "glance": {
     "title": "",
     "tagline": "",
     "link": "",
     "posting": "",
-    "gradePay": "",
+    "classPay": "",
     "balances": "",
     "lastPromotion": "",
     "retirement": "",
@@ -50,17 +50,20 @@
   "requests": {
     "title": "",
     "tagline": "",
-    "link": "",
-    "sent": ""
+    "link": ""
   },
-  "new": {
+  "downloads": {
     "title": "",
-    "tagline": "",
-    "circulars": "",
-    "ideas": "",
-    "trainings": "",
-    "seeAll": "",
-    "backers": ""
+    "link": ""
   },
-  "openFile": ""
+  "community": {
+    "title": "",
+    "link": "",
+    "proposals": "",
+    "discourse": "",
+    "training": "",
+    "backers": "",
+    "replies": "",
+    "noTraining": ""
+  }
 }

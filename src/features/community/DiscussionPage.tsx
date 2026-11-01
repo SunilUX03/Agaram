@@ -103,11 +103,11 @@ export default function DiscussionPage() {
             className="ux4g-btn-primary ux4g-btn-m"
             onClick={() => box.current?.focus()}
           >
-            {t('routes.community_discussion.main')}
+            {t('routes.community_post.main')}
           </button>
         }
         breadcrumb={[
-          { label: t('routes.community_discussions.headline'), to: '/community/discussions' },
+          { label: t('routes.community_discourse.headline'), to: '/community/discourse' },
           { label: p.title },
         ]}
       />

@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/Card';
+import { EmptyState } from '@/components/EmptyState';
 import { QueryView } from '@/components/QueryView';
-import { SearchField } from '@/components/SearchField';
 import { Select } from '@/components/form/inputs';
 import { useUrlState } from '@/components/useUrlState';
-import { RouteHeader } from '@/app/usePage';
 import { useIsDesktop } from '@/components/hooks';
 import { useQ } from '@/data/hooks';
 import type { Department, OrgPost } from '@/domain/types';
@@ -18,18 +17,13 @@ const matches = (p: OrgPost, n: string) =>
     .toLowerCase()
     .includes(n);
 
-export default function WhoDoesWhatPage() {
+/** The By subject tab: who handles what, department by department. */
+export function SubjectTab({ q, onSwitch }: { q: string; onSwitch: () => void }) {
   const { t } = useTranslation('people');
   const desktop = useIsDesktop();
-  const [params] = useSearchParams();
-  const [q, setQ] = useUrlState('q');
   const [dep, setDep] = useUrlState('dept');
   const [filter, setFilter] = useState('');
-  const box = useRef<HTMLInputElement>(null);
   const query = useQ('departments');
-  useEffect(() => {
-    if (params.get('focus') === 'search') box.current?.focus();
-  }, [params]);
   const n = q.trim().toLowerCase();
   const list = (all: Department[]) =>
     all.filter(
@@ -39,10 +33,18 @@ export default function WhoDoesWhatPage() {
     );
   return (
     <>
-      <RouteHeader id="people.whodoeswhat" main={{ onClick: () => box.current?.focus() }} />
       <QueryView query={query} skeleton="row" skeletonCount={6}>
         {(all) => {
           const depts = list(all);
+          if (n && depts.length === 0)
+            return (
+              <EmptyState
+                message={t('who.nothing')}
+                icon="search"
+                actionLabel={t('who.searchPeople')}
+                onAction={onSwitch}
+              />
+            );
           const current = all.find((d) => d.id === dep) ?? (desktop || n ? depts[0] : undefined);
           return (
             <div className="who">
@@ -93,7 +95,6 @@ export default function WhoDoesWhatPage() {
                 )}
               </aside>
               <div>
-                <SearchField ref={box} label={t('who.searchSubject')} value={q} onChange={setQ} />
                 {current ? (
                   <section aria-label={current.name} className="ux4g-mt-m">
                     <h2 className="ux4g-heading-xs-strong">{current.name}</h2>
@@ -106,7 +107,7 @@ export default function WhoDoesWhatPage() {
                         return (
                           <Card
                             key={p.id}
-                            to={`/people/who-does-what/${current.id}/${p.id}`}
+                            to={`/community/colleagues/subject/${current.id}/${p.id}`}
                             className={hit ? 'is-hit' : undefined}
                           >
                             <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s ux4g-jc-between">
@@ -140,9 +141,6 @@ export default function WhoDoesWhatPage() {
           );
         }}
       </QueryView>
-      <Link to="/people/colleagues" className="sr-only">
-        {t('routes.people_colleagues.headline')}
-      </Link>
     </>
   );
 }

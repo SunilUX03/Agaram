@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { NotificationItem } from '@/components/NotificationItem';
 import { QueryView } from '@/components/QueryView';
 import { RouteHeader } from '@/app/usePage';
+import { useUrlState } from '@/components/useUrlState';
 import { useMut, useQ } from '@/data/hooks';
 import { formatDate } from '@/domain/dates';
 
@@ -11,6 +12,7 @@ export default function NotificationsPage() {
   const { t, i18n } = useTranslation('notifications');
   const loc = i18n.language === 'ta' ? 'ta-IN' : 'en-IN';
   const q = useQ('notifications');
+  const [filter, setFilter] = useUrlState('filter');
   const all = useMut('markAllRead');
   const read = useMut('markRead');
   const label = (iso: string) => {
@@ -24,13 +26,35 @@ export default function NotificationsPage() {
         id="notifications"
         main={{ onClick: () => all.mutate([]), disabled: q.data?.every((n) => n.read) ?? true }}
       />
+      <div
+        className="ux4g-d-flex ux4g-flex-wrap gap-xs ux4g-mb-m"
+        role="group"
+        aria-label={t('filters.label')}
+      >
+        {['', 'requests', 'community'].map((f) => (
+          <button
+            key={f || 'all'}
+            type="button"
+            className={`ux4g-filter-chip-m${filter === f ? ' active' : ''}`}
+            aria-pressed={filter === f}
+            onClick={() => setFilter(f)}
+          >
+            {t(`filters.${f || 'all'}`)}
+          </button>
+        ))}
+      </div>
       <QueryView
         query={q}
         skeleton="row"
         skeletonCount={6}
         empty={{ message: t('empty'), icon: 'bell' }}
       >
-        {(rows) => {
+        {(all) => {
+          const rows = all.filter((n) => !filter || n.category === filter);
+          if (!rows.length)
+            return (
+              <p className="ux4g-body-m-default ux4g-text-neutral-secondary">{t('emptyFilter')}</p>
+            );
           const groups = [...new Set(rows.map((n) => dayKey(n.createdAt)))];
           return groups.map((g) => {
             const items = rows.filter((n) => dayKey(n.createdAt) === g);

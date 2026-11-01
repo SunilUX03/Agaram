@@ -1,28 +1,23 @@
 {
   "routes": {
-    "people_colleagues": {
-      "headline": "Colleagues",
-      "tagline": "Find an officer by name, post, district or area of work.",
+    "community_colleagues": {
+      "headline": "Your Colleagues",
+      "tagline": "Find an officer, or find who handles a subject.",
       "main": "Search"
     },
-    "people_colleague": {
+    "community_colleague": {
       "headline": "Colleague",
       "tagline": "",
-      "main": "Save contact"
+      "main": ""
     },
-    "people_whodoeswhat": {
-      "headline": "Who does what",
-      "tagline": "Find who handles a subject, department by department.",
-      "main": "Search a subject"
-    },
-    "people_section": {
+    "community_subject": {
       "headline": "Section",
       "tagline": "",
       "main": "Open officer’s profile"
     },
-    "people_experts": {
-      "headline": "Experts and NGOs",
-      "tagline": "Trusted outside help, one phone call away.",
+    "community_beyond": {
+      "headline": "Beyond the File",
+      "tagline": "Trusted outside help: organisations and experts, one call away.",
       "main": "Add an entry"
     }
   },
@@ -33,7 +28,7 @@
     "all": "All",
     "found_one": "{{count}} officer found",
     "found_other": "{{count}} officers found",
-    "empty": "No officers match. Try fewer words or clear a filter.",
+    "empty": "No colleague found. Try searching by subject instead.",
     "services": "Service",
     "batch": "Batch {{year}}",
     "status": {
@@ -41,7 +36,8 @@
       "On training": "On training"
     },
     "posting": "{{district}}, {{department}}",
-    "clear": "Clear filters"
+    "clear": "Clear filters",
+    "searchSubject": "Search by subject"
   },
   "profile": {
     "service": "Service",
@@ -56,7 +52,8 @@
     "save": "Save contact",
     "saved": "Saved",
     "notFound": "We could not find that officer.",
-    "meta": "{{designation}}, {{posting}}"
+    "meta": "{{designation}}, {{posting}}",
+    "officialEmail": "Official email"
   },
   "who": {
     "filterDepts": "Filter departments",
@@ -69,7 +66,9 @@
     "selectDept": "Choose a department",
     "match": "Matches your search",
     "posts_one": "{{count}} post",
-    "posts_other": "{{count}} posts"
+    "posts_other": "{{count}} posts",
+    "nothing": "No subject found. Try searching by a colleague’s name.",
+    "searchPeople": "Search people"
   },
   "section": {
     "inCharge": "Officer in charge",
@@ -102,5 +101,14 @@
     "add": "Add entry",
     "cancel": "Cancel",
     "thanks": "Thank you. Your entry will appear after review."
+  },
+  "tabs": {
+    "label": "Colleagues sections",
+    "people": "People",
+    "subject": "By subject",
+    "search": {
+      "people": "Search name, post, district or area of work",
+      "subject": "Search a subject, section or officer, for example GPF, sugarcane, budget"
+    }
   }
 }

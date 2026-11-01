@@ -1,26 +1,21 @@
 {
   "routes": {
-    "people_colleagues": {
+    "community_colleagues": {
       "headline": "",
       "tagline": "",
       "main": ""
     },
-    "people_colleague": {
+    "community_colleague": {
       "headline": "",
       "tagline": "",
       "main": ""
     },
-    "people_whodoeswhat": {
+    "community_subject": {
       "headline": "",
       "tagline": "",
       "main": ""
     },
-    "people_section": {
-      "headline": "",
-      "tagline": "",
-      "main": ""
-    },
-    "people_experts": {
+    "community_beyond": {
       "headline": "",
       "tagline": "",
       "main": ""
@@ -41,7 +36,8 @@
       "On training": ""
     },
     "posting": "",
-    "clear": ""
+    "clear": "",
+    "searchSubject": ""
   },
   "profile": {
     "service": "",
@@ -56,7 +52,8 @@
     "save": "",
     "saved": "",
     "notFound": "",
-    "meta": ""
+    "meta": "",
+    "officialEmail": ""
   },
   "who": {
     "filterDepts": "",
@@ -69,7 +66,9 @@
     "selectDept": "",
     "match": "",
     "posts_one": "",
-    "posts_other": ""
+    "posts_other": "",
+    "nothing": "",
+    "searchPeople": ""
   },
   "section": {
     "inCharge": "",
@@ -102,5 +101,14 @@
     "add": "",
     "cancel": "",
     "thanks": ""
+  },
+  "tabs": {
+    "label": "",
+    "people": "",
+    "subject": "",
+    "search": {
+      "people": "",
+      "subject": ""
+    }
   }
 }

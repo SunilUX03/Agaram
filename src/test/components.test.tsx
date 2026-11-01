@@ -22,9 +22,7 @@ const wrap = (ui: React.ReactNode, at = '/') => (
 describe('StatusChip', () => {
   it.each([
     ['draft', 'Draft'],
-    ['submitted', 'Submitted'],
-    ['with-desk', 'With the desk'],
-    ['ready-for-approval', 'Ready for approval'],
+    ['submitted', 'Waiting for approval'],
     ['returned', 'Returned to you'],
     ['approved', 'Approved'],
     ['rejected', 'Not approved'],
@@ -33,7 +31,7 @@ describe('StatusChip', () => {
     render(<StatusChip status={status} />);
     expect(screen.getByText(words)).toBeInTheDocument();
   });
-  it('covers every request status', () => expect(REQUEST_STATUSES).toHaveLength(8));
+  it('covers every request status', () => expect(REQUEST_STATUSES).toHaveLength(6));
 });
 
 describe('FormStepper', () => {

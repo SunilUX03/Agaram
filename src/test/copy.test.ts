@@ -3,8 +3,11 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { buildSeed } from '@/data/seed';
 import { REQUEST_TYPES } from '@/config/requests';
+import { LABELS } from '@/config/labels';
+import { SERVICE_CARDS } from '@/config/services';
 
-// Section 10: words that must never appear in the interface.
+// v2, section 7: words that must never appear in the interface. (Policy Proposals, Discourse, Beyond the File,
+// Capacity Building and the Downloads tab names are official names now.)
 const NEVER = [
   'Officer Profile',
   'Basic Info',
@@ -16,22 +19,15 @@ const NEVER = [
   'Add New',
   'Apply form',
   'Pending Approval',
-  'Policy Proposals',
   'Submit Demand',
   'Seconded',
-  'Discourse',
   'Compendiums',
-  'Beyond the File',
-  'Capacity Building',
   'Uploads',
-  'Special Entries',
-  'Utility Forms',
-  'Important Updates',
-  'Other Types of GOs',
   'Update in Civil List',
   'Order For',
+  'Not Approved',
 ];
-const NEVER_WORDS = ['Demand', 'Canvas', 'Board', 'Master', 'Role'];
+const NEVER_WORDS = ['Demand', 'Canvas', 'Board', 'Master', 'ASO', 'SO', 'Role'];
 
 function strings(dir: string): string[] {
   const out: string[] = [];
@@ -52,14 +48,13 @@ describe('copy', () => {
       REQUEST_TYPES.map((t) => [
         t.label,
         t.cardName,
-        t.help,
-        t.keepReady,
-        t.note,
         t.fields.map((f) => f.label),
         t.documents.map((d) => d.label),
       ]),
     ).split('"'),
     ...JSON.stringify(buildSeed()).split('"'),
+    ...Object.values(LABELS),
+    ...SERVICE_CARDS.flatMap((c) => [c.title, c.headline, c.tagline, c.main, c.pastLabel ?? '']),
   ].join('\n');
   it.each(NEVER)('never shows "%s"', (term) => expect(text).not.toContain(term));
   it.each(NEVER_WORDS)('never shows the word "%s"', (w) =>

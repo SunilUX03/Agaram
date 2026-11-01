@@ -23,23 +23,27 @@ export function renderApp(path: string, opts: { signedIn?: boolean } = {}) {
 /** A real id for every route that has a parameter. */
 export const sample = (path: string) =>
   path
-    .replace('/requests/new/:type', '/requests/new/leave')
-    .replace('/requests/:id', '/requests/req-2')
-    .replace('/community/ideas/:id', '/community/ideas/idea-1')
-    .replace('/community/discussions/:id', '/community/discussions/post-1')
-    .replace('/community/knowledge/:id', '/community/knowledge/art-1')
-    .replace('/people/colleagues/:id', '/people/colleagues/col-1')
-    .replace(':departmentId', 'dep-1')
-    .replace(':postId', 'post-1-1');
+    .replace('/records/services/:card/add-past', '/records/services/leave/add-past')
+    .replace('/records/services/:card/new', '/records/services/leave/new')
+    .replace('/records/services/:card', '/records/services/leave')
+    .replace('/records/requests/:id', '/records/requests/req-2')
+    .replace('/community/proposals/:id', '/community/proposals/idea-1')
+    .replace('/community/discourse/:id', '/community/discourse/post-1')
+    .replace(
+      '/community/colleagues/subject/:departmentId/:postId',
+      '/community/colleagues/subject/dep-1/post-1-1',
+    )
+    .replace('/community/colleagues/:id', '/community/colleagues/col-1');
 
 /** Pages whose H1 comes from data (name, title, greeting) rather than the catalogue. */
 export const DYNAMIC_H1 = new Set([
   'home',
-  'requests.form',
-  'requests.detail',
-  'community.idea',
-  'community.discussion',
-  'community.article',
-  'people.colleague',
-  'people.section',
+  'records.service',
+  'records.service.new',
+  'records.service.past',
+  'records.request',
+  'community.proposal',
+  'community.post',
+  'community.colleague',
+  'community.subject',
 ]);

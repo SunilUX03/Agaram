@@ -5,12 +5,11 @@ import { Avatar } from '@/components/Avatar';
 import { QueryView } from '@/components/QueryView';
 import { SearchField } from '@/components/SearchField';
 import { StatusChip } from '@/components/StatusChip';
-import { Tag } from '@/components/Tag';
 import { useUrlState } from '@/components/useUrlState';
 import { RouteHeader } from '@/app/usePage';
 import { useQ } from '@/data/hooks';
 
-const GROUPS = ['officers', 'ideas', 'discussions', 'articles', 'library', 'requests'] as const;
+const GROUPS = ['officers', 'proposals', 'discussions', 'library', 'requests'] as const;
 type G = (typeof GROUPS)[number];
 const SHOWN = 3;
 
@@ -88,7 +87,7 @@ export default function SearchPage() {
                         {list.map((r) => (
                           <li key={r.id}>
                             {g === 'officers' && (
-                              <Link className="list-row" to={`/people/colleagues/${r.id}`}>
+                              <Link className="list-row" to={`/community/colleagues/${r.id}`}>
                                 <Avatar name={r.name} photoUrl={r.photoUrl} size={40} />
                                 <span className="list-row-main">
                                   <span className="ux4g-body-m-strong">{r.name}</span>
@@ -98,8 +97,8 @@ export default function SearchPage() {
                                 </span>
                               </Link>
                             )}
-                            {g === 'ideas' && (
-                              <Link className="list-row" to={`/community/ideas/${r.id}`}>
+                            {g === 'proposals' && (
+                              <Link className="list-row" to={`/community/proposals/${r.id}`}>
                                 <span className="list-row-main">
                                   <span className="ux4g-body-m-strong">{r.title}</span>
                                   <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
@@ -110,7 +109,7 @@ export default function SearchPage() {
                               </Link>
                             )}
                             {g === 'discussions' && (
-                              <Link className="list-row" to={`/community/discussions/${r.id}`}>
+                              <Link className="list-row" to={`/community/discourse/${r.id}`}>
                                 <span className="list-row-main">
                                   <span className="ux4g-body-m-strong">{r.title}</span>
                                   <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
@@ -119,32 +118,10 @@ export default function SearchPage() {
                                 </span>
                               </Link>
                             )}
-                            {g === 'articles' && (
-                              <Link className="list-row" to={`/community/knowledge/${r.id}`}>
-                                <span className="list-row-main">
-                                  <span className="ux4g-body-m-strong">{r.title}</span>
-                                  <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
-                                    {r.tags?.map((x: string) => (
-                                      <Tag key={x}>{x}</Tag>
-                                    ))}
-                                  </span>
-                                </span>
-                              </Link>
-                            )}
                             {g === 'library' && (
                               <Link
                                 className="list-row"
-                                to={
-                                  r.kind === 'form'
-                                    ? '/library/forms'
-                                    : r.kind === 'faq'
-                                      ? '/library/faqs'
-                                      : r.kind === 'rule'
-                                        ? '/library/rules'
-                                        : r.kind === 'announcement'
-                                          ? '/library/announcements'
-                                          : '/library/circulars'
-                                }
+                                to={`/records/downloads?tab=${{ rule: 'rules', circular: 'circulars', go: 'gos', form: 'forms', faq: 'faqs', special: 'special', dro: 'dro', announcement: 'updates' }[r.kind as string] ?? 'circulars'}&q=${encodeURIComponent(q.trim())}`}
                               >
                                 <span className="list-row-main">
                                   <span className="ux4g-body-m-strong">{r.title}</span>
@@ -155,7 +132,7 @@ export default function SearchPage() {
                               </Link>
                             )}
                             {g === 'requests' && (
-                              <Link className="list-row" to={`/requests/${r.id}`}>
+                              <Link className="list-row" to={`/records/requests/${r.id}`}>
                                 <span className="list-row-main">
                                   <span className="ux4g-body-m-strong">{r.title}</span>
                                   <span className="ux4g-body-s-default ux4g-text-neutral-secondary">

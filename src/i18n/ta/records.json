@@ -1,0 +1,381 @@
+{
+  "routes": {
+    "records": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "records_profile": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "records_services": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "records_service": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "records_service_new": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "records_service_past": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "records_downloads": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "records_request": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  },
+  "crumb": {
+    "records": "",
+    "profile": ""
+  },
+  "menu": {
+    "new": "",
+    "leave": "",
+    "ltc": "",
+    "medical": "",
+    "gpf": "",
+    "past": "",
+    "update": ""
+  },
+  "past": {
+    "title": "",
+    "intro": "",
+    "leave": "",
+    "ltc": "",
+    "medical": "",
+    "gpf": ""
+  },
+  "source": {
+    "paper": ""
+  },
+  "nextStep": {
+    "draft": "",
+    "submitted": "",
+    "returned": "",
+    "approved": "",
+    "rejected": "",
+    "withdrawn": ""
+  },
+  "request": {
+    "sent": "",
+    "tagline": "",
+    "continue": "",
+    "editSend": "",
+    "withdraw": "",
+    "viewRecord": "",
+    "startAgain": "",
+    "returned": "",
+    "rejected": "",
+    "progress": "",
+    "ref": "",
+    "steps": {
+      "sent": "",
+      "review": "",
+      "decision": "",
+      "approved": "",
+      "returned": "",
+      "rejected": "",
+      "withdrawn": "",
+      "draft": ""
+    },
+    "submitted": "",
+    "changes": "",
+    "field": "",
+    "attachments": "",
+    "noFiles": "",
+    "view": "",
+    "download": "",
+    "withdrawTitle": "",
+    "withdrawBody": "",
+    "keep": "",
+    "withdrawn": ""
+  },
+  "home": {
+    "waiting": "",
+    "caughtUp": "",
+    "mine": "",
+    "type": "",
+    "allTypes": "",
+    "noRequests": "",
+    "changes": "",
+    "changesTag": "",
+    "goto": "",
+    "tabs": {
+      "all": "",
+      "action": "",
+      "waiting": "",
+      "approved": "",
+      "closed": ""
+    },
+    "go": {
+      "profile": {
+        "title": "",
+        "body": ""
+      },
+      "services": {
+        "title": "",
+        "body": ""
+      },
+      "downloads": {
+        "title": "",
+        "body": ""
+      }
+    }
+  },
+  "pending": {
+    "chip": "",
+    "asked": "",
+    "asked2": "",
+    "current": "",
+    "busy": "",
+    "withdraw": "",
+    "withdrawTitle": "",
+    "withdrawBody": "",
+    "keep": "",
+    "withdrawn": "",
+    "returned": "",
+    "editAgain": ""
+  },
+  "lock": {
+    "tip": ""
+  },
+  "groups": {
+    "service": "",
+    "personal": "",
+    "contact": "",
+    "education": "",
+    "posting": "",
+    "languages": "",
+    "photo": "",
+    "office": ""
+  },
+  "fields": {
+    "identityNo": "",
+    "allotmentYear": "",
+    "batch": "",
+    "cadreAndDomicile": "",
+    "recruitmentType": "",
+    "dateOfJoining": "",
+    "dateOfRetirement": "",
+    "classPayScale": "",
+    "grade": "",
+    "seniorityNumber": "",
+    "lastPromotionDate": "",
+    "ifhrmsId": "",
+    "gender": "",
+    "dateOfBirth": "",
+    "languagesKnown": "",
+    "religion": "",
+    "caste": "",
+    "mobile1": "",
+    "personalEmail": "",
+    "officialEmail": "",
+    "residentialAddress": "",
+    "postingIn": "",
+    "department": "",
+    "designation": "",
+    "postType": "",
+    "locationChange": "",
+    "officeContact": ""
+  },
+  "profile": {
+    "tabs": "",
+    "tabProfile": "",
+    "tabCareer": "",
+    "update": "",
+    "edit": "",
+    "changePhoto": "",
+    "reportCorrection": "",
+    "changeInCareer": "",
+    "openCareer": ""
+  },
+  "panel": {
+    "intro": "",
+    "cancel": "",
+    "send": "",
+    "sent": "",
+    "failed": "",
+    "title": {
+      "contact": "",
+      "education": "",
+      "languages": "",
+      "photo": "",
+      "office": ""
+    },
+    "errEmail": "",
+    "errPincode": "",
+    "errPhone": "",
+    "errYear": "",
+    "emailHelp": "",
+    "addrLine": "",
+    "addrCity": "",
+    "addrPin": "",
+    "langHelp": "",
+    "officeAddress": "",
+    "officePhone": "",
+    "officeFax": "",
+    "officeMobile": "",
+    "photo": "",
+    "photoAlt": "",
+    "certificate": "",
+    "eduRow": "",
+    "eduLevel": "",
+    "eduDegree": "",
+    "eduSpec": "",
+    "eduInstitute": "",
+    "eduState": "",
+    "eduCountry": "",
+    "eduYear": "",
+    "eduAdd": "",
+    "eduRemove": ""
+  },
+  "correction": {
+    "title": "",
+    "intro": "",
+    "sent": "",
+    "failed": ""
+  },
+  "career": {
+    "addPosting": "",
+    "addPromotion": "",
+    "current": "",
+    "currentChip": "",
+    "filter": "",
+    "filters": {
+      "all": "",
+      "posting": "",
+      "promotion": ""
+    },
+    "empty": "",
+    "present": "",
+    "promotionTo": "",
+    "order": "",
+    "edit": "",
+    "reportError": "",
+    "addedByYou": "",
+    "formAdd": {
+      "posting": "",
+      "promotion": ""
+    },
+    "formEdit": {
+      "posting": "",
+      "promotion": ""
+    },
+    "overlap": "",
+    "endTitle": "",
+    "endBody": "",
+    "endYes": ""
+  },
+  "services": {
+    "history": "",
+    "addPast": ""
+  },
+  "cards": {
+    "leave": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "ltc": {
+      "headline": "",
+      "tagline": "",
+      "main": "",
+      "note": ""
+    },
+    "medical": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    },
+    "gpf": {
+      "headline": "",
+      "tagline": "",
+      "main": ""
+    }
+  },
+  "leave": {
+    "tabBalance": "",
+    "tabHistory": "",
+    "balanceNote": "",
+    "labels": {
+      "cl": "",
+      "rh": "",
+      "el": "",
+      "hpl": ""
+    }
+  },
+  "medical": {
+    "readonly": ""
+  },
+  "history": {
+    "empty": "",
+    "year": "",
+    "allYears": "",
+    "caption": ""
+  },
+  "form": {
+    "about": "",
+    "aboutHelp": "",
+    "name": "",
+    "officerId": "",
+    "designation": "",
+    "department": "",
+    "details": "",
+    "send": "",
+    "sent": "",
+    "pastTitle": "",
+    "pastTagline": "",
+    "pastBanner": "",
+    "usesDays": "",
+    "usesDaysOnly": "",
+    "orderTitle": "",
+    "orderType": "",
+    "orderNumber": "",
+    "orderDate": "",
+    "orderFile": "",
+    "orderRemarks": "",
+    "tagline": {
+      "leave": "",
+      "ltc": "",
+      "medical": "",
+      "gpf": ""
+    }
+  },
+  "downloads": {
+    "tabsLabel": "",
+    "tabs": {
+      "rules": "",
+      "circulars": "",
+      "faqs": "",
+      "gos": "",
+      "forms": "",
+      "special": "",
+      "dro": "",
+      "updates": ""
+    },
+    "search": "",
+    "number": "",
+    "date": "",
+    "description": "",
+    "actions": "",
+    "view": "",
+    "empty": ""
+  }
+}

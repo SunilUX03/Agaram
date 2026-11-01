@@ -8,49 +8,43 @@ import {
   TextField,
   type Option,
 } from '@/components/form/inputs';
-import { COUNTRIES, LEAVE_TYPES, STATE_DISTRICTS, toOptions } from '@/config/options';
-import { UPDATE_FIELDS, type FieldDef } from '@/config/requests';
+import { COUNTRIES, LEAVE_TYPES, toOptions } from '@/config/options';
+import {
+  DISTRICT_DEPARTMENTS,
+  DISTRICT_DESIGNATIONS,
+  POSTING_PLACES,
+  SECRETARIAT_DESIGNATIONS,
+  type FieldDef,
+} from '@/config/requests';
+import { DEPARTMENTS } from '@/config/options';
 import { isFieldRequired, type Values } from '@/domain/requests';
 import { useQ } from '@/data/hooks';
+import { ownTargets } from '@/features/records/profileFields';
 import { useCfg } from './cfg';
 
-/** Resolves a field's option source. "Which entry is wrong" lists the officer's own records. */
+/** Resolves a field's option source. Posting lists depend on where the officer is posted. */
 export function useOptions() {
-  const career = useQ('career'),
-    leaves = useQ('leaves'),
-    trainings = useQ('trainings'),
-    benefits = useQ('benefits'),
-    travels = useQ('travels');
+  const career = useQ('career');
   const { t } = useTranslation('requests');
-  return (ref: FieldDef['options'], values: Values, name: string): Option[] => {
+  return (ref: FieldDef['options'], values: Values): Option[] => {
     if (Array.isArray(ref)) return toOptions(ref);
+    const secretariat = values.postingIn === 'Chennai' || values.postingIn === 'Delhi';
     switch (ref) {
       case 'leaveTypes':
         return toOptions(LEAVE_TYPES);
       case 'countries':
         return toOptions(COUNTRIES);
-      case 'states':
-        return toOptions(Object.keys(STATE_DISTRICTS));
-      case 'districts':
-        return toOptions(
-          STATE_DISTRICTS[
-            String(values[name === 'propertyDistrict' ? 'propertyState' : 'state'] ?? '')
-          ] ?? [],
-        );
-      case 'updateFields':
-        return toOptions(UPDATE_FIELDS[String(values.section ?? '')] ?? []);
-      case 'ownEntries': {
-        const own = [
-          ...(career.data ?? []).map(
-            (x) => `Career: ${x.designation}, ${x.postingIn ?? x.department}`,
-          ),
-          ...(leaves.data ?? []).slice(0, 6).map((x) => `Leave: ${x.type}, ${x.from}`),
-          ...(trainings.data ?? []).map((x) => `Training: ${x.type}`),
-          ...(travels.data ?? []).map((x) => `Travel: ${x.place}, ${x.from}`),
-          ...(benefits.data ?? []).map((x) => `Benefits: ${x.summary}`),
+      case 'postingPlaces':
+        return toOptions(POSTING_PLACES);
+      case 'postingDepartments':
+        return toOptions(secretariat ? DEPARTMENTS : DISTRICT_DEPARTMENTS);
+      case 'postingDesignations':
+        return toOptions(secretariat ? SECRETARIAT_DESIGNATIONS : DISTRICT_DESIGNATIONS);
+      case 'ownEntries':
+        return [
+          ...toOptions(ownTargets(career.data).map((x) => x.label)),
+          { value: 'Something else', label: t('form.somethingElse') },
         ];
-        return [...toOptions(own), { value: 'Something else', label: t('form.somethingElse') }];
-      }
       default:
         return [];
     }
@@ -136,43 +130,5 @@ export function DynamicField({ type, def, values, errors, set, options }: Props)
           options={options}
         />
       );
-    case 'repeat': {
-      const rows = ((v as Values[] | undefined) ?? [{}]) as Values[];
-      const put = (next: Values[]) => set(def.name, next);
-      return (
-        <fieldset>
-          <legend>{label}</legend>
-          {rows.map((row, i) => (
-            <div key={i} className="form-grid repeat-row">
-              {def.sub!.map((sf) => (
-                <TextField
-                  key={sf.name}
-                  name={`${type}-${def.name}-${i}-${sf.name}`}
-                  label={c(type, `f.${def.name}.${sf.name}`, sf.label)}
-                  value={row[sf.name] ?? ''}
-                  onChange={(x) => put(rows.map((r, j) => (j === i ? { ...r, [sf.name]: x } : r)))}
-                />
-              ))}
-              {rows.length > 1 && (
-                <button
-                  type="button"
-                  className="ux4g-btn-text-primary ux4g-btn-s"
-                  onClick={() => put(rows.filter((_, j) => j !== i))}
-                >
-                  {t('form.remove')}
-                </button>
-              )}
-            </div>
-          ))}
-          <button
-            type="button"
-            className="ux4g-btn-outline-primary ux4g-btn-s"
-            onClick={() => put([...rows, {}])}
-          >
-            {def.addLabel ? c(type, `add.${def.name}`, def.addLabel) : t('form.addAnother')}
-          </button>
-        </fieldset>
-      );
-    }
   }
 }

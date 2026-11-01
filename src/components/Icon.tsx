@@ -28,6 +28,12 @@ const NAMES: Record<string, string> = {
   info: 'info',
   warning: 'warning',
   globe: 'language',
+  medical: 'medical_services',
+  edit: 'edit',
+  promotion: 'trending_up',
+  work: 'work',
+  money: 'payments',
+  upload_file: 'upload_file',
 };
 
 export type IconName = keyof typeof NAMES | (string & {});

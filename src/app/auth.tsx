@@ -6,6 +6,17 @@ import { Dialog } from '@/components/Dialog';
 import { features } from '@/config/features';
 import { session } from '@/data/store';
 
+/** Sign out: ends the session, clears cached data and returns to /login. */
+export function useSignOut() {
+  const nav = useNavigate();
+  const qc = useQueryClient();
+  return () => {
+    session.end();
+    qc.clear();
+    nav('/login', { replace: true });
+  };
+}
+
 /** Routes needing sign-in redirect to /login and return afterwards. */
 export function RequireAuth({ children }: { children: ReactNode }) {
   const loc = useLocation();

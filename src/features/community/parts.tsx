@@ -6,7 +6,7 @@ import { Tag } from '@/components/Tag';
 import { ToggleButton } from '@/components/ToggleButton';
 import { useMut } from '@/data/hooks';
 import { formatDate } from '@/domain/dates';
-import type { Article, Idea, PersonRef, Post } from '@/domain/types';
+import type { Idea, PersonRef, Post } from '@/domain/types';
 
 export const useLoc = () => (useTranslation().i18n.language === 'ta' ? 'ta-IN' : 'en-IN');
 
@@ -46,7 +46,7 @@ export function IdeaCard({ idea }: { idea: Idea }) {
         </div>
       </div>
       <h3 className="ux4g-heading-xs-strong ux4g-mt-s">
-        <Link to={`/community/ideas/${idea.id}`} className="stretch">
+        <Link to={`/community/proposals/${idea.id}`} className="stretch">
           {idea.title}
         </Link>
       </h3>
@@ -71,7 +71,7 @@ export function PostRow({ post }: { post: Post }) {
   const author = useAuthor();
   const excerpt = post.body.replace(/<[^>]+>/g, ' ');
   return (
-    <Link to={`/community/discussions/${post.id}`} className="ux4g-list-item list-row post-row">
+    <Link to={`/community/discourse/${post.id}`} className="ux4g-list-item list-row post-row">
       <span className="ux4g-list-item-row">
         <span className="ux4g-list-item-start list-row-main">
           <span className="tags">
@@ -91,45 +91,5 @@ export function PostRow({ post }: { post: Post }) {
         </span>
       </span>
     </Link>
-  );
-}
-
-export function ArticleCard({ a }: { a: Article }) {
-  const { t } = useTranslation('community');
-  const save = useMut('toggleSaved');
-  return (
-    <article className="ux4g-card ux4g-card-outline ux4g-card-vertical card-pad article-card">
-      <div className="card-image article-lead" aria-hidden="true">
-        {a.leadImageUrl ? <img src={a.leadImageUrl} alt="" /> : <span className="lead-tint" />}
-      </div>
-      <div className="tags">
-        {a.status === 'draft' && <Tag>{t('knowledge.draft')}</Tag>}
-        {a.kind === 'handover-note' && <Tag>{t('knowledge.handoverNote')}</Tag>}
-      </div>
-      <h3 className="ux4g-heading-xs-strong ux4g-mt-xs">
-        <Link to={`/community/knowledge/${a.id}`} className="stretch">
-          {a.title}
-        </Link>
-      </h3>
-      <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
-        {a.authorRole}
-        {a.district ? `, ${a.district}` : ''}
-      </p>
-      <p className="clamp-2 ux4g-mt-xs">{a.summary}</p>
-      <div className="tags ux4g-mt-xs">
-        {a.tags.map((x) => (
-          <Tag key={x}>{x}</Tag>
-        ))}
-      </div>
-      <div className="card-foot">
-        <ToggleButton
-          label={t('knowledge.save')}
-          onLabel={t('knowledge.saved')}
-          icon="bookmark"
-          pressed={a.savedByMe}
-          onChange={(on) => save.mutateAsync(['article', a.id, on])}
-        />
-      </div>
-    </article>
   );
 }

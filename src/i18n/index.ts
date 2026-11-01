@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { features } from '@/config/features';
+import { LABELS } from '@/config/labels';
 
 type Catalogue = Record<string, { default: Record<string, unknown> }>;
 const en = import.meta.glob('./en/*.json', { eager: true }) as Catalogue;
@@ -28,16 +29,23 @@ try {
   /* storage unavailable */
 }
 
+/** Official page names live in config/labels.ts. They are merged in as common:nav.*. */
+const enResources = toResources(en) as Record<string, Record<string, unknown>>;
+enResources.common = {
+  ...enResources.common,
+  nav: { ...(enResources.common.nav as object), ...LABELS },
+};
+
 i18n
   .use({ type: 'postProcessor', name: 'pseudo', process: (value: string) => stretch(value) })
   .use(initReactI18next)
   .init({
-    resources: { en: toResources(en), ta: toResources(ta) },
+    resources: { en: enResources, ta: toResources(ta) },
     lng:
       saved && features.i18n.enabledLocales.includes(saved) ? saved : features.i18n.defaultLocale,
     fallbackLng: 'en',
     supportedLngs: ['en', 'ta'],
-    ns: Object.keys(toResources(en)),
+    ns: Object.keys(enResources),
     defaultNS: 'common',
     returnEmptyString: false, // empty Tamil values fall back to English
     interpolation: { escapeValue: false },

@@ -23,7 +23,7 @@ export default function AwardsPage() {
   const q = useQ('awards');
   return (
     <>
-      <RouteHeader id="learn.awards" />
+      <RouteHeader id="community.awards" />
       <UrlTabs tabs={tabs} />
       <div id="tabpanel" role="tabpanel" aria-labelledby={`tab-${tab}`}>
         <QueryView query={q} skeleton="card" skeletonCount={3}>
