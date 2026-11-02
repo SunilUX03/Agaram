@@ -433,7 +433,8 @@ export function buildSeed(now = new Date()): Db {
     timeline: tl,
     createdAt: at(d),
     submittedAt: status === 'draft' ? undefined : at(d),
-    updatedAt: at(d + 1),
+    // Never later than now: a request cannot have been updated in the future, whatever the time of day.
+    updatedAt: new Date(Math.min(new Date(at(d + 1)).getTime(), now.getTime())).toISOString(),
     ...extra,
   });
   const requests: T.Request[] = [
