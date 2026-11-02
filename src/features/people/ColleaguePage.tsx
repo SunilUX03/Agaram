@@ -112,9 +112,11 @@ export default function ColleaguePage() {
       c.postedSince
         ? {
             label: t('colleague.since'),
-            value: new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' }).format(
-              new Date(c.postedSince),
-            ),
+            value: new Intl.DateTimeFormat(loc === 'ta-IN' ? 'ta-IN' : 'en-US', {
+              month: 'long',
+              year: 'numeric',
+              timeZone: 'Asia/Kolkata',
+            }).format(new Date(c.postedSince)),
           }
         : undefined,
       c.officeAddress ? { label: t('colleague.officeAddress'), value: c.officeAddress } : undefined,

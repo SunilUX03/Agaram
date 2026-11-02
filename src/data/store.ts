@@ -12,7 +12,8 @@ function load(): Db {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as { day: string; db: Db };
-      if (parsed.day === VERSION_DAY()) return parsed.db; // dates are relative to today, so reseed each day
+      if (parsed.day === VERSION_DAY() && Array.isArray(parsed.db.colleagues?.[0]?.languages))
+        return parsed.db; // dates are relative to today, so reseed each day
     }
   } catch {
     /* ignore and reseed */

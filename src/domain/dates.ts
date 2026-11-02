@@ -2,6 +2,21 @@ import i18n from 'i18next';
 
 const TZ = 'Asia/Kolkata';
 
+const EN_MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
 /** The date locale for the chosen language: English uses en-IN, Tamil uses ta-IN, nothing else. */
 export const dateLocale = (language?: string) =>
   (language ?? i18n.language ?? 'en').toLowerCase().startsWith('ta') ? 'ta-IN' : 'en-IN';
@@ -24,17 +39,28 @@ export function formatDMY(date: Date): string {
 
 /** "12 Nov 2026" in the active locale, Asia/Kolkata. */
 export function formatDate(value: Date | string | number, locale?: string): string {
-  return new Intl.DateTimeFormat(dateLocale(locale), {
+  const loc = dateLocale(locale);
+  if (loc === 'ta-IN')
+    return new Intl.DateTimeFormat(loc, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      timeZone: TZ,
+    }).format(new Date(value));
+  // English never depends on the browser's locale data: some browsers print Tamil month names for en-IN.
+  const parts = new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
-    month: 'short',
+    month: 'numeric',
     year: 'numeric',
     timeZone: TZ,
-  }).format(new Date(value));
+  }).formatToParts(new Date(value));
+  const get = (t: string) => parts.find((x) => x.type === t)!.value;
+  return `${get('day')} ${EN_MONTHS[Number(get('month')) - 1]} ${get('year')}`;
 }
 
 /** "3:05 PM" in 12-hour form, Asia/Kolkata. */
 export function formatTime(value: Date | string | number, locale?: string): string {
-  return new Intl.DateTimeFormat(dateLocale(locale), {
+  return new Intl.DateTimeFormat(dateLocale(locale) === 'ta-IN' ? 'ta-IN' : 'en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
