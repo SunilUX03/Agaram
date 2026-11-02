@@ -82,6 +82,7 @@
   display: inline-block;
 }
 .menu-pop {
+  background: var(--ux4g-bg-neutral-elevated);
   position: absolute;
   top: calc(100% + 0.25rem);
   left: 0;

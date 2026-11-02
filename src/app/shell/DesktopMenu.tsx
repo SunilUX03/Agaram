@@ -27,6 +27,7 @@ function Dropdown({ item, onNavigate }: { item: NavItem; onNavigate: () => void 
               key={l.to}
               to={l.to}
               role="menuitem"
+              className="menu-pop-item ux4g-body-m-default"
               tabIndex={-1}
               onClick={onNavigate}
               onMouseEnter={() => prefetchPath(l.to)}
