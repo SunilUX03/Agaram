@@ -1,4 +1,10 @@
+import i18n from 'i18next';
+
 const TZ = 'Asia/Kolkata';
+
+/** The date locale for the chosen language: English uses en-IN, Tamil uses ta-IN, nothing else. */
+export const dateLocale = (language?: string) =>
+  (language ?? i18n.language ?? 'en').toLowerCase().startsWith('ta') ? 'ta-IN' : 'en-IN';
 
 export function parseDMY(text: string): Date | null {
   const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(text.trim());
@@ -17,8 +23,8 @@ export function formatDMY(date: Date): string {
 }
 
 /** "12 Nov 2026" in the active locale, Asia/Kolkata. */
-export function formatDate(value: Date | string | number, locale = 'en-IN'): string {
-  return new Intl.DateTimeFormat(locale, {
+export function formatDate(value: Date | string | number, locale?: string): string {
+  return new Intl.DateTimeFormat(dateLocale(locale), {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -27,8 +33,8 @@ export function formatDate(value: Date | string | number, locale = 'en-IN'): str
 }
 
 /** "3:05 PM" in 12-hour form, Asia/Kolkata. */
-export function formatTime(value: Date | string | number, locale = 'en-IN'): string {
-  return new Intl.DateTimeFormat(locale, {
+export function formatTime(value: Date | string | number, locale?: string): string {
+  return new Intl.DateTimeFormat(dateLocale(locale), {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,

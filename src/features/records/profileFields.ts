@@ -1,3 +1,4 @@
+import { formatDate } from '@/domain/dates';
 import type { Officer } from '@/domain/types';
 
 /** Profile field keys (the same keys as `features.profile.fieldAccess`) and the wording shown for them. */
@@ -32,15 +33,7 @@ export const PROFILE_FIELD_LABELS: Record<string, string> = {
 
 export type FieldValue = (o: Officer) => string;
 
-const dmy = (iso?: string) =>
-  iso
-    ? new Intl.DateTimeFormat('en-IN', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        timeZone: 'Asia/Kolkata',
-      }).format(new Date(iso))
-    : '';
+const dmy = (iso?: string) => (iso ? formatDate(iso) : '');
 
 /** The current value of a profile key, as text. */
 export function currentText(key: string, o: Officer): string {

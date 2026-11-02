@@ -359,6 +359,18 @@ await flow('10 Start a discussion anonymously', async (p) => {
   assert.match(await text(p.locator('.post-row').first()), /Anonymous officer/);
 });
 
+await flow('10b A reply opens under its comment', async (p) => {
+  await p.goto(`${BASE}/community/discourse/post-1`);
+  await p.waitForSelector('ul.thread > li.comment');
+  const first = p.locator('ul.thread > li.comment').first();
+  await first.locator('button:has-text("Reply")').first().click();
+  await first.locator('.reply-composer textarea').fill('Thank you, this helped.');
+  await first.locator('button:has-text("Post reply")').click();
+  await first.locator('.reply-composer').waitFor({ state: 'detached' });
+  assert.match(await text(first), /Thank you, this helped\./);
+  assert.equal(await p.locator('.reply-composer').count(), 0);
+});
+
 await flow('11 Find a person or a subject', async (p) => {
   await p.goto(`${BASE}/community/colleagues`);
   await p.fill('input[type=search], #sf-input', 'Karthik');
@@ -370,7 +382,7 @@ await flow('11 Find a person or a subject', async (p) => {
   assert.equal(await p.inputValue('input[type=search], #sf-input'), 'GPF');
   await p.click('.is-hit >> nth=0');
   await p.waitForURL(/\/community\/colleagues\/subject\//);
-  await p.click("a:has-text(\"Open officer's profile\")");
+  await p.click('a:has-text("Open officer\'s profile")');
   await p.waitForURL(/\/community\/colleagues\/col-/);
   await waitText(p, 'Reporting structure');
   await waitText(p, 'Personal numbers are not shown.');

@@ -29,7 +29,9 @@ export function Timeline({ steps, label }: { steps: TimelineStep[]; label?: stri
           aria-current={s.current ? 'step' : undefined}
         >
           <span className="ux4g-journey-indicator" aria-hidden="true">
-            <i className="ux4g-icon-outlined">check</i>
+            <i className="ux4g-icon-outlined" aria-hidden="true">
+              check
+            </i>
           </span>
           <div className="ux4g-journey-info">
             <div className="ux4g-journey-title">

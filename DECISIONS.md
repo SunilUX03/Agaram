@@ -51,3 +51,14 @@ One line of reasoning per choice, newest area last.
 - **Help desk, Accessibility statement, Terms and privacy** footer links have no pages in scope, so they are inert links.
 - **Seed data** reseeds each day, because every date is relative to today.
 - **Static build** uses hash URLs (`npm run build:static`) so it runs from any folder or file host.
+
+## Audit round 1
+
+- **Photo is locked, not removed.** The avatar stays; a lock badge and tooltip explain who can change it. A `correction` request can still fix it, as for other locked fields.
+- **Balance in the selector** shows for casual leave, restricted holiday, earned leave and both half-pay types only. `0 left` stays selectable and keeps the existing warning.
+- **Replies are one level deep.** A reply to a reply attaches to the top-level comment and starts with "@Name". The composer text is a plain "Post reply"; Escape cancels, Ctrl or Cmd+Enter posts. The viewport meta has `interactive-widget=resizes-content` so the composer stays above the phone keyboard.
+- **Reporting structure (defaults chosen).** Each department has one top post. In the Public Department the Additional Secretary post has eight direct reports (the "8 or more" case); elsewhere a post reports to the one two places above. An officer reports to the nearest filled post above, so a vacant post is skipped. Every officer's designation is the title of the post they hold. Section subjects shown as "Handles" are the first eight of the post, as links to the section page.
+- **Mock numbers.** Office phones use `+91 44 0000 11nn`; addresses and previous postings are generated from the seed. No personal phone, personal email, date of birth, home address, religion, caste, class, property or medical data is on a colleague.
+- **Awards.** "Closes in {n} days" is emphasised (bold, primary text colour) at 30 days or fewer, set by `URGENT_DAYS`. Closed cards use the neutral soft background. Short card text (`summary`, `whoCanApply`) and the full text (`description`, `eligibility`, `timeline`) are separate fields.
+- **Dates.** The cause of Tamil month names in English text was Tamil being the chosen date locale while the Tamil catalogue is still empty; one function now decides the date locale from the chosen language, and a test fails if English pages show Tamil characters.
+- **Icons.** Ligature text is always inside an `aria-hidden` icon; the automated check also fails on unnamed buttons and links.

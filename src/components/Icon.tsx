@@ -1,5 +1,5 @@
 /** Material-style icon names used by UX4G's `ux4g-icon-outlined` font (ligatures). */
-const NAMES: Record<string, string> = {
+export const NAMES: Record<string, string> = {
   home: 'home',
   file: 'description',
   requests: 'forum',

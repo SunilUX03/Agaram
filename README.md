@@ -99,20 +99,32 @@ Home is provisional. Its sections come from `features.home.sections` in `src/con
 
 ## Switchable options (`src/config/features.ts`)
 
-| Setting                                          | Default                  | What it controls                                                             |
-| ------------------------------------------------ | ------------------------ | ---------------------------------------------------------------------------- |
-| `LABELS` (`src/config/labels.ts`)                | the official names       | Every menu, page and tab name. Merged into the English catalogue as `nav.*`  |
-| `nav.showHomeLink`                               | `false`                  | A visible "Home" link next to the two sections                               |
-| `home.sections`, `home.quickActions`             | the seven sections       | Order, visibility of Home sections and the six tiles                         |
-| `services.pastRecords`                           | leave, medical, GPF only | Which cards offer "Add a past ..."                                           |
-| `profile.fieldAccess`                            | the lists in the spec    | Which profile fields are locked and which are editable                       |
-| `requests.officerOrderDetails`                   | `optional`               | The order-details block on service forms: `optional`, `hidden` or `required` |
-| `uploads.maxSizeMB`, `uploads.accept`            | `10`, pdf/jpg/png        | File limits for proofs. Community attachments keep 25 MB                     |
-| `features.anonymousPosts`, `features.askSeniors` | `true`, `true`           | The two Discourse options                                                    |
-| `community.pages`                                | all on                   | A page switched off leaves the menu and its route shows the 404 page         |
-| `medical.concurrenceLabel`                       | "Medical concurrence"    | Label of the read-only column in Medical history                             |
-| `i18n.defaultLocale`, `i18n.enabledLocales`      | `en`, `[en, ta]`         | Default language and whether the Tamil switch shows                          |
-| `session.idleMinutes`                            | `20`                     | Time before the session warning                                              |
+| Setting                                                    | Default                  | What it controls                                                             |
+| ---------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------- |
+| `LABELS` (`src/config/labels.ts`)                          | the official names       | Every menu, page and tab name. Merged into the English catalogue as `nav.*`  |
+| `nav.showHomeLink`                                         | `false`                  | A visible "Home" link next to the two sections                               |
+| `home.sections`, `home.quickActions`                       | the seven sections       | Order, visibility of Home sections and the six tiles                         |
+| `services.pastRecords`                                     | leave, medical, GPF only | Which cards offer "Add a past ..."                                           |
+| `approver.title`                                           | "Under Secretary"        | The approver's title in every string (internal role id stays `approver`)     |
+| `colleagues.showCareerHistory`, `colleagues.showEducation` | `true`, `true`           | Previous postings and Qualifications cards on a colleague profile            |
+| `profile.fieldAccess`                                      | the lists in the spec    | Which profile fields are locked and which are editable                       |
+| `requests.officerOrderDetails`                             | `optional`               | The order-details block on service forms: `optional`, `hidden` or `required` |
+| `uploads.maxSizeMB`, `uploads.accept`                      | `10`, pdf/jpg/png        | File limits for proofs. Community attachments keep 25 MB                     |
+| `features.anonymousPosts`, `features.askSeniors`           | `true`, `true`           | The two Discourse options                                                    |
+| `community.pages`                                          | all on                   | A page switched off leaves the menu and its route shows the 404 page         |
+| `medical.concurrenceLabel`                                 | "Medical concurrence"    | Label of the read-only column in Medical history                             |
+| `i18n.defaultLocale`, `i18n.enabledLocales`                | `en`, `[en, ta]`         | Default language and whether the Tamil switch shows                          |
+| `session.idleMinutes`                                      | `20`                     | Time before the session warning                                              |
+
+## Audit round 1 (what changed)
+
+- **Photo is locked.** It sits in `profile.fieldAccess.locked`; the data layer refuses a write with the same `locked-field:photo` error as other locked fields. The header shows a lock badge with the tooltip "This detail can only be changed by the department."
+- **Leave type shows the balance.** The selector shows `· 12 left` beside types that have a balance, from the same data as Leave Balance (`1 day left`, `0 left`); a helper line reads "You have {n} days of {type} left."
+- **Under Secretary.** One config value, `approver.title`. Strings use `{{approver}}`; `src/test/copy.test.ts` fails if the old title for the approver appears anywhere.
+- **Replies open under the comment** (`src/features/community/Thread.tsx`, used by Discourse and Policy Proposals). One composer at a time, drafts kept in memory, one visible nesting level, "@Name" for replies to replies, two replies shown then "View {n} more replies".
+- **Colleague profile and section page** use real data. Reporting is derived: `getReportingLine(all, id)` and `getDirectReports(all, id)` in `src/domain/people.ts`; each `OrgPost` has `reportsToPostId`, each `Colleague` has `postId` and `reportsToId`.
+- **Awards** are grouped (Open to apply, Closed) in a two-column grid from 1024 px; the full text is in a "View details" panel.
+- **Dates and icons.** `formatDate`/`formatTime` pick `en-IN` for English and `ta-IN` for Tamil (`dateLocale`). `src/test/language-icons.test.tsx` checks every route for Tamil characters in English, icon names read as text, and unnamed buttons or links.
 
 ## Swapping the mock data layer for a real API
 
