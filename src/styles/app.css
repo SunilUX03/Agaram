@@ -1525,3 +1525,83 @@ dd {
 .profile-side > section > h2 {
   margin-bottom: var(--ux4g-gap-row-s);
 }
+
+/* Awards. Two columns from 1024 px, one below. Never three. */
+.award-group + .award-group {
+  margin-top: var(--ux4g-gap-row-xl);
+}
+.award-group > h2 {
+  margin-bottom: var(--ux4g-gap-row-m);
+}
+.award-grid {
+  display: grid;
+  gap: var(--ux4g-gap-row-l);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 1024px) {
+  .award-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.award-card {
+  height: 100%;
+}
+.award-card .ux4g-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ux4g-gap-row-s);
+  height: 100%;
+  padding: var(--ux4g-padding-l);
+}
+.award-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ux4g-gap-row-xs);
+}
+.award-urgent {
+  font-weight: 600;
+  color: var(--ux4g-text-neutral-primary);
+}
+.award-title {
+  overflow-wrap: anywhere;
+}
+.award-divider {
+  border: 0;
+  border-top: 1px solid var(--ux4g-border-color-neutral-subtle);
+  width: 100%;
+  margin: var(--ux4g-padding-xs) 0;
+}
+.award-facts {
+  display: grid;
+  gap: var(--ux4g-gap-row-m);
+}
+.award-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.award-foot {
+  margin-top: auto;
+  padding-top: var(--ux4g-padding-s);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ux4g-gap-row-s);
+}
+.award-next {
+  flex-basis: 100%;
+}
+.award-card.is-closed {
+  background: var(--ux4g-bg-neutral-soft);
+}
+.person-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ux4g-gap-row-s);
+}
+.person-row > span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}

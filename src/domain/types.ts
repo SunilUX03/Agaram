@@ -333,8 +333,14 @@ export interface Award {
   id: string;
   name: string;
   description: string;
+  /** One short sentence for the card. */
+  summary: string;
   eligibility: string;
+  /** A short answer to "who can apply", for the card. */
+  whoCanApply: string;
   timeline: string;
+  resultsOn?: string;
+  nextCycle?: string;
   opensOn?: string;
   closesOn?: string;
   link?: string;

@@ -1083,7 +1083,11 @@ export function buildSeed(now = new Date()): Db {
     {
       id: 'a1',
       name: 'Excellence in Public Administration',
-      description: 'Recognises outstanding work that improved services for citizens.',
+      summary: 'Recognises outstanding work that improved services for citizens.',
+      description:
+        'Recognises outstanding work that improved services for citizens. Nominations are judged on the change citizens noticed, the evidence for it, and whether other offices could repeat it.',
+      whoCanApply: 'Civil servants with five or more years of service',
+      resultsOn: dateOnly(120),
       eligibility: 'Civil servants with at least five years of service.',
       timeline: 'Applications close in the next two months. Results are announced in January.',
       opensOn: dateOnly(-20),
@@ -1097,7 +1101,11 @@ export function buildSeed(now = new Date()): Db {
     {
       id: 'a2',
       name: 'Innovation in Governance',
-      description: 'For new methods that made a scheme easier to use.',
+      summary: 'For new methods that made a scheme easier to use.',
+      description:
+        'For new methods that made a scheme easier to use. Teams may apply together; the application should say what changed and how it was measured.',
+      whoCanApply: 'Any serving officer or team',
+      resultsOn: dateOnly(180),
       eligibility: 'Any serving officer or team.',
       timeline: 'Open until the end of the financial year.',
       opensOn: dateOnly(-5),
@@ -1108,7 +1116,11 @@ export function buildSeed(now = new Date()): Db {
     {
       id: 'a3',
       name: 'Service to Rural Communities',
-      description: 'For sustained work in remote areas.',
+      summary: 'For sustained work in remote areas.',
+      description:
+        'For sustained work in remote areas, such as hill, coastal and border blocks, over at least two years.',
+      whoCanApply: 'Officers posted in rural districts',
+      nextCycle: 'opens next year',
       eligibility: 'Officers posted in rural districts.',
       timeline: 'Last cycle closed. The next cycle opens next year.',
       opensOn: dateOnly(-200),
@@ -1118,7 +1130,11 @@ export function buildSeed(now = new Date()): Db {
     {
       id: 'a4',
       name: 'Disaster Response Commendation',
-      description: 'For leadership during a flood, cyclone or similar event.',
+      summary: 'For leadership during a flood, cyclone or similar event.',
+      description:
+        'For leadership during a flood, cyclone or similar event, judged on speed of relief, coordination and care for the most affected.',
+      whoCanApply: 'Officers who led a response in the past year',
+      nextCycle: 'opens in the next monsoon season',
       eligibility: 'Officers who led a response in the past year.',
       timeline: 'Closed. Awardees are listed.',
       opensOn: dateOnly(-300),

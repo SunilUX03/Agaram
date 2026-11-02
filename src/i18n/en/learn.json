@@ -65,6 +65,20 @@
     "pick": "Choose an award",
     "empty": "No awardees recorded yet.",
     "year": "{{year}}",
-    "by": "{{name}}, {{designation}}"
+    "by": "{{name}}, {{designation}}",
+    "open": "Open to apply ({{n}})",
+    "closed": "Closed ({{n}})",
+    "closesIn_one": "Closes in {{count}} day",
+    "closesIn_other": "Closes in {{count}} days",
+    "who": "Who can apply",
+    "windowLabel": "Application window",
+    "windowValue": "{{from}} to {{to}}",
+    "details": "View details",
+    "next": "Next cycle: {{text}}",
+    "results": "Results date",
+    "link": "Official site",
+    "awardees": "Awardees",
+    "detailsTitle": "{{name}}",
+    "noWindow": "Dates not announced"
   }
 }
