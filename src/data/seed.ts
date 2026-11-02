@@ -3,6 +3,7 @@ import { formatDMY } from '@/domain/dates';
 import type * as T from '@/domain/types';
 import type { IdeaStatus } from '@/domain/status';
 import { rangeTitle } from '@/config/requests';
+import { features } from '@/config/features';
 
 const DAY = 86400000;
 export const SAMPLE_PDF = `${import.meta.env.BASE_URL}sample.pdf`;
@@ -494,7 +495,12 @@ export function buildSeed(now = new Date()): Db {
       -6,
       [
         step('Sent', -6, 'You'),
-        step('Returned', -5, 'Super admin', 'The travel dates do not match your earned leave.'),
+        step(
+          'Returned',
+          -5,
+          features.approver.title,
+          'The travel dates do not match your earned leave.',
+        ),
       ],
       {
         mode: 'record',
@@ -509,7 +515,7 @@ export function buildSeed(now = new Date()): Db {
       'approved',
       { type: 'Earned leave', dates: { from: dmy(-95), to: dmy(-89) } },
       -100,
-      [step('Sent', -100, 'You'), step('Approved', -97, 'Super admin')],
+      [step('Sent', -100, 'You'), step('Approved', -97, features.approver.title)],
       { mode: 'apply' },
     ),
     R(
@@ -519,7 +525,7 @@ export function buildSeed(now = new Date()): Db {
       'approved',
       { type: 'Part final', purpose: 'House construction', amount: '250000', date: dmy(-210) },
       -215,
-      [step('Sent', -215, 'You'), step('Approved', -212, 'Super admin')],
+      [step('Sent', -215, 'You'), step('Approved', -212, features.approver.title)],
       { mode: 'apply' },
     ),
     R(
@@ -539,7 +545,7 @@ export function buildSeed(now = new Date()): Db {
       -125,
       [
         step('Sent', -125, 'You'),
-        step('Not approved', -121, 'Super admin', 'Dental care is not covered.'),
+        step('Not approved', -121, features.approver.title, 'Dental care is not covered.'),
       ],
       { mode: 'apply', rejectReason: 'Dental care is not covered under this scheme.' },
     ),

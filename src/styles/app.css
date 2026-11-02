@@ -1352,12 +1352,6 @@ a.list-row-main {
   background: var(--ux4g-bg-primary-strong);
   border: 2px solid var(--ux4g-bg-neutral-elevated);
 }
-.photo-preview {
-  width: 5rem;
-  height: 5rem;
-  border-radius: var(--ux4g-radius-full);
-  object-fit: cover;
-}
 .change-table {
   width: 100%;
 }
@@ -1381,4 +1375,33 @@ a.list-row-main {
 dd {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+/* The photo is locked: a small lock sits on its corner. */
+.avatar-locked {
+  position: relative;
+  display: inline-flex;
+}
+.avatar-lock {
+  position: absolute;
+  right: -0.125rem;
+  bottom: -0.125rem;
+  display: inline-flex;
+  padding: var(--ux4g-padding-2xs);
+  border-radius: var(--ux4g-radius-full);
+  background: var(--ux4g-bg-neutral-elevated);
+  border: var(--ux4g-border-width-sm) solid var(--ux4g-border-color-neutral-default);
+}
+
+/* An option with secondary text on the right (for example the days of leave left). */
+.option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--ux4g-gap-row-m);
+  width: 100%;
+}
+.option-hint {
+  color: var(--ux4g-text-neutral-secondary);
+  white-space: nowrap;
 }

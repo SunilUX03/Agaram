@@ -39,7 +39,7 @@ interface Group {
   report?: string;
 }
 
-/** Profile and Career (v2, section 3.2). Locked fields show a lock; editable ones go to the super admin. */
+/** Profile and Career (v2, section 3.2). Locked fields show a lock; editable ones go to the approver. */
 export default function ProfilePage() {
   const { t } = useTranslation('records');
   const officer = useQ('officer');
@@ -66,9 +66,7 @@ export default function ProfilePage() {
         ? 'languages'
         : fromReq === 'officeContact'
           ? 'office'
-          : fromReq === 'photo'
-            ? 'photo'
-            : 'contact'
+          : 'contact'
     : null;
   const shown = panel ?? reqGroup;
   const closePanel = () => {
@@ -80,7 +78,7 @@ export default function ProfilePage() {
     }
   };
 
-  const options = (['contact', 'education', 'languages', 'photo', 'office'] as const).map((g) => ({
+  const options = (['contact', 'education', 'languages', 'office'] as const).map((g) => ({
     label: t(`groups.${g}`),
     onClick: () => setPanel(g),
   }));
@@ -317,7 +315,12 @@ function ProfileTab({
         aria-labelledby="pf-about"
       >
         <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-m">
-          <Avatar name={o.name} photoUrl={o.photoUrl} size={80} />
+          <span className="avatar-locked">
+            <Avatar name={o.name} photoUrl={o.photoUrl} size={80} />
+            <span className="avatar-lock lock" title={t('lock.tip')}>
+              <Icon name="lock" size={14} label={t('lock.tip')} />
+            </span>
+          </span>
           <div className="ux4g-flex-1">
             <h2 id="pf-about" className="ux4g-heading-m-strong">
               {o.salutation} {o.name}
@@ -331,20 +334,17 @@ function ProfileTab({
             <p className="ux4g-mt-xs">
               <StatusChip status="officer:serving" />
             </p>
-            {pendingOf('photo') && (
-              <p className="ux4g-body-s-default ux4g-text-neutral-secondary ux4g-mt-xs">
-                <Tag>{t('pending.chip')}</Tag>{' '}
-                {t('pending.asked2', { value: pendingOf('photo')!.proposedValue })}
-              </p>
-            )}
+            <p className="ux4g-mt-xs">
+              <button
+                type="button"
+                className="ux4g-text-link-m link-label"
+                onClick={() => setReport('Profile: Name')}
+              >
+                {t('profile.reportCorrection')}
+                <span className="sr-only"> {t('groups.about')}</span>
+              </button>
+            </p>
           </div>
-          <button
-            type="button"
-            className="ux4g-btn-outline-primary ux4g-btn-m"
-            onClick={() => onEdit('photo')}
-          >
-            {t('profile.changePhoto')}
-          </button>
         </div>
       </section>
 

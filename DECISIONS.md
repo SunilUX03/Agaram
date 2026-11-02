@@ -28,7 +28,7 @@ One line of reasoning per choice, newest area last.
 
 - **v2 wins over v1.** The two-section structure, the 28 routes, the 8 request types and the 6 statuses replace the first build's 42 pages, 17 types and 8 statuses. Anything not in the v2 route table was deleted: `/file`, `/requests`, `/people`, `/learn`, `/library`, `/desk`, `/account`.
 - **Old v1 links show the 404 page.** There are no redirects, as the spec says a v1 route that is not listed is removed.
-- **One approver.** The interface says "the super admin" in banners and the timeline. No desk or section-officer stages.
+- **One approver, the Under Secretary.** The title is one config value (`approver.title` in `src/config/features.ts`, internal role id `approver`) and is read everywhere: catalogue strings use `{{approver}}` (an i18next default variable), and the repository and seed use the config directly. A rename is one line. No desk or section-officer stages.
 - **Nothing changes the record until approval.** Profile edits, Career entries, past entries and service entries all create requests. A pending change shows the old value, a "Change pending" chip and "You asked for: ...".
 - **Locked fields are enforced in the data layer** (`api.saveRequest` refuses a `profile-edit` that names one), and only a `correction` request can change one. One pending change per field or entry.
 - **Edit panels are large dialogs.** The spec says "side panel on desktop, full-screen sheet on mobile"; the shared full-size UX4G modal does both. Change it in `Dialog` if a true side panel is wanted.

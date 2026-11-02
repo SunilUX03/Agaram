@@ -56,7 +56,7 @@
   },
   "past": {
     "title": "Add a past record",
-    "intro": "For something that already happened and was kept on paper. The super admin will check it before it appears in your record.",
+    "intro": "For something that already happened and was kept on paper. The {{approver}} will check it before it appears in your record.",
     "leave": "Leave",
     "ltc": "Leave Travel Concession (LTC)",
     "medical": "Medical reimbursement",
@@ -81,13 +81,13 @@
     "withdraw": "Withdraw",
     "viewRecord": "View in my record",
     "startAgain": "Start again",
-    "returned": "The super admin returned this request. Reason: {{reason}}",
+    "returned": "The {{approver}} returned this request. Reason: {{reason}}",
     "rejected": "This request was not approved. Reason: {{reason}}",
     "progress": "Progress",
     "ref": "Reference number:",
     "steps": {
       "sent": "Sent",
-      "review": "Under review by the super admin",
+      "review": "Under review by the {{approver}}",
       "decision": "Decision",
       "approved": "Approved",
       "returned": "Returned",
@@ -103,7 +103,7 @@
     "view": "View",
     "download": "Download",
     "withdrawTitle": "Withdraw this request?",
-    "withdrawBody": "The super admin will not look at it. You can start again later.",
+    "withdrawBody": "The {{approver}} will not look at it. You can start again later.",
     "keep": "Keep it",
     "withdrawn": "Your request has been withdrawn."
   },
@@ -115,7 +115,7 @@
     "allTypes": "All types",
     "noRequests": "No requests yet. Use New request when you need to ask for something.",
     "changes": "Changes waiting for approval",
-    "changesTag": "Your profile and Career edits that the super admin has not decided yet.",
+    "changesTag": "Your profile and Career edits that the {{approver}} has not decided yet.",
     "goto": "Go to",
     "tabs": {
       "all": "All",
@@ -150,7 +150,7 @@
     "withdrawBody": "The old value stays as it is.",
     "keep": "Keep it",
     "withdrawn": "Your change has been withdrawn.",
-    "returned": "The super admin returned {{group}}. Reason: {{reason}}",
+    "returned": "The {{approver}} returned {{group}}. Reason: {{reason}}",
     "editAgain": "Edit and send again"
   },
   "lock": {
@@ -163,8 +163,8 @@
     "education": "Education",
     "posting": "Current posting",
     "languages": "Languages",
-    "photo": "Photo",
-    "office": "Office contact"
+    "office": "Office contact",
+    "about": "About me"
   },
   "fields": {
     "identityNo": "Identity No",
@@ -201,13 +201,12 @@
     "tabCareer": "Career",
     "update": "Update my details",
     "edit": "Edit",
-    "changePhoto": "Change photo",
     "reportCorrection": "Report a correction",
     "changeInCareer": "Change this in Career.",
     "openCareer": "Open Career"
   },
   "panel": {
-    "intro": "Locked details are shown for reference. The super admin checks your change before it appears in your record.",
+    "intro": "Locked details are shown for reference. The {{approver}} checks your change before it appears in your record.",
     "cancel": "Cancel",
     "send": "Send for approval",
     "sent": "Your change has been sent for approval.",
@@ -216,7 +215,6 @@
       "contact": "Contact and address",
       "education": "Education",
       "languages": "Languages",
-      "photo": "Photo",
       "office": "Office contact"
     },
     "errEmail": "Enter a valid email address.",
@@ -232,8 +230,6 @@
     "officePhone": "Office phone",
     "officeFax": "Fax",
     "officeMobile": "Office mobile",
-    "photo": "Photo (JPG or PNG)",
-    "photoAlt": "Your photo",
     "certificate": "Certificate",
     "eduRow": "Education {{n}}",
     "eduLevel": "Level",
@@ -248,7 +244,7 @@
   },
   "correction": {
     "title": "Report a correction",
-    "intro": "Tell the department what is wrong and what it should say. The super admin will check it.",
+    "intro": "Tell the department what is wrong and what it should say. The {{approver}} will check it.",
     "sent": "Your correction has been sent for approval.",
     "failed": "We could not send that. Try again."
   },
@@ -319,7 +315,11 @@
       "rh": "Restricted holiday (RH)",
       "el": "Earned leave (EL)",
       "hpl": "Half pay leave (HPL)"
-    }
+    },
+    "left": "{{n}} left",
+    "leftOne": "1 day left",
+    "balanceHelp_one": "You have {{count}} day of {{type}} left.",
+    "balanceHelp_other": "You have {{count}} days of {{type}} left."
   },
   "medical": {
     "readonly": "set by the department after review"
@@ -342,7 +342,7 @@
     "sent": "Your request has been sent for approval.",
     "pastTitle": "Add a past record: {{title}}",
     "pastTagline": "Something that already happened, kept on paper.",
-    "pastBanner": "You are adding something that already happened, such as leave taken on paper. The super admin will check it before it appears in your record.",
+    "pastBanner": "You are adding something that already happened, such as leave taken on paper. The {{approver}} will check it before it appears in your record.",
     "usesDays": "This uses {{n}} days. {{m}} will be left.",
     "usesDaysOnly": "This uses {{n}} days.",
     "orderTitle": "Order details, if you have them",

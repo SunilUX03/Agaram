@@ -127,6 +127,8 @@ export function TextArea({
 export interface Option {
   value: string;
   label: string;
+  /** Secondary text on the right of the option, read with it (for example "12 left"). */
+  hint?: string;
 }
 
 /**
@@ -269,7 +271,11 @@ export function Select({
           disabled={f.locked}
           onClick={() => (open ? setOpen(false) : openAt())}
         >
-          <span className="ux4g-dropdown-value">{selected?.label ?? placeholder ?? ''}</span>
+          <span className="ux4g-dropdown-value">
+            {selected
+              ? `${selected.label}${selected.hint ? ` · ${selected.hint}` : ''}`
+              : (placeholder ?? '')}
+          </span>
           <i className="ux4g-icon-outlined ux4g-dropdown-caret" aria-hidden="true">
             expand_more
           </i>
@@ -293,7 +299,14 @@ export function Select({
             onMouseDown={(e) => (e.preventDefault(), pick(o.value))}
             onMouseEnter={() => setActive(i)}
           >
-            {o.label || '\u00a0'}
+            {o.hint ? (
+              <span className="option-row">
+                <span>{o.label}</span>
+                <span className="option-hint">{o.hint}</span>
+              </span>
+            ) : (
+              o.label || '\u00a0'
+            )}
           </li>
         ))}
         {all.length === 0 && (

@@ -6,7 +6,7 @@ import type { LeaveBalance, Mode, Request } from './types';
 export type Values = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 export type Files = Record<string, { name: string; size: number; type: string }[]>;
 
-/** Allowed status moves (v2, section 6). The super admin's moves are simulated by the demo controls. */
+/** Allowed status moves (v2, section 6). The approver's moves are simulated by the demo controls. */
 export const TRANSITIONS: Record<RequestStatus, RequestStatus[]> = {
   draft: ['submitted'],
   submitted: ['approved', 'returned', 'rejected', 'withdrawn'],
@@ -247,3 +247,18 @@ export const typeOf = (r: Pick<Request, 'type'>) => REQUEST_TYPES.find((t) => t.
 
 /** Message key for the "next step" line shown on My requests. */
 export const nextStepKey = (status: RequestStatus) => `requests:next.${status}`;
+
+/** The leave types that draw on a balance, with the short name shown beside them. */
+export const LEAVE_SHORT: Record<string, string> = {
+  'Casual leave': 'CL',
+  'Restricted holiday': 'RH',
+  'Earned leave': 'EL',
+};
+/** Days left for a leave type, or undefined when the type has no balance. */
+export function daysLeft(
+  type: string | undefined,
+  b: LeaveBalance | undefined,
+): number | undefined {
+  const k = balanceKey(type);
+  return k && b ? remaining(b, k) : undefined;
+}

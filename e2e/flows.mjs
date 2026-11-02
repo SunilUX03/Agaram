@@ -55,13 +55,23 @@ const pick = async (p, sel, label) => {
     .first()
     .click();
 };
+/** Leave types show the days left beside them, so the option text is "Casual leave (CL)12 left". */
+const pickLeave = async (p, label, left) => {
+  await p.click('#f-leave-type');
+  if (left)
+    await p.waitForSelector(
+      '#f-leave-type-list [role=option]:has-text("Earned leave (EL)"):has-text("120 left")',
+    );
+  await p.locator(`#f-leave-type-list [role=option]:has-text("${label}")`).first().click();
+  if (left) await waitText(p, `You have ${left} days of Casual leave left.`);
+};
 const radio = (p, label) => p.locator(`label.ux4g-radio:has-text("${label}")`).first().click();
 const sendBtn = (p) => p.click('button:has-text("Send for approval"):visible');
 const newMenu = async (p, item) => {
   await p.click('button[aria-haspopup=menu]:has-text("New request"):visible');
   await p.click(`[role=menuitem]:has-text("${item}")`);
 };
-/** The super admin's decision, through the demo controls (the page is reloaded with ?demo=1). Pass the request id when more than one is waiting. */
+/** The approver's decision, through the demo controls (the page is reloaded with ?demo=1). Pass the request id when more than one is waiting. */
 const decide = async (p, path, button, reason, id) => {
   await p.goto(`${BASE}${path}${path.includes('?') ? '&' : '?'}demo=1`);
   await p.waitForSelector('summary:has-text("Demo controls")');
@@ -84,7 +94,7 @@ await flow('1 Apply for leave', async (p) => {
   await newMenu(p, 'Apply for leave');
   await p.waitForSelector('#f-leave-type');
   assert.equal(await p.locator('input[readonly]').count(), 4); // name, officer ID, designation, department
-  await pick(p, '#f-leave-type', 'Casual leave');
+  await pickLeave(p, 'Casual leave (CL)', 12);
   await p.fill('#f-leave-dates-from', dmy(100));
   await p.fill('#f-leave-dates-to', dmy(101));
   await waitText(p, 'This uses 2 days. 10 will be left.');
@@ -110,7 +120,7 @@ await flow('2 Add a past leave from paper', async (p) => {
   await p.goto(`${BASE}/records/services/leave`);
   await p.click('a:has-text("Add a past leave")');
   await waitText(p, 'You are adding something that already happened');
-  await pick(p, '#f-leave-type', 'Casual leave');
+  await pickLeave(p, 'Casual leave (CL)', 12);
   await p.fill('#f-leave-dates-from', dmy(-620));
   await p.fill('#f-leave-dates-to', dmy(-619));
   await sendBtn(p); // no proof file yet
@@ -280,7 +290,7 @@ await flow('7 Fix a returned request', async (p) => {
   await p.waitForSelector('[role=tab]:has-text("Needs my action") .ux4g-tag-tonal-neutral');
   const action = await text(p.locator('[role=tab]:has-text("Needs my action")'));
   await p.click('.list-row:has-text("Returned to you"):has-text("Leave") >> nth=0');
-  await waitText(p, 'The super admin returned this request. Reason:');
+  await waitText(p, 'The Under Secretary returned this request. Reason:');
   await p.click('a:has-text("Edit and send again")');
   await p.waitForSelector('#f-leave-dates-from');
   await p.fill('#f-leave-dates-from', dmy(200));

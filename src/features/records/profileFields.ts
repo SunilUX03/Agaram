@@ -96,9 +96,11 @@ export interface Target {
 /** Everything an officer can report as wrong: profile fields and Career entries. */
 export function ownTargets(career: import('@/domain/types').CareerEntry[] = []): Target[] {
   return [
-    ...Object.entries(PROFILE_FIELD_LABELS)
-      .filter(([k]) => k !== 'photo')
-      .map(([key, label]) => ({ label: `Profile: ${label}`, kind: 'profile' as const, key })),
+    ...Object.entries(PROFILE_FIELD_LABELS).map(([key, label]) => ({
+      label: `Profile: ${label}`,
+      kind: 'profile' as const,
+      key,
+    })),
     ...career.map((e) => ({ label: careerLabel(e), kind: 'career' as const, key: e.id })),
   ];
 }

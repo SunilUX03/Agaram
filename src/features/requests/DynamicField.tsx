@@ -17,7 +17,7 @@ import {
   type FieldDef,
 } from '@/config/requests';
 import { DEPARTMENTS } from '@/config/options';
-import { isFieldRequired, type Values } from '@/domain/requests';
+import { LEAVE_SHORT, daysLeft, isFieldRequired, type Values } from '@/domain/requests';
 import { useQ } from '@/data/hooks';
 import { ownTargets } from '@/features/records/profileFields';
 import { useCfg } from './cfg';
@@ -25,13 +25,28 @@ import { useCfg } from './cfg';
 /** Resolves a field's option source. Posting lists depend on where the officer is posted. */
 export function useOptions() {
   const career = useQ('career');
+  const balance = useQ('leaveBalance');
   const { t } = useTranslation('requests');
+  const rec = useTranslation('records').t;
   return (ref: FieldDef['options'], values: Values): Option[] => {
     if (Array.isArray(ref)) return toOptions(ref);
     const secretariat = values.postingIn === 'Chennai' || values.postingIn === 'Delhi';
     switch (ref) {
       case 'leaveTypes':
-        return toOptions(LEAVE_TYPES);
+        // Each type that has a balance shows the days left beside it (same data as the Balance tab).
+        return LEAVE_TYPES.map((type) => {
+          const n = daysLeft(type, balance.data);
+          return {
+            value: type,
+            label: LEAVE_SHORT[type] ? `${type} (${LEAVE_SHORT[type]})` : type,
+            hint:
+              n === undefined
+                ? undefined
+                : n === 1
+                  ? rec('leave.leftOne')
+                  : rec('leave.left', { n }),
+          };
+        });
       case 'countries':
         return toOptions(COUNTRIES);
       case 'postingPlaces':
@@ -67,10 +82,21 @@ export function DynamicField({ type, def, values, errors, set, options }: Props)
   const { t } = useTranslation('requests');
   const c = useCfg();
   const label = c(type, `f.${def.name}`, def.label);
+  const rec = useTranslation('records').t;
+  const balance = useQ('leaveBalance');
+  const left =
+    type === 'leave' && def.name === 'type'
+      ? daysLeft(String(values.type ?? ''), balance.data)
+      : undefined;
   const common = {
     name: `${type}-${def.name}`,
     label,
-    help: def.help ? c(type, `h.${def.name}`, def.help) : undefined,
+    help:
+      left !== undefined
+        ? rec('leave.balanceHelp', { count: left, type: String(values.type) })
+        : def.help
+          ? c(type, `h.${def.name}`, def.help)
+          : undefined,
     required: isFieldRequired(def, values),
     error: errors[def.name],
   };

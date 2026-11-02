@@ -124,7 +124,6 @@ function describeChange(key: string, v: unknown): string {
     const o = v as T.Officer['officeContact'];
     return [o.address, o.phone, o.fax, o.mobile].filter(Boolean).join(', ');
   }
-  if (key === 'photo') return 'A new photo';
   return String(v);
 }
 
@@ -194,9 +193,6 @@ function writeProfile(db: Db, key: string, val: unknown) {
     case 'officeContact':
       o.officeContact = clone(val as T.Officer['officeContact']);
       break;
-    case 'photo':
-      o.photoUrl = String(val);
-      break;
     default: {
       // Only a correction may write a locked field.
       const map: Record<string, string> = {
@@ -208,6 +204,7 @@ function writeProfile(db: Db, key: string, val: unknown) {
         officialEmail: 'contact.officialEmail',
         religion: 'religion',
         caste: 'caste',
+        photo: 'photoUrl',
         gender: 'gender',
         batch: 'batch',
         seniorityNumber: 'seniorityNumber',
@@ -516,7 +513,7 @@ export const api = {
       },
       { write: true },
     ),
-  /** Demo control: the super admin's decision on a submitted request. */
+  /** Demo control: the approver's decision on a submitted request. */
   decideRequest: (id: string, to: 'approved' | 'returned' | 'rejected', reason?: string) =>
     run(
       (db) => {
@@ -530,7 +527,7 @@ export const api = {
         addTimeline(
           r,
           to === 'approved' ? 'Approved' : to === 'returned' ? 'Returned' : 'Not approved',
-          'Super admin',
+          features.approver.title,
           to === 'approved' ? undefined : why,
         );
         clearPending(db, r.id);
@@ -564,7 +561,7 @@ export const api = {
           updatedAt: now(),
         };
         addTimeline(r, 'Sent', 'You');
-        addTimeline(r, 'Returned', 'Super admin', r.returnReason);
+        addTimeline(r, 'Returned', features.approver.title, r.returnReason);
         db.requests.unshift(r);
         notify(db, 'request', NOTE.returned(r.title, r.returnReason), `/records/requests/${r.id}`);
         return clone(r);

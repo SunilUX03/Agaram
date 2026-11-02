@@ -8,7 +8,7 @@ import { toOptions } from '@/config/options';
 import { useMut, useQ } from '@/data/hooks';
 import type { Education, Officer, PendingChange, Request } from '@/domain/types';
 
-export type PanelGroup = 'contact' | 'education' | 'languages' | 'photo' | 'office';
+export type PanelGroup = 'contact' | 'education' | 'languages' | 'office';
 const LEVELS = ['Graduate degree', 'Postgraduate degree', 'Doctorate', 'Diploma'];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,7 +20,6 @@ type Draft = {
   languages: string;
   education: Omit<Education, 'id'>[] & { id?: string }[];
   office: Officer['officeContact'];
-  photo: string;
 };
 
 /** The edit panel for one group of editable profile fields. Locked fields in the group are shown read-only. */
@@ -49,7 +48,6 @@ export function EditPanel({
     languages: asked.languagesKnown ?? officer.languages.join(', '),
     education: asked.education ?? officer.qualifications.map((q) => ({ ...q })),
     office: asked.officeContact ?? { ...officer.officeContact },
-    photo: asked.photo ?? '',
   });
   const [cert, setCert] = useState<UploadedFile[]>([]);
   const [tried, setTried] = useState(false);
@@ -75,7 +73,6 @@ export function EditPanel({
       c.education = d.education;
     if (group === 'office' && JSON.stringify(d.office) !== JSON.stringify(officer.officeContact))
       c.officeContact = d.office;
-    if (group === 'photo' && d.photo) c.photo = d.photo;
     return c;
   }, [d, group, officer]);
 
@@ -101,7 +98,6 @@ export function EditPanel({
     });
   if (group === 'education' && Object.keys(changes).length && cert.length === 0)
     errors.cert = common('ui.errors.docRequired', { label: t('panel.certificate') });
-  if (group === 'photo' && !d.photo && tried) errors.photo = common('ui.errors.required');
 
   const keys = Object.keys(changes);
   const blocked = keys.some(busy);
@@ -253,38 +249,6 @@ export function EditPanel({
             error={tried ? errors.mobile : undefined}
             locked={busy('officeContact')}
           />
-        </div>
-      )}
-      {group === 'photo' && (
-        <div>
-          <label htmlFor="pe-photo" className="ux4g-label-l-default ux4g-text-neutral-secondary">
-            {t('panel.photo')}
-          </label>
-          <div className="ux4g-d-flex ux4g-ai-center gap-m ux4g-mt-xs">
-            {(d.photo || officer.photoUrl) && (
-              <img
-                className="photo-preview"
-                src={d.photo || officer.photoUrl}
-                alt={t('panel.photoAlt')}
-              />
-            )}
-            <input
-              id="pe-photo"
-              type="file"
-              accept="image/png,image/jpeg"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (!f) return;
-                const r = new FileReader();
-                r.onload = () => setD((s) => ({ ...s, photo: String(r.result) }));
-                r.readAsDataURL(f);
-              }}
-            />
-          </div>
-          {err('photo') && <p className="ux4g-body-s-default ux4g-text-error">{err('photo')}</p>}
-          {tried && errors.photo && (
-            <p className="ux4g-body-s-default ux4g-text-error">{errors.photo}</p>
-          )}
         </div>
       )}
       {group === 'education' && (

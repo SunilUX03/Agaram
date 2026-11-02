@@ -48,7 +48,7 @@ i18n
     ns: Object.keys(enResources),
     defaultNS: 'common',
     returnEmptyString: false, // empty Tamil values fall back to English
-    interpolation: { escapeValue: false },
+    interpolation: { escapeValue: false, defaultVariables: { approver: features.approver.title } },
     postProcess: pseudo ? ['pseudo'] : false,
   });
 

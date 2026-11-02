@@ -31,7 +31,7 @@ Sign in with any non-empty email or officer ID and any password.
 
 ## Demo controls and test switches
 
-- `?demo=1` opens the floating **Demo controls** panel (remembered for the tab): language, **Reset demo data**, **Force loading / empty / error**, and the super admin's decision on a request waiting for approval: **Approve**, **Return (with a reason)**, **Reject (with a reason)**, plus **Create sample returned request**.
+- `?demo=1` opens the floating **Demo controls** panel (remembered for the tab): language, **Reset demo data**, **Force loading / empty / error**, and the Under Secretary's decision on a request waiting for approval: **Approve**, **Return (with a reason)**, **Reject (with a reason)**, plus **Create sample returned request**.
 - `/dev/components?demo=1` is the component gallery.
 - `?pseudo=1` stretches every string by about 35 percent and wraps it in brackets to check layouts.
 
@@ -52,7 +52,7 @@ e2e              the 14 flows as browser tests
 
 ### The request and approval engine
 
-Every change an officer makes to their record is a **request**, approved by one person: the super admin. There are 8 types, each one entry in `src/config/requests.ts`: `leave`, `ltc`, `medical`, `gpf`, `posting`, `promotion`, `profile-edit`, `correction`. A request has a mode (`apply`, `past`, `record`) and a source (`portal` or `paper`), and moves through 6 statuses: draft, submitted ("Waiting for approval"), returned, approved, rejected, withdrawn. **Nothing changes the record until approval.** Approval effects (add the leave and reduce the balance, add a career entry, write a profile field, and so on) are in `applyApproval` in `src/data/api.ts`. While a profile, posting, promotion or correction request is waiting, the page keeps the old value and shows **Change pending** with "You asked for: ...".
+Every change an officer makes to their record is a **request**, approved by one person: the Under Secretary. There are 8 types, each one entry in `src/config/requests.ts`: `leave`, `ltc`, `medical`, `gpf`, `posting`, `promotion`, `profile-edit`, `correction`. A request has a mode (`apply`, `past`, `record`) and a source (`portal` or `paper`), and moves through 6 statuses: draft, submitted ("Waiting for approval"), returned, approved, rejected, withdrawn. **Nothing changes the record until approval.** Approval effects (add the leave and reduce the balance, add a career entry, write a profile field, and so on) are in `applyApproval` in `src/data/api.ts`. While a profile, posting, promotion or correction request is waiting, the page keeps the old value and shows **Change pending** with "You asked for: ...".
 
 Locked fields are enforced in the data layer, not only in the interface: a `profile-edit` that names a locked field is refused (`locked-field`), and only one pending change per field is allowed. See `features.profile.fieldAccess` and the tests in `src/test/domain.test.ts`.
 
@@ -151,7 +151,7 @@ The flows follow section 8 of the v2 spec: apply for leave, add a past leave, ed
 
 ## Stubbed or simulated
 
-- **The super admin's decision** (approve, return, reject) is simulated with the demo controls.
+- **The Under Secretary's decision** (approve, return, reject) is simulated with the demo controls.
 - **Targeted delivery of "Ask my seniors"** is a flag on the post; nobody is notified.
 - **File storage:** uploads keep only file names and sizes; "View" opens a sample PDF.
 - **Email, SMS and real notifications:** the bell reads the mock store.
@@ -164,5 +164,5 @@ The flows follow section 8 of the v2 spec: apply for leave, add a past leave, ed
 2. Should officers ever be able to change their mobile number or the spelling of their name themselves, or should that stay with the department?
 3. Should Home show circulars (Downloads) or Community highlights first?
 4. Which services should become the next cards after Leave, LTC, Medical and GPF (for example Foreign Visit, House Building Advance, Property)?
-5. Should a second approval stage (for example a section officer) be added later, before the super admin?
+5. Should a second approval stage (for example a section officer) be added later, before the Under Secretary?
 6. Is the "Medical concurrence" column to be kept, and what is its right name?

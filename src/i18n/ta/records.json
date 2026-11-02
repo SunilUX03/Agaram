@@ -163,8 +163,8 @@
     "education": "",
     "posting": "",
     "languages": "",
-    "photo": "",
-    "office": ""
+    "office": "",
+    "about": ""
   },
   "fields": {
     "identityNo": "",
@@ -201,7 +201,6 @@
     "tabCareer": "",
     "update": "",
     "edit": "",
-    "changePhoto": "",
     "reportCorrection": "",
     "changeInCareer": "",
     "openCareer": ""
@@ -216,7 +215,6 @@
       "contact": "",
       "education": "",
       "languages": "",
-      "photo": "",
       "office": ""
     },
     "errEmail": "",
@@ -232,8 +230,6 @@
     "officePhone": "",
     "officeFax": "",
     "officeMobile": "",
-    "photo": "",
-    "photoAlt": "",
     "certificate": "",
     "eduRow": "",
     "eduLevel": "",
@@ -319,7 +315,11 @@
       "rh": "",
       "el": "",
       "hpl": ""
-    }
+    },
+    "left": "",
+    "leftOne": "",
+    "balanceHelp_one": "",
+    "balanceHelp_other": ""
   },
   "medical": {
     "readonly": ""

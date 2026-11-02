@@ -3,6 +3,7 @@ import { api } from '@/data/api';
 import { buildSeed, ME } from '@/data/seed';
 import { resetDb } from '@/data/store';
 import { REQUEST_TYPES, getRequestType, rangeTitle } from '@/config/requests';
+import { features } from '@/config/features';
 import {
   canMove,
   canWithdraw,
@@ -274,7 +275,7 @@ describe('privacy (brief, section 9)', () => {
 
 describe('request lifecycle through the repository', () => {
   const dates = { from: '05/03/2027', to: '06/03/2027' };
-  it('sends, is approved by the super admin, and applies an approved leave to the record', async () => {
+  it('sends, is approved by the approver, and applies an approved leave to the record', async () => {
     resetDb();
     const before = (await api.leaveBalance()).cl.used;
     const r = await api.saveRequest({
@@ -333,7 +334,14 @@ describe('request lifecycle through the repository', () => {
   });
   it('refuses a write to a locked profile field, in the data layer', async () => {
     resetDb();
-    for (const key of ['name', 'classPayScale', 'dateOfBirth', 'religion', 'officialEmail'])
+    for (const key of [
+      'photo',
+      'name',
+      'classPayScale',
+      'dateOfBirth',
+      'religion',
+      'officialEmail',
+    ])
       await expect(
         api.saveRequest({
           type: 'profile-edit',
@@ -342,6 +350,20 @@ describe('request lifecycle through the repository', () => {
         }),
       ).rejects.toThrow(/locked-field/);
     expect((await api.officer()).name).toBe('Aadhira Valluvan');
+  });
+  it('treats the photo as a locked field: refused, and listed as locked and not editable', async () => {
+    resetDb();
+    expect(features.profile.fieldAccess.locked).toContain('photo');
+    expect(features.profile.fieldAccess.editable).not.toContain('photo');
+    const before = (await api.officer()).photoUrl;
+    await expect(
+      api.saveRequest({
+        type: 'profile-edit',
+        values: { group: 'Photo', changes: { photo: 'data:image/png;base64,AAAA' } },
+        attachments: [],
+      }),
+    ).rejects.toThrow('locked-field:photo');
+    expect((await api.officer()).photoUrl).toBe(before);
   });
   it('keeps the old value and a Change pending marker until the change is decided', async () => {
     resetDb();

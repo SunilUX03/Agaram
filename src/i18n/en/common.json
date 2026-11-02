@@ -124,7 +124,7 @@
       "balance": "This is more than your balance of {{n}} days. Add a reason.",
       "docRequired": "{{label}}: add a file to continue.",
       "usePast": "Use Add a past record for something that already happened.",
-      "pastBalance": "This takes your balance below zero. The super admin will check it."
+      "pastBalance": "This takes your balance below zero. The {{approver}} will check it."
     },
     "date": {
       "hint": "dd/mm/yyyy",

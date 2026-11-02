@@ -1,5 +1,7 @@
 /** Pending product decisions as switchable options (v2, section 9). Nothing here is hard-coded in a component. */
 export const features = {
+  /** Who approves every request. The title is read from here everywhere; the internal role id stays "approver". */
+  approver: { role: 'approver', title: 'Under Secretary' },
   nav: {
     /** A visible "Home" link next to the two sections. The logo and the mobile Home tab always open Home. */
     showHomeLink: false,
@@ -33,6 +35,7 @@ export const features = {
     /** Which profile fields are locked and which are editable. The product owner may move a field. */
     fieldAccess: {
       locked: [
+        'photo',
         'name',
         'identityNo',
         'serviceStatus',
@@ -60,7 +63,6 @@ export const features = {
         'currentPosting.locationChange',
       ] as string[],
       editable: [
-        'photo',
         'languagesKnown',
         'personalEmail',
         'residentialAddress',

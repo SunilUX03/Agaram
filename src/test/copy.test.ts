@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { buildSeed } from '@/data/seed';
+import { features } from '@/config/features';
 import { REQUEST_TYPES } from '@/config/requests';
 import { LABELS } from '@/config/labels';
 import { SERVICE_CARDS } from '@/config/services';
@@ -60,6 +61,26 @@ describe('copy', () => {
   it.each(NEVER_WORDS)('never shows the word "%s"', (w) =>
     expect(new RegExp(`\\b${w}\\b`).test(text)).toBe(false),
   );
+  it('never says "super admin": the approver is the Under Secretary, from one config value', () => {
+    expect(text.toLowerCase()).not.toMatch(/super.?admin/);
+    // Source, docs and flows say it nowhere either (this test file is the one place the phrase is written).
+    const walk = (d: string): string[] =>
+      fs
+        .readdirSync(d, { withFileTypes: true })
+        .flatMap((e) =>
+          e.isDirectory()
+            ? e.name === 'node_modules'
+              ? []
+              : walk(path.join(d, e.name))
+            : [path.join(d, e.name)],
+        );
+    const files = [...walk('src'), ...walk('e2e'), 'README.md', 'DECISIONS.md'].filter(
+      (f) => !f.endsWith('copy.test.ts') && /\.(ts|tsx|json|md|mjs)$/.test(f),
+    );
+    for (const f of files) expect(fs.readFileSync(f, 'utf8'), f).not.toMatch(/super.?admin/i);
+    expect(features.approver.title).toBe('Under Secretary');
+    expect(features.approver.role).toBe('approver');
+  });
   it('has no exclamation marks in the English catalogue', () =>
     expect(strings('src/i18n/en').filter((s) => s.includes('!'))).toEqual([]));
   it('has a Tamil key for every English key', () => {
