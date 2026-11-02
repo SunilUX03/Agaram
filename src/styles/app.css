@@ -1405,3 +1405,22 @@ dd {
   color: var(--ux4g-text-neutral-secondary);
   white-space: nowrap;
 }
+
+/* Replies open under the comment they answer, inside its thread. */
+.reply-composer {
+  margin: var(--ux4g-margin-xs) 0 var(--ux4g-margin-s);
+  padding: var(--ux4g-padding-s);
+  border: var(--ux4g-border-width-sm) solid var(--ux4g-border-color-neutral-default);
+  border-radius: var(--ux4g-radius-md);
+  background: var(--ux4g-bg-neutral-elevated);
+  scroll-margin-bottom: 6rem;
+}
+@media (max-width: 1023px) {
+  /* On phones the composer stays visible above the on-screen keyboard and the bottom bar. */
+  .reply-composer {
+    position: sticky;
+    bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    z-index: 30;
+    margin-inline: calc(-1 * var(--ux4g-padding-xs));
+  }
+}

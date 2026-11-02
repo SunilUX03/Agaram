@@ -10,9 +10,10 @@ import { Dialog } from '@/components/Dialog';
 import { TextArea, TextField } from '@/components/form/inputs';
 import { NotFound } from '@/app/NotFound';
 import { useMut, useQ } from '@/data/hooks';
-import { formatDate, formatTime } from '@/domain/dates';
+import { formatDate } from '@/domain/dates';
 import type { Idea } from '@/domain/types';
-import { BackButton, useAuthor, useLoc } from './parts';
+import { CommentThread } from './Thread';
+import { BackButton, useLoc } from './parts';
 
 const ORDER = ['submitted', 'under-review'];
 
@@ -50,7 +51,6 @@ export default function IdeaPage() {
   const { id = '' } = useParams();
   const { t } = useTranslation('community');
   const loc = useLoc();
-  const author = useAuthor();
   const q = useQ('idea', id);
   const comments = useQ('comments', id);
   const add = useMut('addComment');
@@ -126,19 +126,7 @@ export default function IdeaPage() {
             {comments.isPending ? (
               <Skeleton variant="row" count={2} />
             ) : comments.data?.length ? (
-              <ul className="thread">
-                {comments.data.map((c) => (
-                  <li key={c.id} className="comment">
-                    <div className="comment-head">
-                      <strong>{author(c.author, c.mine)}</strong>
-                      <span className="ux4g-text-neutral-secondary">
-                        {formatDate(c.createdAt, loc)}, {formatTime(c.createdAt, loc)}
-                      </span>
-                    </div>
-                    <p>{c.text}</p>
-                  </li>
-                ))}
-              </ul>
+              <CommentThread parentId={id} comments={comments.data} withTime />
             ) : (
               <p className="ux4g-text-neutral-secondary">{t('ideas.page.noComments')}</p>
             )}

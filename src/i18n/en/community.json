@@ -158,8 +158,8 @@
     "empty": "No posts yet. Start the first discussion.",
     "emptyBtn": "Start a discussion",
     "reply": "Reply",
-    "replyBox": "Your reply",
-    "send": "Post reply",
+    "replyBox": "Add a comment",
+    "send": "Comment",
     "report": "Report",
     "reportTitle": "Report this reply",
     "reportReason": "Reason",
@@ -197,5 +197,15 @@
       "needOptions": "Add at least 2 options.",
       "needDate": "Choose a closing date in the future."
     }
+  },
+  "thread": {
+    "replyingTo": "Replying to {{name}}",
+    "replyLabel": "Your reply to {{name}}",
+    "postReply": "Post reply",
+    "cancel": "Cancel",
+    "posted": "Reply posted",
+    "toName": "to {{name}}",
+    "viewMore_one": "View {{count}} more reply",
+    "viewMore_other": "View {{count}} more replies"
   }
 }

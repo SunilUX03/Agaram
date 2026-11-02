@@ -14,6 +14,7 @@ import { useMut, useQ } from '@/data/hooks';
 import { formatDate } from '@/domain/dates';
 import { sanitizeHtml } from '@/domain/sanitize';
 import type { Comment } from '@/domain/types';
+import { CommentThread } from './Thread';
 import { useAuthor, useLoc } from './parts';
 
 export default function DiscussionPage() {
@@ -29,7 +30,6 @@ export default function DiscussionPage() {
   const report = useMut('report');
   const box = useRef<HTMLTextAreaElement>(null);
   const [text, setText] = useState('');
-  const [replyTo, setReplyTo] = useState<Comment | null>(null);
   const [choice, setChoice] = useState('');
   const [rep, setRep] = useState<Comment | null>(null);
   const [reason, setReason] = useState('');
@@ -44,50 +44,9 @@ export default function DiscussionPage() {
   const closed = p.poll ? new Date(p.poll.closesAt) < new Date() : false;
   const showResult = !!p.poll && (!!p.poll.myVote || closed);
   const total = p.poll?.options.reduce((s, o) => s + o.votes, 0) ?? 0;
-  const roots = (cm.data ?? []).filter((c) => !c.replyTo);
-  const kids = (c: Comment) => (cm.data ?? []).filter((x) => x.replyTo === c.id);
+  // The box at the bottom is only for new top-level comments. Replies open under the comment they answer.
   const send = () =>
-    text.trim() &&
-    add.mutate([id, text.trim(), { replyTo: replyTo?.id }], {
-      onSuccess: () => (setText(''), setReplyTo(null)),
-    });
-  const node = (c: Comment, depth: number) => (
-    <li key={c.id} className="comment">
-      <div className="comment-head ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-s">
-        <strong className="ux4g-body-m-strong">{author(c.author, c.mine)}</strong>
-        {c.author !== 'anonymous' && c.author.designation?.includes('earlier batch') && (
-          <Tag>{t('discussions.seniors')}</Tag>
-        )}
-        <span className="ux4g-body-s-default ux4g-text-neutral-secondary">
-          {formatDate(c.createdAt, loc)}
-        </span>
-      </div>
-      <p className="ux4g-body-m-default ux4g-my-xs">{c.text}</p>
-      <div className="ux4g-d-flex ux4g-flex-wrap ux4g-ai-center gap-m">
-        {depth === 0 && (
-          <button
-            type="button"
-            className="ux4g-btn-text-primary ux4g-btn-s"
-            onClick={() => (setReplyTo(c), box.current?.focus())}
-          >
-            {t('discussions.reply')}
-          </button>
-        )}
-        {!c.mine && (
-          <button
-            type="button"
-            className="ux4g-btn-text-primary ux4g-btn-s"
-            onClick={() => setRep(c)}
-          >
-            {t('discussions.report')}
-          </button>
-        )}
-      </div>
-      {depth === 0 && kids(c).length > 0 && (
-        <ul className="thread">{kids(c).map((k) => node(k, 1))}</ul>
-      )}
-    </li>
-  );
+    text.trim() && add.mutate([id, text.trim(), {}], { onSuccess: () => setText('') });
   return (
     <>
       <PageHeader
@@ -167,24 +126,12 @@ export default function DiscussionPage() {
         >
           {cm.isPending ? (
             <Skeleton variant="row" count={2} />
-          ) : roots.length ? (
-            <ul className="thread">{roots.map((c) => node(c, 0))}</ul>
+          ) : cm.data?.length ? (
+            <CommentThread parentId={id} comments={cm.data} onReport={setRep} />
           ) : (
             <p className="ux4g-text-neutral-secondary">{t('discussions.noReplies')}</p>
           )}
           <div className="ux4g-mt-m">
-            {replyTo && (
-              <p className="ux4g-body-s-default">
-                {t('discussions.replyTo', { name: author(replyTo.author, replyTo.mine) })}{' '}
-                <button
-                  type="button"
-                  className="ux4g-btn-text-primary ux4g-btn-s"
-                  onClick={() => setReplyTo(null)}
-                >
-                  {t('discussions.cancel')}
-                </button>
-              </p>
-            )}
             <label className="sr-only" htmlFor="reply-box">
               {t('discussions.replyBox')}
             </label>
@@ -193,7 +140,6 @@ export default function DiscussionPage() {
                 className="ux4g-textarea-input"
                 id="reply-box"
                 ref={box}
-
                 rows={3}
                 placeholder={t('discussions.replyBox')}
                 value={text}

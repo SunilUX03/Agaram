@@ -197,5 +197,15 @@
       "needOptions": "",
       "needDate": ""
     }
+  },
+  "thread": {
+    "replyingTo": "",
+    "replyLabel": "",
+    "postReply": "",
+    "cancel": "",
+    "posted": "",
+    "toName": "",
+    "viewMore_one": "",
+    "viewMore_other": ""
   }
 }

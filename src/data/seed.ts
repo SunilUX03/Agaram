@@ -1532,6 +1532,31 @@ export function buildSeed(now = new Date()): Db {
       -4,
     ),
   );
+  // A thread with three replies, so "View more replies" has something to show.
+  const rootOne = comments.find((c) => c.parentId === 'post-1' && !c.replyTo)!;
+  comments.push(
+    rep(
+      'post-1',
+      person(15),
+      'Thank you. Does the on-call officer get a rest day after?',
+      -1,
+      rootOne.id,
+    ),
+    rep(
+      'post-1',
+      seniors(20),
+      'Yes. We gave the next working day off, and it was worth it.',
+      -1,
+      rootOne.id,
+    ),
+    rep(
+      'post-1',
+      person(16),
+      'We did the same in two blocks. It reduced sick leave.',
+      0,
+      rootOne.id,
+    ),
+  );
   void rand;
   return {
     officer,
