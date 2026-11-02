@@ -1,6 +1,6 @@
 import { buildSeed, type Db } from './seed';
 
-const KEY = 'agaram-demo-db-v1';
+const KEY = 'agaram-demo-db-v3';
 const SESSION = 'agaram-demo-session';
 const VERSION_DAY = () => new Date().toISOString().slice(0, 10);
 
