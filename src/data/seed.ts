@@ -740,16 +740,15 @@ export function buildSeed(now = new Date()): Db {
     'Finance and budget',
     'Coastal management',
   ];
-  const colleagues: T.Colleague[] = Array.from({ length: 60 }, (_, i) => {
+  // Department sizes: Public Department is the large one (it has an officer with eight direct reports).
+  const deptSizes = [12, 8, 8, 7, 7, 6, 6, 6];
+  const deptStart = deptSizes.map((_, d) => deptSizes.slice(0, d).reduce((x, y) => x + y, 0));
+  const people = Array.from({ length: 60 }, (_, i) => {
     const service = services[i % services.length];
     const name =
       i === 7
         ? 'Thiruvalluvar Subramanian Venkatachalapathi Ramanujam Iyengar'
         : `${first[i % first.length]} ${last[(i * 3) % last.length]}`;
-    const dep =
-      i === 11
-        ? 'Rural Development and Panchayat Raj, Department of Panchayat Raj Institutions and Rural Local Bodies Coordination'
-        : departments[i % departments.length];
     const slug = name
       .toLowerCase()
       .replace(/[^a-z]+/g, '.')
@@ -757,13 +756,15 @@ export function buildSeed(now = new Date()): Db {
     return {
       id: `col-${i + 1}`,
       name,
-      designation: desigs[service][i % desigs[service].length],
       service,
       batch: service === 'IAS' ? 2005 + (i % 18) : undefined,
       district: districts[i % districts.length],
-      department: dep,
       areaOfExposure: areas[i % areas.length],
-      statusNote: i % 17 === 3 ? 'On leave' : i % 23 === 5 ? 'On training' : undefined,
+      statusNote: (i % 17 === 3
+        ? 'On leave'
+        : i % 23 === 5
+          ? 'On training'
+          : undefined) as T.Colleague['statusNote'],
       photoUrl: i % 3 === 2 ? undefined : photoDataUri(i + 2),
       officialEmail: `${slug}@example.gov.test`,
     };
@@ -805,19 +806,31 @@ export function buildSeed(now = new Date()): Db {
     'Leave and travel',
     'Cadre management',
   ];
+  // The post chain. Post 0 is the single top post. In the Public Department, post 2 has eight direct
+  // reports; elsewhere each post reports to the one two places above it.
+  const parentIndex = (di: number, ri: number): number | undefined =>
+    ri === 0 ? undefined : di === 0 ? (ri <= 2 ? 0 : ri === 11 ? 1 : 2) : ri <= 2 ? 0 : ri - 2;
+  const VACANT = { di: 2, ri: 3 }; // a post with nobody on file
+  const titleOf = (ri: number) =>
+    ri < 8
+      ? `${ranks[ri]}${ri === 0 ? '' : ri < 5 ? ` (${['Policy', 'Establishment', 'Finance', 'Schemes', 'Coordination'][ri % 5]})` : ''}`
+      : `${ranks[ri % 8]} (${['Records', 'Audit', 'Legal', 'Monitoring'][ri % 4]})`;
   const depts: T.Department[] = departments.map((name, di) => ({
     id: `dep-${di + 1}`,
     name,
-    posts: ranks.map((rank, ri) => {
-      const sectionCount = ri >= 6 ? 2 : 3 + (ri % 2);
-      const officer = colleagues[(di * 8 + ri) % colleagues.length];
-      const notOnFile = di === 2 && ri === 3;
+    posts: Array.from({ length: deptSizes[di] + (di === VACANT.di ? 1 : 0) }, (_, ri) => {
+      const sectionCount = ri % 8 >= 6 ? 2 : 3 + (ri % 2);
+      const k = di === VACANT.di && ri > VACANT.ri ? ri - 1 : ri;
+      const vacant = di === VACANT.di && ri === VACANT.ri;
+      const officer = vacant ? undefined : people[deptStart[di] + k];
+      const parent = parentIndex(di, ri);
       return {
         id: `post-${di + 1}-${ri + 1}`,
-        title: `${rank}${ri === 0 ? '' : ri < 5 ? ` (${['Policy', 'Establishment', 'Finance', 'Schemes', 'Coordination'][ri % 5]})` : ''}`,
-        rank,
-        officerId: notOnFile ? undefined : officer.id,
-        officerName: notOnFile ? undefined : officer.name,
+        title: titleOf(ri),
+        rank: ranks[ri % 8],
+        officerId: officer?.id,
+        officerName: officer?.name,
+        reportsToPostId: parent === undefined ? undefined : `post-${di + 1}-${parent + 1}`,
         sections: Array.from({ length: sectionCount }, (_, si) => ({
           id: `sec-${di + 1}-${ri + 1}-${si + 1}`,
           name:
@@ -826,12 +839,73 @@ export function buildSeed(now = new Date()): Db {
             ] + (si > 2 ? ' II' : ''),
           subjects: Array.from(
             { length: 4 + ((di + ri + si) % 5) },
-            (_, k) => subjectPool[(di * 5 + ri * 3 + si * 7 + k * 2) % subjectPool.length],
+            (_, k2) => subjectPool[(di * 5 + ri * 3 + si * 7 + k2 * 2) % subjectPool.length],
           ),
         })),
       };
     }),
   }));
+
+  // Each officer takes the designation of the post they hold and reports to the officer in the nearest
+  // filled post above. Everything below is derived from the chain, so the two cannot disagree.
+  const langPool = ['Tamil', 'English', 'Hindi', 'Telugu', 'Malayalam', 'Kannada'];
+  const degreePool = [
+    ['B.E.', 'Civil Engineering', 'Anna University'],
+    ['M.A.', 'Public Administration', 'University of Madras'],
+    ['B.Sc.', 'Agriculture', 'Tamil Nadu Agricultural University'],
+    ['LL.B.', 'Law', 'Government Law College, Chennai'],
+    ['M.B.B.S.', 'Medicine', 'Madras Medical College'],
+    ['B.A.', 'Economics', 'Presidency College, Chennai'],
+    ['M.Sc.', 'Physics', 'Loyola College, Chennai'],
+    ['M.Tech.', 'Environmental Engineering', 'IIT Madras'],
+  ];
+  const allPosts = depts.flatMap((d) => d.posts.map((p) => ({ d, p })));
+  const colleagues: T.Colleague[] = people.map((c, i) => {
+    const hit = allPosts.find((x) => x.p.officerId === c.id)!;
+    const { d, p } = hit;
+    let up = hit.p.reportsToPostId;
+    let boss: string | undefined;
+    while (up && !boss) {
+      const above = d.posts.find((x) => x.id === up)!;
+      boss = above.officerId;
+      up = above.reportsToPostId;
+    }
+    const prior = i === 9 ? 0 : i === 20 ? 9 : i === 21 ? 7 : 2 + (i % 4);
+    const since = 2026 - 1 - (i % 3);
+    return {
+      ...c,
+      designation: p.title,
+      department: d.name,
+      postId: p.id,
+      reportsToId: boss,
+      languages:
+        i === 13
+          ? []
+          : langPool.filter((_, k) => k === 0 || k === 1 || (i + k) % 3 === 0).slice(0, 4),
+      qualifications: Array.from({ length: 1 + (i % 3) }, (_, k) => {
+        const [degree, subject, institute] = degreePool[(i + k * 3) % degreePool.length];
+        return { degree, subject, institute };
+      }),
+      officeAddress:
+        c.district === 'Chennai'
+          ? `${d.name}, Secretariat, Fort St George, Chennai 600 009`
+          : `Collectorate Complex, ${c.district} 600 000`,
+      officePhone: `+91 44 0000 ${1100 + i}`,
+      previousPostings: Array.from({ length: prior }, (_, j) => ({
+        designation: desigs[c.service][(i + j) % desigs[c.service].length],
+        department: departments[(i + j + 1) % departments.length],
+        place: districts[(i + j * 2) % districts.length],
+        from: since - 2 * (j + 1),
+        to: since - 2 * j,
+      })),
+      postedSince: dateOnly(-(120 + ((i * 53) % 900))),
+      handles: p.sections
+        .flatMap((s) => s.subjects)
+        .filter((x, k, arr) => arr.indexOf(x) === k)
+        .slice(0, 8)
+        .map((label) => ({ label, departmentId: d.id, postId: p.id })),
+    };
+  });
 
   const experts: T.Expert[] = [
     {

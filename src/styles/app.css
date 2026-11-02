@@ -1424,3 +1424,104 @@ dd {
     margin-inline: calc(-1 * var(--ux4g-padding-xs));
   }
 }
+
+/* Colleague profile and section page. UX4G has no profile layout, so these are layout only. */
+.profile-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ux4g-gap-row-m);
+}
+@media (min-width: 768px) {
+  .profile-head {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--ux4g-gap-row-l);
+  }
+}
+.profile-head-body {
+  min-width: 0;
+}
+.profile-head-name {
+  overflow-wrap: anywhere;
+}
+.profile-grid {
+  display: grid;
+  gap: var(--ux4g-gap-row-m);
+  grid-template-columns: minmax(0, 1fr);
+}
+.profile-side,
+.profile-main {
+  display: grid;
+  gap: var(--ux4g-gap-row-m);
+  align-content: start;
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    align-items: start;
+  }
+  .profile-side {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 6rem;
+  }
+  .profile-main {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+.person-link {
+  display: flex;
+  align-items: center;
+  gap: var(--ux4g-gap-row-s);
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  padding: var(--ux4g-padding-xs) 0;
+}
+.person-link span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.person-link:hover strong,
+.person-link:hover > span:only-child {
+  text-decoration: underline;
+}
+.mini-people,
+.line-list,
+.contact-list {
+  display: grid;
+  gap: var(--ux4g-gap-row-xs);
+}
+.prev-list {
+  display: grid;
+  gap: var(--ux4g-gap-row-m);
+}
+.prev-list li {
+  display: flex;
+  flex-direction: column;
+}
+.chip-link {
+  text-decoration: none;
+}
+.officer-card {
+  display: flex;
+  gap: var(--ux4g-gap-row-m);
+  align-items: flex-start;
+}
+.officer-card-body {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.acc-static {
+  padding: var(--ux4g-padding-s) 0;
+}
+.profile-main > section > h2,
+.profile-side > section > h2 {
+  margin-bottom: var(--ux4g-gap-row-s);
+}

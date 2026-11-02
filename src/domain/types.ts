@@ -263,6 +263,27 @@ export interface Colleague {
   statusNote?: 'On leave' | 'On training';
   photoUrl?: string;
   officialEmail: string;
+  /** The post this officer holds in a department's chain, if any. */
+  postId?: string;
+  /** The officer this one reports to (the nearest filled post above). */
+  reportsToId?: string;
+  languages: string[];
+  /** One to three. */
+  qualifications: { degree: string; subject: string; institute: string }[];
+  officeAddress: string;
+  officePhone: string;
+  /** Newest first. */
+  previousPostings: {
+    designation: string;
+    department: string;
+    place: string;
+    from: number;
+    to: number;
+  }[];
+  /** ISO date the officer took the current post. */
+  postedSince: string;
+  /** Subjects handled, each linking to the section page of the post. */
+  handles: { label: string; departmentId: string; postId: string }[];
 }
 export interface OrgPost {
   id: string;
@@ -270,6 +291,8 @@ export interface OrgPost {
   rank: string;
   officerId?: string;
   officerName?: string;
+  /** The post above this one. Absent on the single top post of a department. */
+  reportsToPostId?: string;
   sections: { id: string; name: string; subjects: string[] }[];
 }
 export interface Department {

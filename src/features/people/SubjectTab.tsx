@@ -118,6 +118,14 @@ export function SubjectTab({ q, onSwitch }: { q: string; onSwitch: () => void })
                                 </span>
                               )}
                             </div>
+                            {p.reportsToPostId && (
+                              <p className="ux4g-body-s-default ux4g-text-neutral-secondary">
+                                {t('who.reportsTo', {
+                                  post: current.posts.find((x) => x.id === p.reportsToPostId)
+                                    ?.title,
+                                })}
+                              </p>
+                            )}
                             <p>
                               {p.officerName ?? (
                                 <span className="ux4g-text-neutral-secondary">

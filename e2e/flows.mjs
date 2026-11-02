@@ -370,7 +370,12 @@ await flow('11 Find a person or a subject', async (p) => {
   assert.equal(await p.inputValue('input[type=search], #sf-input'), 'GPF');
   await p.click('.is-hit >> nth=0');
   await p.waitForURL(/\/community\/colleagues\/subject\//);
-  await waitText(p, 'Officer in charge');
+  await p.click("a:has-text(\"Open officer's profile\")");
+  await p.waitForURL(/\/community\/colleagues\/col-/);
+  await waitText(p, 'Reporting structure');
+  await waitText(p, 'Personal numbers are not shown.');
+  await p.click('a:has-text("See in By subject")');
+  await p.waitForURL(/\/community\/colleagues\/subject\//);
 });
 
 await flow('12 Capacity Building', async (p) => {

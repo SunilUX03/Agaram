@@ -88,6 +88,8 @@ export const features = {
       awards: true,
     } as Record<string, boolean>,
   },
+  /** Colleague profile cards. */
+  colleagues: { showCareerHistory: true, showEducation: true },
   medical: { concurrenceLabel: 'Medical concurrence' },
   i18n: { defaultLocale: 'en', enabledLocales: ['en', 'ta'] as string[] },
   session: { idleMinutes: 20 },

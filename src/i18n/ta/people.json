@@ -68,7 +68,8 @@
     "posts_one": "",
     "posts_other": "",
     "nothing": "",
-    "searchPeople": ""
+    "searchPeople": "",
+    "reportsTo": ""
   },
   "section": {
     "inCharge": "",
@@ -77,7 +78,15 @@
     "subjects_other": "",
     "notFound": "",
     "back": "",
-    "notOnFile": ""
+    "notOnFile": "",
+    "officer": "",
+    "openProfile": "",
+    "reportsTo": "",
+    "team": "",
+    "postLine": "",
+    "noOfficer": "",
+    "vacant": "",
+    "firstSection": ""
   },
   "experts": {
     "search": "",
@@ -110,5 +119,43 @@
       "people": "",
       "subject": ""
     }
+  },
+  "colleague": {
+    "email": "",
+    "seeInSubject": "",
+    "posting": "",
+    "service": "",
+    "serviceOnly": "",
+    "about": "",
+    "serviceBatch": "",
+    "languages": "",
+    "qualifications": "",
+    "qualification": "",
+    "area": "",
+    "current": "",
+    "designation": "",
+    "department": "",
+    "location": "",
+    "since": "",
+    "sinceValue": "",
+    "officeAddress": "",
+    "officePhone": "",
+    "officialEmail": "",
+    "handles": "",
+    "previous": "",
+    "years": "",
+    "showAll": "",
+    "showFewer": "",
+    "reporting": "",
+    "reportsTo": "",
+    "reportsNone": "",
+    "line": "",
+    "direct": "",
+    "seeAll": "",
+    "directCount": "",
+    "directPanel": "",
+    "contact": "",
+    "personal": "",
+    "open": ""
   }
 }

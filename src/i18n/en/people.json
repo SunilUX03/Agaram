@@ -13,7 +13,7 @@
     "community_subject": {
       "headline": "Section",
       "tagline": "",
-      "main": "Open officer’s profile"
+      "main": "Open officer's profile"
     },
     "community_beyond": {
       "headline": "Beyond the File",
@@ -68,7 +68,8 @@
     "posts_one": "{{count}} post",
     "posts_other": "{{count}} posts",
     "nothing": "No subject found. Try searching by a colleague’s name.",
-    "searchPeople": "Search people"
+    "searchPeople": "Search people",
+    "reportsTo": "Reports to: {{post}}"
   },
   "section": {
     "inCharge": "Officer in charge",
@@ -77,7 +78,15 @@
     "subjects_other": "{{count}} subjects",
     "notFound": "We could not find that section.",
     "back": "Back to {{department}}",
-    "notOnFile": "Not on file"
+    "notOnFile": "Not on file",
+    "officer": "Officer in charge",
+    "openProfile": "Open officer's profile",
+    "reportsTo": "Reports to",
+    "team": "Team",
+    "postLine": "{{post}}: {{name}}",
+    "noOfficer": "The department has not recorded who holds this post.",
+    "vacant": "No officer on file",
+    "firstSection": "Subjects handled"
   },
   "experts": {
     "search": "Search experts and organisations",
@@ -110,5 +119,43 @@
       "people": "Search name, post, district or area of work",
       "subject": "Search a subject, section or officer, for example GPF, sugarcane, budget"
     }
+  },
+  "colleague": {
+    "email": "Email",
+    "seeInSubject": "See in By subject",
+    "posting": "{{place}} · {{department}}",
+    "service": "{{service}} · Batch {{batch}}",
+    "serviceOnly": "{{service}}",
+    "about": "About",
+    "serviceBatch": "Service and batch",
+    "languages": "Languages known",
+    "qualifications": "Qualifications",
+    "qualification": "{{degree}}, {{subject}}, {{institute}}",
+    "area": "Area of exposure",
+    "current": "Current posting",
+    "designation": "Designation",
+    "department": "Department",
+    "location": "District or location",
+    "since": "Posted here since",
+    "sinceValue": "{{date}}",
+    "officeAddress": "Office address",
+    "officePhone": "Office phone",
+    "officialEmail": "Official email",
+    "handles": "Handles",
+    "previous": "Previous postings",
+    "years": "{{from}} to {{to}}",
+    "showAll": "Show all",
+    "showFewer": "Show fewer",
+    "reporting": "Reporting structure",
+    "reportsTo": "Reports to",
+    "reportsNone": "Reports to: none (head of department)",
+    "line": "Reporting line",
+    "direct": "Direct reports",
+    "seeAll": "See all {{n}}",
+    "directCount": "{{n}} direct reports",
+    "directPanel": "Direct reports of {{name}}",
+    "contact": "Contact",
+    "personal": "Personal numbers are not shown.",
+    "open": "Open profile of {{name}}"
   }
 }
